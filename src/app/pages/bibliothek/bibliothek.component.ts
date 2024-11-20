@@ -6,8 +6,6 @@ import { CardComponent } from '../../core/components/card/card.component';
   standalone: true,
   imports: [CardComponent],
   templateUrl: './bibliothek.component.html',
-  styleUrl: './bibliothek.component.css'
+  styleUrl: './bibliothek.component.css',
 })
-export class BibliothekComponent {
-
-}
+export class BibliothekComponent {}
