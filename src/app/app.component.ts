@@ -10,7 +10,7 @@ import { BibliothekComponent } from './pages/bibliothek/bibliothek.component';
   standalone: true,
   imports: [NavbarComponent, FooterComponent, OverviewComponent, BibliothekComponent, RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'bookverse';
