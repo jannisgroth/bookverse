@@ -6,8 +6,6 @@ import { CarouselComponent } from '../../core/components/carousel/carousel.compo
   standalone: true,
   imports: [CarouselComponent],
   templateUrl: './overview.component.html',
-  styleUrl: './overview.component.css'
+  styleUrl: './overview.component.css',
 })
-export class OverviewComponent {
-
-}
+export class OverviewComponent {}

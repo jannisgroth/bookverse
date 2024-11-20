@@ -8,7 +8,13 @@ import { BibliothekComponent } from './pages/bibliothek/bibliothek.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent, OverviewComponent, BibliothekComponent, RouterOutlet],
+  imports: [
+    NavbarComponent,
+    FooterComponent,
+    OverviewComponent,
+    BibliothekComponent,
+    RouterOutlet,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

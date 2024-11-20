@@ -5,7 +5,7 @@
     "source.fixAll.eslint": "explicit"
   },
   "eslint.validate": ["javascript", "typescript"],
-  
+
   "eslint.enable": true,
   "editor.quickSuggestions": {
     "strings": true
@@ -14,7 +14,7 @@
   "editor.formatOnPaste": true,
   "editor.formatOnType": true,
   "problems.decorations.enabled": true,
-  
+
   "workbench.colorCustomizations": {
     "editorError.foreground": "#ff0000",
     "editorError.border": "#ff0000"
