@@ -1,14 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
-export class ConfigService {
-  constructor(private http: HttpClient) {}
+export class ReadService {
+  readonly #http: HttpClient;
+  constructor(http: HttpClient) {
+    this.#http = http;
+  }
 
   async get() {
-    const buch = await this.http.get('https://localhost:3000/rest', {
-      headers: { 'Content-Type': 'application/hal+json' },
+    this.#http.get<any>('https://localhost:3000/rest').subscribe(buch => {
+      console.log(buch);
     });
-    return JSON.stringify(buch);
   }
 }
