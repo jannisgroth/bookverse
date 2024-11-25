@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Buch } from '../../../models/buch.model';
 
 @Component({
   standalone: true,
@@ -7,4 +8,15 @@ import { Component } from '@angular/core';
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.css',
 })
-export class ModalComponent {}
+export class ModalComponent {
+  @Input() buch: Buch | undefined;
+  @Input() ausgewähltesBuch: Buch | undefined;
+
+  openModal(modal: HTMLDialogElement) {
+    modal.showModal();
+  }
+
+  closeModal(modal: HTMLDialogElement) {
+    modal.close();
+  }
+}

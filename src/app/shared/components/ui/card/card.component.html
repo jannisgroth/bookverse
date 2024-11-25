@@ -1,15 +1,37 @@
-<div class="card bg-neutral-300 w-96 shadow-xl">
-  <figure class="mt-7 min-h-96">
-    <img class="rounded-lg shadow-2xl" [src]="imageSrc" />
+<div
+  class="card card-side bg-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 ease-in-out">
+  <!-- Bild auf der linken Seite -->
+  <figure class="w-1/3">
+    <img class="h-full w-full object-cover rounded-l-xl" [src]="imageSrc" />
   </figure>
-  <div class="card-body">
-    <h2 class="card-title">Buchname</h2>
-    <p>Schlagwoerter: ....</p>
-    <p>ISBN: ....</p>
-    <div class="card-actions justify-end">
-      <button class="btn hover:bg-indigo-500 btn-primary rounded-md ring-2 w-28 h-14 text-balance" (click)="getBuch()">
+
+  <!-- Text und Aktionen -->
+  <div class="card-body w-2/3">
+    <h2 class="card-title text-2xl font-medium text-gray-800">{{ buch.titel?.titel }}</h2>
+    <p class="text-sm text-gray-600 mt-2">{{ buch.titel?.untertitel }}</p>
+    <p class="text-sm text-gray-500 mt-2">ISBN: {{ buch.isbn }}</p>
+    <div class="card-actions justify-end mt-6">
+      <button class="btn btn-primary text-white py-2 px-6 rounded-full hover:bg-blue-600 transition-all"
+        (click)="showDetails()">
         Show more
       </button>
     </div>
   </div>
 </div>
+
+<!-- <div
+  class="card bg-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 ease-in-out">
+  <figure class="">
+    <img class="max-h-fit shadow-stone-500 shadow-xl m-4 rounded-lg" [src]="imageSrc" />
+  </figure>
+  <div class="card-body min-h-64">
+    <h2 class="card-title text-2xl font-medium text-gray-800">{{ buch.titel?.titel }}</h2>
+    <p class="text-sm text-gray-600 mt-2">{{ buch.schlagwoerter?.join(', ') }}</p>
+    <p class="text-sm text-gray-500 mt-2">ISBN: {{ buch.isbn }}</p>
+    <div class="card-actions justify-end mt-6">
+      <button class="btn btn-primary text-white py-2 px-6 rounded-full hover:bg-blue-600 transition-all">
+        Show more
+      </button>
+    </div>
+  </div>
+</div> -->
