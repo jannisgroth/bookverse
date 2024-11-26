@@ -1,4 +1,10 @@
-import { Component, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  OnInit,
+  runInInjectionContext,
+  signal,
+} from '@angular/core';
 import { CardComponent } from '../../shared/components/ui/card/card.component';
 import { ReadService } from '../../core/api/http-read.service';
 import { NGXLogger } from 'ngx-logger';
@@ -22,18 +28,18 @@ export class BibliothekComponent implements OnInit {
   constructor(
     private readservice: ReadService,
     private logger: NGXLogger
-  ) {}
-  ngOnInit() {
-    this.readservice.getBuecher().subscribe({
-      next: buecher => {
-        this.buecherSignal.set(buecher);
-        this.loading.set(false);
-        this.logger.log('Bücher geladen:', buecher);
-      },
-      error: error => {
-        this.logger.error('Fehler beim Laden der Bücher:', error);
-      },
+  ) {
+    effect(() => {
+      // Wenn buecherSignal aktualisiert wird, triggern wir diesen Effekt
+      const buecher = this.readservice.buecher();
+      this.loading.set(false); // loading auf false um spinner zu entfernen
+      this.buecherSignal.set(buecher); // buecher dem signal zuweisen
+      this.logger.debug('Aktualisierte Bücherliste:', buecher);
     });
+  }
+  ngOnInit(): void {
+    // API-Aufruf, um die Bücher zu laden
+    this.readservice.getBuecher();
   }
 
   openModal(buch: Buch) {
