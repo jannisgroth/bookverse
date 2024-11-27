@@ -2,7 +2,6 @@ import {
   Component,
   effect,
   OnInit,
-  runInInjectionContext,
   signal,
 } from '@angular/core';
 import { CardComponent } from '../../shared/components/ui/card/card.component';
@@ -11,11 +10,12 @@ import { NGXLogger } from 'ngx-logger';
 import { Buch } from '../../shared/models/buch.model';
 import { NgFor, NgIf } from '@angular/common';
 import { ModalComponent } from '../../shared/components/ui/modal/modal.component';
+import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-alert/error-alert.component';
 
 @Component({
   standalone: true,
   selector: 'app-bibliothek',
-  imports: [CardComponent, NgFor, NgIf, ModalComponent],
+  imports: [CardComponent, NgFor, NgIf, ModalComponent, ErrorAlertComponent],
   templateUrl: './bibliothek.component.html',
   styleUrl: './bibliothek.component.css',
   providers: [ReadService],
@@ -24,24 +24,39 @@ export class BibliothekComponent implements OnInit {
   buecherSignal = signal<Buch[]>([]);
   selectedBuchSignal = signal<Buch | undefined>(undefined);
   loading = signal<boolean>(true);
+  showError = signal<boolean>(false);
+  error = 'Es konnte kein Buch gefunden werden';
 
+  private buecherLadenEffect = effect(() => {
+    const buecher = this.readservice.buecher();
+    this.buecherSignal.set(buecher);
+    this.logger.debug('Aktualisierte Bücherliste:', buecher);
+    this.loading.set(this.readservice.loading());
+    this.showError.set(this.readservice.showError());
+  });
+
+  /**
+   * Erzeugt ein neues BibliothekComponent
+   * @param readservice Der Service, der die API-Aufrufe durchführt
+   * @param logger Der Logger, der zum Protokollieren von Ereignissen verwendet wird
+   */
   constructor(
     private readservice: ReadService,
     private logger: NGXLogger
-  ) {
-    effect(() => {
-      // Wenn buecherSignal aktualisiert wird, triggern wir diesen Effekt
-      const buecher = this.readservice.buecher();
-      this.loading.set(false); // loading auf false um spinner zu entfernen
-      this.buecherSignal.set(buecher); // buecher dem signal zuweisen
-      this.logger.debug('Aktualisierte Bücherliste:', buecher);
-    });
-  }
+  ) { }
+  /**
+   * Lifecycle-Hook, der aufgerufen wird, wenn die Komponente initialisiert wurde.
+   * Löst den API-Aufruf aus, um die Bücher zu laden.
+   */
   ngOnInit(): void {
     // API-Aufruf, um die Bücher zu laden
     this.readservice.getBuecher();
   }
-
+  /**
+   * Zeigt das Modal an, indem es den selectedBuchSignal mit dem uebergebenen Buch setzt
+   * und das Modal mit dem id "modal" zeigt.
+   * @param buch Das Buch, das angezeigt werden soll
+   */
   openModal(buch: Buch) {
     this.selectedBuchSignal.set(buch);
     const modal: HTMLDialogElement = document.querySelector('#modal')!;
