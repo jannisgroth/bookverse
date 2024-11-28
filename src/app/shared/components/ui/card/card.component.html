@@ -1,15 +1,22 @@
 <div
-  class="card card-side bg-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 ease-in-out">
+  class="card card-side bg-neutral-50 rounded-xl shadow-md shadow-primary hover:shadow-md hover:shadow-slate-300 hover:scale-105 transition-all duration-300 ease-in-out h-full">
   <!-- Bild auf der linken Seite -->
   <figure class="w-1/3">
-    <img class="h-full w-full object-cover rounded-l-xl" [src]="imageSrc" />
+    <img *ngIf="buch?.file" class="h-full w-full object-cover rounded-xl" src="{{ buch?.file }}" />
+    <div *ngIf="!buch?.file" class="w-full h-full flex items-center justify-center border border-primary rounded-xl">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+        class="size-10 text-primary">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+      </svg>
+    </div>
   </figure>
 
   <!-- Text und Aktionen -->
   <div class="card-body w-2/3">
-    <h2 class="card-title text-2xl font-medium text-gray-800">{{ buch.titel?.titel }}</h2>
-    <p class="text-sm text-gray-600 mt-2">{{ buch.titel?.untertitel }}</p>
-    <p class="text-sm text-gray-500 mt-2">ISBN: {{ buch.isbn }}</p>
+    <h2 class="card-title text-2xl font-medium text-gray-800">{{ buch?.titel?.titel }}</h2>
+    <p class="text-sm text-gray-600 mt-2">{{ buch?.titel?.untertitel }}</p>
+    <p class="text-sm text-gray-500 mt-2">ISBN: {{ buch?.isbn }}</p>
     <div class="card-actions justify-end mt-6">
       <button class="btn btn-primary text-white py-2 px-6 rounded-full hover:bg-blue-600 transition-all"
         (click)="showDetails()">
@@ -18,20 +25,3 @@
     </div>
   </div>
 </div>
-
-<!-- <div
-  class="card bg-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 ease-in-out">
-  <figure class="">
-    <img class="max-h-fit shadow-stone-500 shadow-xl m-4 rounded-lg" [src]="imageSrc" />
-  </figure>
-  <div class="card-body min-h-64">
-    <h2 class="card-title text-2xl font-medium text-gray-800">{{ buch.titel?.titel }}</h2>
-    <p class="text-sm text-gray-600 mt-2">{{ buch.schlagwoerter?.join(', ') }}</p>
-    <p class="text-sm text-gray-500 mt-2">ISBN: {{ buch.isbn }}</p>
-    <div class="card-actions justify-end mt-6">
-      <button class="btn btn-primary text-white py-2 px-6 rounded-full hover:bg-blue-600 transition-all">
-        Show more
-      </button>
-    </div>
-  </div>
-</div> -->

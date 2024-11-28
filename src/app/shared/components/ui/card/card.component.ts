@@ -10,13 +10,10 @@ import { Buch } from '../../../models/buch.model';
   styleUrl: './card.component.css',
 })
 export class CardComponent {
-  @Input() imageSrc: string = '';
-  @Input() buch: any;
+  @Input() buch: Buch | undefined;
   @Output() openModal = new EventEmitter<any>();
 
-  buecher = signal<Buch[]>([]);
-
-  constructor() {}
+  constructor() { }
 
   showDetails() {
     this.openModal.emit(this.buch);

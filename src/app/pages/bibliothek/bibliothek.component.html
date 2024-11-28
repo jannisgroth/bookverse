@@ -4,9 +4,9 @@
     class="loading loading-spinner loading-lg text-primary flex items-center justify-center m-auto">
   </span>
   <div *ngIf="!loading()">
-    <div class="grid grid-cols-3 gap-3">
-      <div *ngFor="let buch of buecherSignal()">
-        <app-card imageSrc="/assets/JavaScript.jpg" [buch]="buch" (openModal)="openModal($event)"></app-card>
+    <div class="grid grid-cols-3 gap-8 auto-rows-fr">
+      <div *ngFor="let buch of buecher()">
+        <app-card [buch]="buch" (openModal)="openModal($event)"></app-card>
       </div>
     </div>
   </div>
