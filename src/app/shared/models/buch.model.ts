@@ -12,4 +12,10 @@ export interface Buch {
   homepage: string | undefined;
   schlagwoerter: string[] | null | undefined;
   titel: Titel | undefined;
+  _links: {
+    self: {
+      href: string | undefined;
+    }
+  }
+  file: string | undefined;
 }

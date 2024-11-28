@@ -21,19 +21,8 @@ import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-ale
   providers: [ReadService],
 })
 export class BibliothekComponent implements OnInit {
-  buecherSignal = signal<Buch[]>([]);
-  selectedBuchSignal = signal<Buch | undefined>(undefined);
-  loading = signal<boolean>(true);
-  showError = signal<boolean>(false);
-  error = 'Es konnte kein Buch gefunden werden';
-
-  private buecherLadenEffect = effect(() => {
-    const buecher = this.readservice.buecher();
-    this.buecherSignal.set(buecher);
-    this.logger.debug('Aktualisierte Bücherliste:', buecher);
-    this.loading.set(this.readservice.loading());
-    this.showError.set(this.readservice.showError());
-  });
+  readonly error = 'Es konnte kein Buch gefunden werden';
+  readonly selectedBuchSignal = signal<Buch | undefined>(undefined);
 
   /**
    * Erzeugt ein neues BibliothekComponent
@@ -44,13 +33,23 @@ export class BibliothekComponent implements OnInit {
     private readservice: ReadService,
     private logger: NGXLogger
   ) { }
+  get buecher() {
+    return this.readservice.buecher;
+  }
+  get loading() {
+    return this.readservice.loading;
+  }
+  get showError() {
+    return this.readservice.showError;
+  }
+
   /**
    * Lifecycle-Hook, der aufgerufen wird, wenn die Komponente initialisiert wurde.
    * Löst den API-Aufruf aus, um die Bücher zu laden.
    */
   ngOnInit(): void {
     // API-Aufruf, um die Bücher zu laden
-    this.readservice.getBuecher();
+    this.readservice.getBuecherMitBild();
   }
   /**
    * Zeigt das Modal an, indem es den selectedBuchSignal mit dem uebergebenen Buch setzt
