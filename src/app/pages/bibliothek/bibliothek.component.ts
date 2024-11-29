@@ -1,6 +1,5 @@
 import {
   Component,
-  effect,
   OnInit,
   signal,
 } from '@angular/core';
@@ -21,7 +20,6 @@ import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-ale
   providers: [ReadService],
 })
 export class BibliothekComponent implements OnInit {
-  readonly error = 'Es konnte kein Buch gefunden werden';
   readonly selectedBuchSignal = signal<Buch | undefined>(undefined);
 
   /**
@@ -39,8 +37,11 @@ export class BibliothekComponent implements OnInit {
   get loading() {
     return this.readservice.loading;
   }
-  get showError() {
-    return this.readservice.showError;
+  get errorShow() {
+    return this.readservice.error().show;
+  }
+  get errorMessage() {
+    return this.readservice.error().message;
   }
 
   /**

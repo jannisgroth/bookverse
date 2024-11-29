@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, signal, WritableSignal } from '@angular/core';
 import { Buch } from '../../../models/buch.model';
 import { ReadService } from '../../../../core/api/http-read.service';
 import { NgFor, NgIf } from '@angular/common';
@@ -11,5 +11,5 @@ import { NgFor, NgIf } from '@angular/common';
   styleUrl: './carousel.component.css',
 })
 export class CarouselComponent {
-  @Input() buecher: Buch[] = [];
+  @Input() buecher: WritableSignal<Buch[]> = signal<Buch[]>([]);
 }
