@@ -1,3 +1,9 @@
 <div>
-    <app-carousel [buecher]="bucher"></app-carousel>
+    <app-error-alert *ngIf="errorBilderShow" message="{{ errorBilderMessage }}"></app-error-alert>
+    <app-error-alert *ngIf="errorShow" message="{{ errorMessage }}"></app-error-alert>
+
+    <span *ngIf="loading()"
+        class="loading loading-spinner loading-lg text-primary flex items-center justify-center m-auto">
+    </span>
+    <app-carousel *ngIf="!loading()" [buecher]="buecher"></app-carousel>
 </div>

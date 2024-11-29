@@ -2,6 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { NGXLogger } from 'ngx-logger';
 import { Buch } from '../../shared/models/buch.model';
+import { shouldUseFlatConfig } from 'eslint/use-at-your-own-risk';
 
 @Injectable()
 export class ReadService {
@@ -9,7 +10,9 @@ export class ReadService {
 
   readonly buecher = signal<Buch[]>([]);
   readonly loading = signal<boolean>(true);
-  readonly showError = signal<boolean>(false);
+  readonly error = signal<{ show: boolean, message: string }>({ show: false, message: '' });
+  readonly errorBilder = signal<{ show: boolean, message: string }>({ show: false, message: '' });
+
   constructor(
     private readonly http: HttpClient,
     private readonly logger: NGXLogger
@@ -36,14 +39,20 @@ export class ReadService {
         //alert('keine Bücher gefunden!');
         this.buecher.set([]); // Leere Liste im Fehlerfall
         this.loading.set(false);
-        this.showError.set(true);
+        this.error.set({ show: true, message: 'Es konnten keine Buecher geladen werden!' })
         setTimeout(() => {
-          this.showError.set(false);
+          this.error.set({ show: false, message: '' });
         }, 3000);
       },
     });
   }
 
+  /**
+   * Lädt die Bild-Dateien fuer die uebergebenen Bücher.
+   * Wenn ein Buch kein Bild hat, wird die Variable buchOhneFile auf true gesetzt.
+   * Wenn am Ende mindestens ein Buch kein Bild hat, wird eine Fehlermeldung angezeigt.
+   * @param buecher Die Bücher, fuer die die Bild-Dateien geladen werden sollen.
+   */
   async getBuecherMitFile(buecher: Buch[]) {
     const loadFiles = buecher.map(async (buch) => {
       const url = buch._links.self.href;
@@ -53,9 +62,22 @@ export class ReadService {
       if (file) {
         buch.file = URL.createObjectURL(file);
         this.logger.debug('Bild für Buch geladen:', buch.file);
+      } else {
+        buch.file = undefined;
       }
+
     });
     await Promise.all(loadFiles);
+
+    const fileExist = buecher.some(buch => buch.file !== undefined);
+
+    if (!fileExist) {
+      this.errorBilder.set({ show: true, message: 'Es konnten keine Bilder geladen werden!' });
+      setTimeout(() => {
+        this.errorBilder.set({ show: false, message: '' });
+      }, 3000);
+    }
+
   }
 
   getFile(id: number): Promise<Blob | undefined> {
