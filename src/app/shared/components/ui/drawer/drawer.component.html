@@ -1,22 +1,20 @@
 <div class="drawer">
-  <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+  <input [id]="drawerId" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content">
     <!-- Page content here -->
-    <label for="my-drawer" class="w-9 h-9 rounded-full flex items-center justify-center cursor-pointer">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-        class="w-full h-full text-primary">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-      </svg>
+    <label for="{{ drawerId }}" class="w-9 h-9 rounded-full flex items-center justify-center cursor-pointer">
+      <ng-container *ngIf="iconTemplate; else defaultIcon">
+        <ng-container *ngTemplateOutlet="iconTemplate"></ng-container>
+      </ng-container>
+      <ng-template #defaultIcon>
+        <span>ICon fehlt</span>
+      </ng-template>
     </label>
   </div>
   <div class="drawer-side z-50 rounded-lg">
-    <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+    <label for="{{ drawerId }}" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-      <!-- Sidebar content here -->
-      <li><a>Name: </a></li>
-      <li><a>Email: </a></li>
-      <li><a>Rolle: </a></li>
+      <ng-content></ng-content>
     </ul>
   </div>
 </div>

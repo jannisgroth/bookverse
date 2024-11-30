@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { NGXLogger } from 'ngx-logger';
 import { Buch } from '../../shared/models/buch.model';
-import { shouldUseFlatConfig } from 'eslint/use-at-your-own-risk';
+
 
 @Injectable()
 export class ReadService {
