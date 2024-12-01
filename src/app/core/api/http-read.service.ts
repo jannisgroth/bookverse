@@ -18,11 +18,7 @@ export class ReadService {
     private readonly logger: NGXLogger
   ) { } // Dependency injection
 
-  /**
-   * Fetches a list of books from the REST API and updates the internal state.
-   * On a successful response, it sets the fetched books and logs a debug message.
-   * On an error, it logs the error, sets an empty book list, and displays an error message temporarily.
-   */
+
   getBuecherMitBild() {
     this.http.get<{ _embedded: { buecher: Buch[] } }>(`${this.restUrl}`).subscribe({
       next: response => {
