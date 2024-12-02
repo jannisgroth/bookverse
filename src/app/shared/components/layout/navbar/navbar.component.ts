@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
+  NavigationEnd,
   Router,
   RouterLink,
   RouterLinkActive,
@@ -28,11 +29,13 @@ import { SuchleisteComponent } from '../../ui/suchleiste/suchleiste.component';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
-  showSearchBar = false;
+  showSearchBar = signal<boolean>(false);
 
   constructor(private router: Router) {
-    this.router.events.subscribe(() => {
-      this.showSearchBar = this.router.url === '/bibliothek';
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.showSearchBar.set(this.router.url === '/bibliothek');
+      }
     });
   }
 }

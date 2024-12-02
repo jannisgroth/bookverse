@@ -1,5 +1,6 @@
 import {
   Component,
+  effect,
   OnInit,
   signal,
 } from '@angular/core';
@@ -21,7 +22,6 @@ import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-ale
 })
 export class BibliothekComponent implements OnInit {
   readonly selectedBuchSignal = signal<Buch | undefined>(undefined);
-
   /**
    * Erzeugt ein neues BibliothekComponent
    * @param readservice Der Service, der die API-Aufrufe durchführt
