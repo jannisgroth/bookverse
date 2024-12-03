@@ -1,16 +1,11 @@
-import {
-  Component,
-  effect,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, effect, OnInit, signal } from '@angular/core';
 import { CardComponent } from '../../shared/components/ui/card/card.component';
 import { ReadService } from '../../core/api/http-read.service';
-import { NGXLogger } from 'ngx-logger';
 import { Buch } from '../../shared/models/buch.model';
 import { NgFor, NgIf } from '@angular/common';
 import { ModalComponent } from '../../shared/components/ui/modal/modal.component';
 import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-alert/error-alert.component';
+import { LoggerService } from '../../core/logging/logger.service';
 
 @Component({
   standalone: true,
@@ -29,8 +24,8 @@ export class BibliothekComponent implements OnInit {
    */
   constructor(
     private readservice: ReadService,
-    private logger: NGXLogger
-  ) { }
+    private logger: LoggerService
+  ) {}
   get buecher() {
     return this.readservice.buecher;
   }
