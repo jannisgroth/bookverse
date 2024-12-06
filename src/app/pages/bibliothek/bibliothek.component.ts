@@ -1,4 +1,4 @@
-import { Component, effect, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, OnInit, signal } from '@angular/core';
 import { CardComponent } from '../../shared/components/ui/card/card.component';
 import { ReadService } from '../../core/api/http-read.service';
 import { Buch } from '../../shared/models/buch.model';
@@ -17,6 +17,7 @@ import { LoggerService } from '../../core/logging/logger.service';
 })
 export class BibliothekComponent implements OnInit {
   readonly selectedBuchSignal = signal<Buch | undefined>(undefined);
+
   /**
    * Erzeugt ein neues BibliothekComponent
    * @param readservice Der Service, der die API-Aufrufe durchführt
@@ -56,5 +57,38 @@ export class BibliothekComponent implements OnInit {
     this.selectedBuchSignal.set(buch);
     const modal: HTMLDialogElement = document.querySelector('#modal')!;
     if (modal) modal.showModal();
+  }
+
+  /**
+   * Sortiert die Bücherliste.
+   * Mögliche Sortierkriterien: isbn, rating, preis, rabatt, datum
+   * TODO: Titel implementieren
+   * @param sortierkriterium Das Sortierkriterium, nach dem das Buch sortiert werden soll
+   * @param rangfolge gibt an, ob auf- oder absteigend sortiert werden soll
+   */
+  buecherSortierung({ sortierkriterium = 'isbn', rangfolge = 'aufsteigend' }) {
+    console.log(sortierkriterium);
+    this.buecher.update(buecher => {
+      return [...buecher].sort((a, b) => {
+        const aWert = a[sortierkriterium as keyof Buch];
+        const bWert = b[sortierkriterium as keyof Buch];
+        let vergleichswert = 0;
+
+        switch (typeof aWert) {
+          case 'string':
+            // Vergleich für Strings
+            vergleichswert = (aWert as string).localeCompare(bWert as string);
+            break;
+          case 'number':
+            // Vergleich für Zahlen
+            vergleichswert = (aWert as number) - (bWert as number);
+            break;
+          default:
+            // Für unbekannte Typen keine Sortierung
+            vergleichswert = 0;
+        }
+        return rangfolge === 'aufsteigend' ? vergleichswert : -vergleichswert;
+      });
+    });
   }
 }
