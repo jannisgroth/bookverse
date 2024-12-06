@@ -71,9 +71,10 @@ export class BibliothekComponent implements OnInit {
 
     if (
       !['isbn', 'rating', 'preis', 'rabatt', 'datum'].includes(sortierkriterium)
-    )
+    ) {
       this.logger.error('Ungültiges Sortierkriterium: {}', sortierkriterium);
-    return;
+      return;
+    }
 
     this.buecher.update(buecher => {
       return [...buecher].sort((a, b) => {
