@@ -67,7 +67,14 @@ export class BibliothekComponent implements OnInit {
    * @param rangfolge gibt an, ob auf- oder absteigend sortiert werden soll
    */
   buecherSortierung({ sortierkriterium = 'isbn', rangfolge = 'aufsteigend' }) {
-    console.log(sortierkriterium);
+    this.logger.debug('Sortierkriterium: {}', sortierkriterium);
+
+    if (
+      !['isbn', 'rating', 'preis', 'rabatt', 'datum'].includes(sortierkriterium)
+    )
+      this.logger.error('Ungültiges Sortierkriterium: {}', sortierkriterium);
+    return;
+
     this.buecher.update(buecher => {
       return [...buecher].sort((a, b) => {
         const aWert = a[sortierkriterium as keyof Buch];
