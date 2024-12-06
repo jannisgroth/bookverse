@@ -1,8 +1,45 @@
 <div class="m-4">
-  <app-error-alert *ngIf="errorShow" message="{{ errorMessage }}"></app-error-alert>
-  <span *ngIf="loading()"
+  <app-error-alert
+    *ngIf="errorShow"
+    message="{{ errorMessage }}"></app-error-alert>
+  <span
+    *ngIf="loading()"
     class="loading loading-spinner loading-lg text-primary flex items-center justify-center m-auto">
   </span>
+  <!-- AB HIER IST MEIN ZEUGS (Maxim) -->
+  <div
+    tabindex="0"
+    class="collapse collapse-arrow border-base-300 bg-base-200 border">
+    <div class="collapse-title text-xl font-medium">Sortieren</div>
+    <div class="collapse-content">
+      <select class="select select-bordered w-full max-w-xs">
+        <option disabled selected>Sortierkriterien:</option>
+        <option>ISBN</option>
+        <option>Rating</option>
+        <option>Preis</option>
+        <option>Rabatt</option>
+        <option>Datum</option>
+      </select>
+      <label class="swap swap-rotate">
+        <!-- Aufsteigend -->
+        <input type="checkbox" />
+        <svg
+          class="swap-on fill-current h-5 w-5"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24">
+          <path d="M5 15l7-7 7 7" />
+        </svg>
+        <!-- Absteigend -->
+        <svg
+          class="swap-off fill-current h-5 w-5"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24">
+          <path d="M19 9l-7 7-7-7" />
+        </svg>
+      </label>
+    </div>
+  </div>
+  <!-- BIS HIER IST MEIN ZEUGS (Maxim) -->
   <div *ngIf="!loading()">
     <div class="grid grid-cols-3 gap-8 auto-rows-fr">
       <div *ngFor="let buch of buecher()">
@@ -10,5 +47,8 @@
       </div>
     </div>
   </div>
-  <app-modal [ausgewähltesBuch]="selectedBuchSignal()" [buch]="selectedBuchSignal()" #modal></app-modal>
+  <app-modal
+    [ausgewähltesBuch]="selectedBuchSignal()"
+    [buch]="selectedBuchSignal()"
+    #modal></app-modal>
 </div>
