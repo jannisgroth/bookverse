@@ -18,7 +18,7 @@ import { LoggerService } from '../../core/logging/logger.service';
 export class BibliothekComponent implements OnInit {
   readonly selectedBuchSignal = signal<Buch | undefined>(undefined);
 
-  sortierkriterium: keyof Buch = 'isbn';
+  sortierkriterium: keyof Buch = 'titel';
   rangfolge: 'aufsteigend' | 'absteigend' = 'aufsteigend';
 
   /**
