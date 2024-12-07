@@ -68,6 +68,7 @@ describe('BibliothekComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  // TODO : Tests konfigurieren
   it('sollte Bücher nach Titel aufsteigend sortieren', () => {
     spyOn(component.buecher, 'update').and.callFake(callback => {
       const sortedBuecher = callback(buecher);
