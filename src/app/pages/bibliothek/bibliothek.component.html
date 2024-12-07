@@ -6,7 +6,6 @@
     *ngIf="loading()"
     class="loading loading-spinner loading-lg text-primary flex items-center justify-center m-auto">
   </span>
-  <!-- AB HIER IST MEIN ZEUGS (Maxim) -->
   <div class="flex items-center gap-4">
     <!-- Sortierkriterien -->
     <select
@@ -43,7 +42,6 @@
   <div class="flex w-full flex-col">
     <div class="divider">Bibliothek</div>
   </div>
-  <!-- BIS HIER IST MEIN ZEUGS (Maxim) -->
   <div *ngIf="!loading()">
     <div class="grid grid-cols-3 gap-8 auto-rows-fr">
       <div *ngFor="let buch of buecher()">
