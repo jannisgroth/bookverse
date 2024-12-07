@@ -64,24 +64,26 @@ export class BibliothekComponent implements OnInit {
 
   /**
    * Sortiert die Bücherliste.
-   * Mögliche Sortierkriterien: isbn, rating, preis, rabatt, datum
-   * TODO: Titel implementieren
-   * @param sortierkriterium Das Sortierkriterium, nach dem das Buch sortiert werden soll
-   * @param rangfolge gibt an, ob auf- oder absteigend sortiert werden soll
+   * @param target EventTarget vom Drop Down Menü, mit welchem man das
+   * Sortierkriterium auswählt
+   * oder null, falls man nur auf/absteigend ändert.
+   * Mögliche Sortierkriterien: isbn, rating, preis, rabatt, datum, titel
    */
   buecherSortierung(target: EventTarget | null) {
     const sortierkriterium =
       ((target as HTMLSelectElement)?.value as keyof Buch) ??
       this.sortierkriterium;
     if (
-      !['isbn', 'rating', 'preis', 'rabatt', 'datum'].includes(sortierkriterium)
+      !['isbn', 'rating', 'preis', 'rabatt', 'datum', 'titel'].includes(
+        sortierkriterium
+      )
     ) {
       this.logger.error('Ungültiges Sortierkriterium: {}', sortierkriterium);
       return;
     }
     this.sortierkriterium = sortierkriterium;
 
-    this.logger.debug(
+    this.logger.info(
       'Sortierung mit Sortierkriterium: {} und Rangfolge: {}',
       sortierkriterium,
       this.rangfolge
@@ -89,8 +91,14 @@ export class BibliothekComponent implements OnInit {
 
     this.buecher.update(buecher => {
       return [...buecher].sort((a, b) => {
-        const aWert = a[sortierkriterium as keyof Buch];
-        const bWert = b[sortierkriterium as keyof Buch];
+        const aWert =
+          sortierkriterium === 'titel'
+            ? a.titel?.titel
+            : a[sortierkriterium as keyof Buch];
+        const bWert =
+          sortierkriterium === 'titel'
+            ? b.titel?.titel
+            : b[sortierkriterium as keyof Buch];
         let vergleichswert = 0;
 
         switch (typeof aWert) {
