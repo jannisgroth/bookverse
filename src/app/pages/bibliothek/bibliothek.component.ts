@@ -18,6 +18,9 @@ import { LoggerService } from '../../core/logging/logger.service';
 export class BibliothekComponent implements OnInit {
   readonly selectedBuchSignal = signal<Buch | undefined>(undefined);
 
+  sortierkriterium: keyof Buch = 'isbn';
+  rangfolge: 'aufsteigend' | 'absteigend' = 'aufsteigend';
+
   /**
    * Erzeugt ein neues BibliothekComponent
    * @param readservice Der Service, der die API-Aufrufe durchführt
@@ -66,15 +69,23 @@ export class BibliothekComponent implements OnInit {
    * @param sortierkriterium Das Sortierkriterium, nach dem das Buch sortiert werden soll
    * @param rangfolge gibt an, ob auf- oder absteigend sortiert werden soll
    */
-  buecherSortierung({ sortierkriterium = 'isbn', rangfolge = 'aufsteigend' }) {
-    this.logger.debug('Sortierkriterium: {}', sortierkriterium);
-
+  buecherSortierung(target: EventTarget | null) {
+    const sortierkriterium =
+      ((target as HTMLSelectElement)?.value as keyof Buch) ??
+      this.sortierkriterium;
     if (
       !['isbn', 'rating', 'preis', 'rabatt', 'datum'].includes(sortierkriterium)
     ) {
       this.logger.error('Ungültiges Sortierkriterium: {}', sortierkriterium);
       return;
     }
+    this.sortierkriterium = sortierkriterium;
+
+    this.logger.debug(
+      'Sortierung mit Sortierkriterium: {} und Rangfolge: {}',
+      sortierkriterium,
+      this.rangfolge
+    );
 
     this.buecher.update(buecher => {
       return [...buecher].sort((a, b) => {
@@ -95,8 +106,16 @@ export class BibliothekComponent implements OnInit {
             // Für unbekannte Typen keine Sortierung
             vergleichswert = 0;
         }
-        return rangfolge === 'aufsteigend' ? vergleichswert : -vergleichswert;
+        return this.rangfolge === 'aufsteigend'
+          ? vergleichswert
+          : -vergleichswert;
       });
     });
+  }
+
+  buecherRangfolge(): void {
+    this.rangfolge =
+      this.rangfolge === 'aufsteigend' ? 'absteigend' : 'aufsteigend';
+    this.buecherSortierung(null);
   }
 }

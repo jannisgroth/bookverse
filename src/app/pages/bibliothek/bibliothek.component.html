@@ -9,8 +9,10 @@
   <!-- AB HIER IST MEIN ZEUGS (Maxim) -->
   <div class="flex items-center gap-4">
     <!-- Sortierkriterien -->
-    <select class="select select-bordered w-full max-w-xs">
-      <option selected disabled hidden>Sortieren</option>
+    <select
+      class="select select-bordered w-full max-w-xs"
+      (change)="buecherSortierung($event.target)">
+      <option selected disabled hidden value="">Sortieren</option>
       <option value="isbn">ISBN</option>
       <option value="rating">Rating</option>
       <option value="preis">Preis</option>
@@ -21,19 +23,19 @@
     <!-- Sortierreihenfolge -->
     <label class="swap swap-rotate">
       <!-- Aufsteigend -->
-      <input type="checkbox" id="sortOrder" />
+      <input type="checkbox" (change)="buecherRangfolge()" />
       <svg
         class="swap-on fill-current h-6 w-6"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24">
-        <path d="M5 15l7-7 7 7" />
+        <path d="M19 9l-7 7-7-7" />
       </svg>
       <!-- Absteigend -->
       <svg
         class="swap-off fill-current h-6 w-6"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24">
-        <path d="M19 9l-7 7-7-7" />
+        <path d="M5 15l7-7 7 7" />
       </svg>
     </label>
   </div>
