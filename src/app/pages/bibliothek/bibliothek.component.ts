@@ -121,6 +121,11 @@ export class BibliothekComponent implements OnInit {
     });
   }
 
+  /**
+   * Wechselt die Reihenfolge der (sortierten) Bücherliste zu auf/absteigend
+   * Ruft die Funktion buecherSortierung mit null als Parameter auf, dann wird
+   * das aktuell gespeicherte Sortierkriterium gewählt
+   */
   buecherRangfolge(): void {
     this.rangfolge =
       this.rangfolge === 'aufsteigend' ? 'absteigend' : 'aufsteigend';
