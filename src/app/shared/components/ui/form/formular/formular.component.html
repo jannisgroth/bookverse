@@ -1,4 +1,4 @@
-<form class="grid grid-cols-1 gap-8" [formGroup]="buchForm">
+<form class="flex flex-col gap-10" [formGroup]="buchForm">
     <!-- Row 1 -->
     <div class="form-row">
         <div class="form-col">
@@ -49,11 +49,24 @@
     </div>
 
     <!-- Row 5 -->
-    <div class="grid grid-flow-col auto-cols-max space-x-20">
-        <div class="form-col">
-            <app-select></app-select>
+    <div class="form-row">
+        <div class="form-control w-full my-auto">
+            <div class="flex items-center space-x-10">
+                <label class="flex items-center space-x-2">
+                    <input type="radio" name="radio-2" class="radio radio-primary" checked="checked" />
+                    <span class="label-text text-lg font-semibold">EPUB</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input type="radio" name="radio-2" class="radio radio-primary" />
+                    <span class="label-text text-lg font-semibold">HARDCOVER</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input type="radio" name="radio-2" class="radio radio-primary" />
+                    <span class="label-text text-lg font-semibold">PAPERBACK</span>
+                </label>
+            </div>
         </div>
-        <div class="form-control min-w-fit">
+        <div class="form-control w-full my-auto">
             <app-upload-input></app-upload-input>
         </div>
         <div class="form-control w-full my-auto">

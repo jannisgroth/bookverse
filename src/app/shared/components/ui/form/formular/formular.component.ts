@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { InputComponent } from "../input/input.component";
-import { SelectComponent } from "../select/select.component";
 import { UploadInputComponent } from "../upload-input/upload-input.component";
 import { RatingComponent } from "../rating/rating.component";
 import { CheckboxComponent } from "../checkbox/checkbox.component";
@@ -8,7 +7,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
 @Component({
   selector: 'app-formular',
-  imports: [InputComponent, SelectComponent, UploadInputComponent, RatingComponent, CheckboxComponent, ReactiveFormsModule],
+  imports: [InputComponent, UploadInputComponent, RatingComponent, CheckboxComponent, ReactiveFormsModule],
   templateUrl: './formular.component.html',
   styleUrl: './formular.component.css'
 })
