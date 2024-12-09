@@ -93,4 +93,15 @@ export class ReadService {
     });
   }
 
+  createBuch(buch: Buch) {
+    this.http.post(this.restUrl, buch).subscribe({
+      next: (response) => {
+        alert('Buch wurde erfolgreich angelegt!');
+      },
+      error: (err) => {
+        alert('fehler beim anlegen des buches');
+      }
+    })
+  }
+
 }
