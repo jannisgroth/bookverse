@@ -3,7 +3,7 @@ import { CarouselComponent } from '../../shared/components/ui/carousel/carousel.
 import { ReadService } from '../../core/api/http-read.service';
 import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-alert/error-alert.component';
 import { NgIf } from '@angular/common';
-import { NGXLogger } from 'ngx-logger';
+import { LoggerService } from '../../core/logging/logger.service';
 
 @Component({
   selector: 'app-overview',
@@ -15,8 +15,8 @@ import { NGXLogger } from 'ngx-logger';
 export class OverviewComponent implements OnInit {
   constructor(
     private readservice: ReadService,
-    private logger: NGXLogger
-  ) { }
+    private logger: LoggerService
+  ) {}
   get buecher() {
     return this.readservice.buecher;
   }
