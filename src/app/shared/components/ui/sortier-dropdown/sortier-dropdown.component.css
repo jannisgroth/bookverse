@@ -1,0 +1,4 @@
+select:focus {
+  outline: none; /* Entfernt den Fokusrahmen */
+  border: none; /* Entfernt die Umrandung */
+}

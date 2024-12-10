@@ -16,7 +16,6 @@ export class SortierDropdownComponent {
       'art' | 'lieferbar' | 'homepage' | 'schlagwoerter' | '_links' | 'file'
     >
   >;
-  @Input() rangfolge!: WritableSignal<'aufsteigend' | 'absteigend'>;
 
   readonly sortierkriterien = [
     'isbn',
@@ -41,16 +40,11 @@ export class SortierDropdownComponent {
   buecherSortierung(target: EventTarget) {
     const sortierkriterium = (target as HTMLSelectElement).value;
     if (!this.sortierkriterien.includes(sortierkriterium)) {
-      this.logger.error('Ungültiges Sortierkriterium: {}', sortierkriterium);
+      this.logger.error(`Ungültiges Sortierkriterium: ${sortierkriterium}`);
       return;
     }
     this.sortierkriterium.set(
       sortierkriterium as ReturnType<typeof this.sortierkriterium>
-    );
-    this.logger.info(
-      'Sortierung mit Sortierkriterium: {} und Rangfolge: {}',
-      this.sortierkriterium,
-      this.rangfolge()
     );
     this.sortierservice.buecherUpdate();
   }
