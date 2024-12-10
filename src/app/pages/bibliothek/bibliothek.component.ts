@@ -6,31 +6,25 @@ import { NgFor, NgIf } from '@angular/common';
 import { ModalComponent } from '../../shared/components/ui/modal/modal.component';
 import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-alert/error-alert.component';
 import { LoggerService } from '../../core/logging/logger.service';
+import { SortierServiceComponent } from '../../shared/components/ui/sortier-service/sortier-service.component';
 
 @Component({
   standalone: true,
   selector: 'app-bibliothek',
-  imports: [CardComponent, NgFor, NgIf, ModalComponent, ErrorAlertComponent],
+  imports: [
+    CardComponent,
+    NgFor,
+    NgIf,
+    ModalComponent,
+    ErrorAlertComponent,
+    SortierServiceComponent,
+  ],
   templateUrl: './bibliothek.component.html',
   styleUrl: './bibliothek.component.css',
   providers: [ReadService],
 })
 export class BibliothekComponent implements OnInit {
   readonly selectedBuchSignal = signal<Buch | undefined>(undefined);
-
-  readonly sortierkriterien = [
-    'isbn',
-    'rating',
-    'preis',
-    'rabatt',
-    'datum',
-    'titel',
-  ];
-  sortierkriterium: keyof Omit<
-    Buch,
-    'art' | 'lieferbar' | 'homepage' | 'schlagwoerter' | '_links' | 'file'
-  > = 'titel';
-  rangfolge: 'aufsteigend' | 'absteigend' = 'aufsteigend';
 
   /**
    * Erzeugt ein neues BibliothekComponent
@@ -71,76 +65,5 @@ export class BibliothekComponent implements OnInit {
     this.selectedBuchSignal.set(buch);
     const modal: HTMLDialogElement = document.querySelector('#modal')!;
     if (modal) modal.showModal();
-  }
-
-  /**
-   * Setzt das Sortierkriterium und ruft die Funktion zum Updaten der Bücherliste auf.
-   * @param target EventTarget vom Drop Down Menü, mit welchem man das
-   * Sortierkriterium auswählt.
-   * Mögliche Sortierkriterien: isbn, rating, preis, rabatt, datum, titel
-   */
-  buecherSortierung(target: EventTarget) {
-    const sortierkriterium = (target as HTMLSelectElement).value;
-    if (!this.sortierkriterien.includes(sortierkriterium)) {
-      this.logger.error('Ungültiges Sortierkriterium: {}', sortierkriterium);
-      return;
-    }
-    this.sortierkriterium = sortierkriterium as typeof this.sortierkriterium;
-
-    this.logger.info(
-      'Sortierung mit Sortierkriterium: {} und Rangfolge: {}',
-      this.sortierkriterium,
-      this.rangfolge
-    );
-    this.buecherUpdate();
-  }
-
-  buecherUpdate() {
-    this.buecher.update(buecher => {
-      // Spread Operator (...) ab ES2015
-      return [...buecher].sort((erstesBuch, zweitesBuch) => {
-        const erstesBuchWert =
-          this.sortierkriterium === 'titel'
-            ? erstesBuch.titel?.titel
-            : erstesBuch[this.sortierkriterium];
-
-        const zweitesBuchWert =
-          this.sortierkriterium === 'titel'
-            ? zweitesBuch.titel?.titel
-            : zweitesBuch[this.sortierkriterium];
-
-        const vergleichswert = (() => {
-          switch (typeof erstesBuchWert) {
-            case 'string':
-              // Vergleich für Strings
-              return erstesBuchWert.localeCompare(
-                zweitesBuchWert as typeof erstesBuchWert
-              );
-            case 'number':
-              // Vergleich für Zahlen
-              return (
-                erstesBuchWert - (zweitesBuchWert as typeof erstesBuchWert)
-              );
-            default:
-              // Für unbekannte Typen keine Sortierung
-              return 0;
-          }
-        })();
-
-        return this.rangfolge === 'aufsteigend'
-          ? vergleichswert
-          : -vergleichswert;
-      });
-    });
-  }
-
-  /**
-   * Wechselt die Reihenfolge der (sortierten) Bücherliste zu auf/absteigend
-   * ruft die Funktion buecherUpdate() auf
-   */
-  buecherRangfolge() {
-    this.rangfolge =
-      this.rangfolge === 'aufsteigend' ? 'absteigend' : 'aufsteigend';
-    this.buecherUpdate();
   }
 }

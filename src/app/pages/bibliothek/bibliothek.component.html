@@ -6,39 +6,8 @@
     *ngIf="loading()"
     class="loading loading-spinner loading-lg text-primary flex items-center justify-center m-auto">
   </span>
-  <div class="flex items-center gap-4">
-    <!-- Sortierkriterien -->
-    <select
-      class="select select-bordered w-full max-w-xs"
-      (change)="buecherSortierung($event.target!)">
-      <option selected disabled hidden>Sortieren</option>
-      <option value="isbn">ISBN</option>
-      <option value="rating">Rating</option>
-      <option value="preis">Preis</option>
-      <option value="rabatt">Rabatt</option>
-      <option value="datum">Datum</option>
-      <option value="titel">Titel</option>
-    </select>
-
-    <!-- Sortierreihenfolge -->
-    <label class="swap swap-rotate">
-      <!-- Aufsteigend -->
-      <input type="checkbox" (change)="buecherRangfolge()" />
-      <svg
-        class="swap-on fill-current h-6 w-6"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24">
-        <path d="M19 9l-7 7-7-7" />
-      </svg>
-      <!-- Absteigend -->
-      <svg
-        class="swap-off fill-current h-6 w-6"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24">
-        <path d="M5 15l7-7 7 7" />
-      </svg>
-    </label>
-  </div>
+  <!-- hier sortierkomponente -->
+  <app-sortier-service></app-sortier-service>
   <div class="flex w-full flex-col">
     <div class="divider">Bibliothek</div>
   </div>

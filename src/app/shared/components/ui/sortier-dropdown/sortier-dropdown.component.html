@@ -1,0 +1,12 @@
+<!-- Sortierkriterien -->
+<select
+  class="select select-bordered w-full max-w-xs"
+  (change)="buecherSortierung($event.target!)">
+  <option selected disabled hidden>Sortieren</option>
+  <option value="isbn">ISBN</option>
+  <option value="rating">Rating</option>
+  <option value="preis">Preis</option>
+  <option value="rabatt">Rabatt</option>
+  <option value="datum">Datum</option>
+  <option value="titel">Titel</option>
+</select>
