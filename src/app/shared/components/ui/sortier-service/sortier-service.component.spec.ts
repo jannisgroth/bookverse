@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SortierServiceComponent } from './sortier-service.component';
 
-describe('SortierenComponent', () => {
+describe('SortierServiceComponent', () => {
   let component: SortierServiceComponent;
   let fixture: ComponentFixture<SortierServiceComponent>;
 
