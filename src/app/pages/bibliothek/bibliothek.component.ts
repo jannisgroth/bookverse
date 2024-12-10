@@ -26,7 +26,10 @@ export class BibliothekComponent implements OnInit {
     'datum',
     'titel',
   ];
-  sortierkriterium: keyof Buch = 'titel';
+  sortierkriterium: keyof Omit<
+    Buch,
+    'art' | 'lieferbar' | 'homepage' | 'schlagwoerter' | 'links' | 'file'
+  > = 'titel';
   rangfolge: 'aufsteigend' | 'absteigend' = 'aufsteigend';
 
   /**
@@ -71,53 +74,56 @@ export class BibliothekComponent implements OnInit {
   }
 
   /**
-   * Sortiert die Bücherliste.
+   * Setzt das Sortierkriterium und ruft die Funktion zum Updaten der Bücherliste auf.
    * @param target EventTarget vom Drop Down Menü, mit welchem man das
-   * Sortierkriterium auswählt
-   * oder null, falls man nur auf/absteigend ändert.
+   * Sortierkriterium auswählt.
    * Mögliche Sortierkriterien: isbn, rating, preis, rabatt, datum, titel
    */
-  buecherSortierung(target: EventTarget | undefined) {
-    const sortierkriterium =
-      ((target as HTMLSelectElement).value as keyof Buch) ??
-      this.sortierkriterium;
+  buecherSortierung(target: EventTarget) {
+    const sortierkriterium = (target as HTMLSelectElement).value;
     if (!this.sortierkriterien.includes(sortierkriterium)) {
       this.logger.error('Ungültiges Sortierkriterium: {}', sortierkriterium);
       return;
     }
-    this.sortierkriterium = sortierkriterium;
+    this.sortierkriterium = sortierkriterium as typeof this.sortierkriterium;
 
     this.logger.info(
       'Sortierung mit Sortierkriterium: {} und Rangfolge: {}',
       sortierkriterium,
       this.rangfolge
     );
+    this.buecherUpdate();
+  }
 
+  buecherUpdate() {
     this.buecher.update(buecher => {
-      return [...buecher].sort((buchA, buchB) => {
-        const aWert =
-          sortierkriterium === 'titel'
-            ? buchA.titel?.titel
-            : buchA[sortierkriterium as keyof Buch];
-        const bWert =
-          sortierkriterium === 'titel'
-            ? buchB.titel?.titel
-            : buchB[sortierkriterium as keyof Buch];
-        let vergleichswert = 0;
+      return [...buecher].sort((erstesBuch, zweitesBuch) => {
+        const erstesBuchWert =
+          this.sortierkriterium === 'titel'
+            ? erstesBuch.titel?.titel
+            : erstesBuch[this.sortierkriterium as keyof Buch];
 
-        switch (typeof aWert) {
-          case 'string':
-            // Vergleich für Strings
-            vergleichswert = (aWert as string).localeCompare(bWert as string);
-            break;
-          case 'number':
-            // Vergleich für Zahlen
-            vergleichswert = (aWert as number) - (bWert as number);
-            break;
-          default:
-            // Für unbekannte Typen keine Sortierung
-            vergleichswert = 0;
-        }
+        const zweitesBuchWert =
+          this.sortierkriterium === 'titel'
+            ? zweitesBuch.titel?.titel
+            : zweitesBuch[this.sortierkriterium as keyof Buch];
+
+        const vergleichswert = (() => {
+          switch (typeof erstesBuchWert) {
+            case 'string':
+              // Vergleich für Strings
+              return (erstesBuchWert as string).localeCompare(
+                zweitesBuchWert as string
+              );
+            case 'number':
+              // Vergleich für Zahlen
+              return (erstesBuchWert as number) - (zweitesBuchWert as number);
+            default:
+              // Für unbekannte Typen keine Sortierung
+              return 0;
+          }
+        })();
+
         return this.rangfolge === 'aufsteigend'
           ? vergleichswert
           : -vergleichswert;
@@ -127,12 +133,11 @@ export class BibliothekComponent implements OnInit {
 
   /**
    * Wechselt die Reihenfolge der (sortierten) Bücherliste zu auf/absteigend
-   * Ruft die Funktion buecherSortierung mit null als Parameter auf, dann wird
-   * das aktuell gespeicherte Sortierkriterium gewählt
+   * ruft die Funktion buecherUpdate() auf
    */
   buecherRangfolge() {
     this.rangfolge =
       this.rangfolge === 'aufsteigend' ? 'absteigend' : 'aufsteigend';
-    this.buecherSortierung(undefined);
+    this.buecherUpdate();
   }
 }
