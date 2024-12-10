@@ -97,6 +97,7 @@ export class BibliothekComponent implements OnInit {
 
   buecherUpdate() {
     this.buecher.update(buecher => {
+      // Spread Operator (...) ab ES2015
       return [...buecher].sort((erstesBuch, zweitesBuch) => {
         const erstesBuchWert =
           this.sortierkriterium === 'titel'
