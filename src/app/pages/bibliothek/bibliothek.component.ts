@@ -113,6 +113,7 @@ export class BibliothekComponent implements OnInit {
           switch (typeof erstesBuchWert) {
             case 'string':
               // Vergleich für Strings
+              // localCompare aus lib.es2020.string.d.ts
               return erstesBuchWert.localeCompare(
                 zweitesBuchWert as typeof erstesBuchWert
               );
