@@ -89,7 +89,7 @@ export class BibliothekComponent implements OnInit {
 
     this.logger.info(
       'Sortierung mit Sortierkriterium: {} und Rangfolge: {}',
-      sortierkriterium,
+      this.sortierkriterium,
       this.rangfolge
     );
     this.buecherUpdate();
