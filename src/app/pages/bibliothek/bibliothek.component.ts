@@ -18,6 +18,14 @@ import { LoggerService } from '../../core/logging/logger.service';
 export class BibliothekComponent implements OnInit {
   readonly selectedBuchSignal = signal<Buch | undefined>(undefined);
 
+  readonly sortierkriterien = [
+    'isbn',
+    'rating',
+    'preis',
+    'rabatt',
+    'datum',
+    'titel',
+  ];
   sortierkriterium: keyof Buch = 'titel';
   rangfolge: 'aufsteigend' | 'absteigend' = 'aufsteigend';
 
@@ -69,15 +77,11 @@ export class BibliothekComponent implements OnInit {
    * oder null, falls man nur auf/absteigend ändert.
    * Mögliche Sortierkriterien: isbn, rating, preis, rabatt, datum, titel
    */
-  buecherSortierung(target: EventTarget | null) {
+  buecherSortierung(target: EventTarget | undefined) {
     const sortierkriterium =
-      ((target as HTMLSelectElement)?.value as keyof Buch) ??
+      ((target as HTMLSelectElement).value as keyof Buch) ??
       this.sortierkriterium;
-    if (
-      !['isbn', 'rating', 'preis', 'rabatt', 'datum', 'titel'].includes(
-        sortierkriterium
-      )
-    ) {
+    if (!this.sortierkriterien.includes(sortierkriterium)) {
       this.logger.error('Ungültiges Sortierkriterium: {}', sortierkriterium);
       return;
     }
@@ -90,15 +94,15 @@ export class BibliothekComponent implements OnInit {
     );
 
     this.buecher.update(buecher => {
-      return [...buecher].sort((a, b) => {
+      return [...buecher].sort((buchA, buchB) => {
         const aWert =
           sortierkriterium === 'titel'
-            ? a.titel?.titel
-            : a[sortierkriterium as keyof Buch];
+            ? buchA.titel?.titel
+            : buchA[sortierkriterium as keyof Buch];
         const bWert =
           sortierkriterium === 'titel'
-            ? b.titel?.titel
-            : b[sortierkriterium as keyof Buch];
+            ? buchB.titel?.titel
+            : buchB[sortierkriterium as keyof Buch];
         let vergleichswert = 0;
 
         switch (typeof aWert) {
@@ -126,9 +130,9 @@ export class BibliothekComponent implements OnInit {
    * Ruft die Funktion buecherSortierung mit null als Parameter auf, dann wird
    * das aktuell gespeicherte Sortierkriterium gewählt
    */
-  buecherRangfolge(): void {
+  buecherRangfolge() {
     this.rangfolge =
       this.rangfolge === 'aufsteigend' ? 'absteigend' : 'aufsteigend';
-    this.buecherSortierung(null);
+    this.buecherSortierung(undefined);
   }
 }
