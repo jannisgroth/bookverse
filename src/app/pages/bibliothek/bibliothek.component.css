@@ -1,5 +1,6 @@
 .container {
-  display: flex; /* Verwendet Flexbox */
-  justify-content: space-between; /* Optional: Verändert den Abstand zwischen den Komponenten */
-  align-items: center; /* Optional: Zentriert die Komponenten vertikal */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
 }

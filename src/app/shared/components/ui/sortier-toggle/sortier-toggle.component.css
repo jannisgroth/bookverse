@@ -1,5 +1,5 @@
 button {
-  width: 150px; /* Stellt sicher, dass der Button mindestens 150px breit ist */
-  padding: 10px 20px; /* Optional: sorgt für Abstände innen im Button */
+  width: 150px;
+  padding: 10px 20px;
   text-align: center;
 }

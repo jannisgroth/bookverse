@@ -1,5 +1,7 @@
 <!-- Sortierkriterien -->
-<select class="select join-item" (change)="buecherSortierung($event.target!)">
+<select
+  class="select join-item rounded-l-full"
+  (change)="buecherSortierung($event.target!)">
   <option selected disabled hidden>Sortieren</option>
   <option value="isbn">ISBN</option>
   <option value="rating">Rating</option>
