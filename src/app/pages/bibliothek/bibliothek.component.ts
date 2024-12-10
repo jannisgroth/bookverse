@@ -113,10 +113,14 @@ export class BibliothekComponent implements OnInit {
           switch (typeof erstesBuchWert) {
             case 'string':
               // Vergleich für Strings
-              return erstesBuchWert.localeCompare(zweitesBuchWert as string);
+              return erstesBuchWert.localeCompare(
+                zweitesBuchWert as typeof erstesBuchWert
+              );
             case 'number':
               // Vergleich für Zahlen
-              return erstesBuchWert - (zweitesBuchWert as number);
+              return (
+                erstesBuchWert - (zweitesBuchWert as typeof erstesBuchWert)
+              );
             default:
               // Für unbekannte Typen keine Sortierung
               return 0;
