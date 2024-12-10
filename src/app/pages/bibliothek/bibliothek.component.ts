@@ -28,7 +28,7 @@ export class BibliothekComponent implements OnInit {
   ];
   sortierkriterium: keyof Omit<
     Buch,
-    'art' | 'lieferbar' | 'homepage' | 'schlagwoerter' | 'links' | 'file'
+    'art' | 'lieferbar' | 'homepage' | 'schlagwoerter' | '_links' | 'file'
   > = 'titel';
   rangfolge: 'aufsteigend' | 'absteigend' = 'aufsteigend';
 
@@ -102,12 +102,12 @@ export class BibliothekComponent implements OnInit {
         const erstesBuchWert =
           this.sortierkriterium === 'titel'
             ? erstesBuch.titel?.titel
-            : erstesBuch[this.sortierkriterium as keyof Buch];
+            : erstesBuch[this.sortierkriterium];
 
         const zweitesBuchWert =
           this.sortierkriterium === 'titel'
             ? zweitesBuch.titel?.titel
-            : zweitesBuch[this.sortierkriterium as keyof Buch];
+            : zweitesBuch[this.sortierkriterium];
 
         const vergleichswert = (() => {
           switch (typeof erstesBuchWert) {
