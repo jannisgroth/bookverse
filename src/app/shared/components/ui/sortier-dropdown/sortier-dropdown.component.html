@@ -1,7 +1,5 @@
 <!-- Sortierkriterien -->
-<select
-  class="select select-bordered w-full max-w-xs"
-  (change)="buecherSortierung($event.target!)">
+<select class="select join-item" (change)="buecherSortierung($event.target!)">
   <option selected disabled hidden>Sortieren</option>
   <option value="isbn">ISBN</option>
   <option value="rating">Rating</option>

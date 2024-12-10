@@ -26,13 +26,16 @@ export class SortierServiceComponent {
         'art' | 'lieferbar' | 'homepage' | 'schlagwoerter' | '_links' | 'file'
       >
     >('titel');
-  rangfolge = signal<'aufsteigend' | 'absteigend'>('aufsteigend');
+  rangfolge = signal<'Aufsteigend' | 'Absteigend'>('Aufsteigend');
 
   /**
    * Aktualisiert die Bücherliste nach den Sortierkriterien.
    * Mögliche Sortierkriterien: isbn, rating, preis, rabatt, datum, titel
    */
   buecherUpdate() {
+    this.logger.info(
+      `Sortierung mit Sortierkriterium: ${this.sortierkriterium()} und Rangfolge: ${this.rangfolge()}`
+    );
     this.buecher.update(buecher => {
       // Spread Operator (...) ab ES2015
       return [...buecher].sort((erstesBuch, zweitesBuch) => {
@@ -64,7 +67,7 @@ export class SortierServiceComponent {
           }
         })();
 
-        return this.rangfolge() === 'aufsteigend'
+        return this.rangfolge() === 'Aufsteigend'
           ? vergleichswert
           : -vergleichswert;
       });

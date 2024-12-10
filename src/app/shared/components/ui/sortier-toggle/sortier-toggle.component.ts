@@ -1,28 +1,28 @@
 import { Component, Input, WritableSignal } from '@angular/core';
 import { SortierServiceComponent } from '../sortier-service/sortier-service.component';
-
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-sortier-toggle',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './sortier-toggle.component.html',
   styleUrl: './sortier-toggle.component.css',
 })
 export class SortierToggleComponent {
-  @Input() rangfolge!: WritableSignal<'aufsteigend' | 'absteigend'>;
+  @Input() rangfolge!: WritableSignal<'Aufsteigend' | 'Absteigend'>;
 
   /**
    * Erzeugt eine neue SortierToggleComponent
-   * @param sortierservice Der Sortierservice
    */
   constructor(private sortierservice: SortierServiceComponent) {}
 
   /**
    * Wechselt die Reihenfolge der (sortierten) Bücherliste zu auf/absteigend
-   * ruft die Funktion buecherUpdate() auf
+   * ruft die Funktion buecherUpdate() im SortierService auf
    */
   buecherRangfolge() {
     this.rangfolge.set(
-      this.rangfolge() === 'aufsteigend' ? 'absteigend' : 'aufsteigend'
+      this.rangfolge() === 'Aufsteigend' ? 'Absteigend' : 'Aufsteigend'
     );
     this.sortierservice.buecherUpdate();
   }
