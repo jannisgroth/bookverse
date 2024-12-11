@@ -1,6 +1,6 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
-import { Buch } from '../../shared/models/buch.model';
+import { Buch, BuchArt } from '../../shared/models/buch.model';
 import { LoggerService } from '../logging/logger.service';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class ReadService {
     message: '',
   });
 
-  artFilter = signal<string | undefined>(undefined);
+  artFilter = signal<BuchArt | undefined>(undefined);
   lieferbarFilter = signal<boolean | undefined>(undefined);
   titelFilter = signal<string | undefined>(undefined);
   schlagwoerterFilter = signal<string[]>([]);
