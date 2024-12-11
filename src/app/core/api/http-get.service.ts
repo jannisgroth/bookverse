@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Buch } from '../../shared/models/buch.model';
 import { LoggerService } from '../logging/logger.service';
@@ -18,10 +18,15 @@ export class ReadService {
     message: '',
   });
 
+  artFilter = signal<string | undefined>(undefined);
+  lieferbarFilter = signal<boolean | undefined>(undefined);
+  schlagwoerterFilter = signal<[string] | undefined>(undefined);
+  titelFilter = signal<string | undefined>(undefined);
+
   constructor(
     private readonly http: HttpClient,
     private readonly logger: LoggerService
-  ) { } // Dependency injection
+  ) {} // Dependency injection
 
   getBuecherMitBild() {
     this.http
@@ -107,13 +112,12 @@ export class ReadService {
 
   createBuch(buch: Buch) {
     this.http.post(this.restUrl, buch).subscribe({
-      next: (response) => {
+      next: response => {
         alert('Buch wurde erfolgreich angelegt!');
       },
-      error: (err) => {
+      error: err => {
         alert('fehler beim anlegen des buches');
-      }
-    })
+      },
+    });
   }
-
 }
