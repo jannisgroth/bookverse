@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BibliothekComponent } from './bibliothek.component';
+import { Buch } from '../../shared/models/buch.model';
 
 describe('BibliothekComponent', () => {
   let component: BibliothekComponent;
