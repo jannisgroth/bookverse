@@ -1,6 +1,6 @@
 import { Component, Injectable, OnInit, signal } from '@angular/core';
 import { CarouselComponent } from '../../shared/components/ui/carousel/carousel.component';
-import { ReadService } from '../../core/api/http-read.service';
+import { ReadService } from '../../core/api/http-get.service';
 import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-alert/error-alert.component';
 import { NgIf } from '@angular/common';
 import { LoggerService } from '../../core/logging/logger.service';

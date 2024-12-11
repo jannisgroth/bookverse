@@ -1,6 +1,6 @@
 import { Component, computed, effect, OnInit, signal } from '@angular/core';
 import { CardComponent } from '../../shared/components/ui/card/card.component';
-import { ReadService } from '../../core/api/http-read.service';
+import { ReadService } from '../../core/api/http-get.service';
 import { Buch } from '../../shared/models/buch.model';
 import { NgFor, NgIf } from '@angular/common';
 import { ModalComponent } from '../../shared/components/ui/modal/modal.component';
