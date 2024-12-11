@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ReadService } from '../../../../../core/api/http-get.service';
-import { Buch, BuchArt } from '../../../../models/buch.model';
+import { BuchArt } from '../../../../models/buch.model';
 
 @Component({
   selector: 'app-art-filter-collapse',
