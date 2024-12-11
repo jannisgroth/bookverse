@@ -1,5 +1,5 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Buch } from '../../shared/models/buch.model';
 import { LoggerService } from '../logging/logger.service';
 
@@ -20,8 +20,8 @@ export class ReadService {
 
   artFilter = signal<string | undefined>(undefined);
   lieferbarFilter = signal<boolean | undefined>(undefined);
-  schlagwoerterFilter = signal<[string] | undefined>(undefined);
   titelFilter = signal<string | undefined>(undefined);
+  schlagwoerterFilter = signal<[string] | undefined>(undefined);
 
   constructor(
     private readonly http: HttpClient,
@@ -29,8 +29,19 @@ export class ReadService {
   ) {} // Dependency injection
 
   getBuecherMitBild() {
+    //params enthält die Queryparameter aus den Signals
+    let params = new HttpParams();
+    if (this.artFilter()) params = params.append('art', this.artFilter()!);
+    if (this.lieferbarFilter())
+      params = params.append('lieferbar', this.lieferbarFilter()!);
+    if (this.titelFilter())
+      params = params.append('titel', this.titelFilter()!);
+    this.schlagwoerterFilter()?.forEach(schlagwort => {
+      params = params.append(schlagwort, true);
+    });
+
     this.http
-      .get<{ _embedded: { buecher: Buch[] } }>(`${this.restUrl}`)
+      .get<{ _embedded: { buecher: Buch[] } }>(`${this.restUrl}`, { params })
       .subscribe({
         next: response => {
           const buecher = response._embedded.buecher;
