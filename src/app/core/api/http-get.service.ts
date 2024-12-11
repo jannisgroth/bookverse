@@ -21,7 +21,7 @@ export class ReadService {
   artFilter = signal<string | undefined>(undefined);
   lieferbarFilter = signal<boolean | undefined>(undefined);
   titelFilter = signal<string | undefined>(undefined);
-  schlagwoerterFilter = signal<[string] | undefined>(undefined);
+  schlagwoerterFilter = signal<string[]>([]);
 
   constructor(
     private readonly http: HttpClient,
@@ -32,13 +32,16 @@ export class ReadService {
     //params enthält die Queryparameter aus den Signals
     let params = new HttpParams();
     if (this.artFilter()) params = params.append('art', this.artFilter()!);
-    if (this.lieferbarFilter())
+    if (this.lieferbarFilter() !== undefined) {
       params = params.append('lieferbar', this.lieferbarFilter()!);
+    }
     if (this.titelFilter())
       params = params.append('titel', this.titelFilter()!);
-    this.schlagwoerterFilter()?.forEach(schlagwort => {
-      params = params.append(schlagwort, true);
-    });
+    if (this.schlagwoerterFilter() !== undefined)
+      this.schlagwoerterFilter()!.forEach(schlagwort => {
+        params = params.append(schlagwort, true);
+      });
+    console.log(params.get('lieferbar'));
 
     this.http
       .get<{ _embedded: { buecher: Buch[] } }>(`${this.restUrl}`, { params })
