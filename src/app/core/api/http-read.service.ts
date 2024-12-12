@@ -1,6 +1,6 @@
-import { Injectable, signal } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Buch } from '../../shared/models/buch.model';
+import { Injectable, signal, effect } from '@angular/core';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { Buch, BuchArt } from '../../shared/models/buch.model';
 import { LoggerService } from '../logging/logger.service';
 
 @Injectable()
@@ -18,14 +18,37 @@ export class ReadService {
     message: '',
   });
 
+  readonly artFilter = signal<BuchArt | undefined>(undefined);
+  readonly lieferbarFilter = signal<boolean | undefined>(undefined);
+  readonly titelFilter = signal<string | undefined>(undefined);
+  readonly schlagwoerterFilter = signal<string[]>([]);
+
+  onSignalChange() {
+    console.log('Signal wurde gesetzt!');
+  }
+
   constructor(
     private readonly http: HttpClient,
     private readonly logger: LoggerService
-  ) { } // Dependency injection
+  ) {} // Dependency injection
 
   getBuecherMitBild() {
+    //params enthält die Queryparameter aus den Signals
+    let params = new HttpParams();
+    if (this.artFilter()) params = params.append('art', this.artFilter()!);
+    if (this.lieferbarFilter() !== undefined) {
+      params = params.append('lieferbar', this.lieferbarFilter()!);
+    }
+    if (this.titelFilter())
+      params = params.append('titel', this.titelFilter()!);
+    if (this.schlagwoerterFilter() !== undefined)
+      this.schlagwoerterFilter()!.forEach(schlagwort => {
+        params = params.append(schlagwort, true);
+      });
+    console.log(params.get('lieferbar'));
+
     this.http
-      .get<{ _embedded: { buecher: Buch[] } }>(`${this.restUrl}`)
+      .get<{ _embedded: { buecher: Buch[] } }>(`${this.restUrl}`, { params })
       .subscribe({
         next: response => {
           const buecher = response._embedded.buecher;
@@ -107,13 +130,12 @@ export class ReadService {
 
   createBuch(buch: Buch) {
     this.http.post(this.restUrl, buch).subscribe({
-      next: (response) => {
+      next: response => {
         alert('Buch wurde erfolgreich angelegt!');
       },
-      error: (err) => {
+      error: err => {
         alert('fehler beim anlegen des buches');
-      }
-    })
+      },
+    });
   }
-
 }
