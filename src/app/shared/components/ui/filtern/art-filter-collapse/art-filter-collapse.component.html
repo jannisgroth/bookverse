@@ -2,18 +2,20 @@
   <input type="checkbox" (change)="uncheck($event.target!)" />
   <div class="collapse-title text-xl font-medium">Art</div>
   <div class="collapse-content">
-    <div class="form-control">
+    <div class="container">
       <label class="label cursor-pointer">
         <div class="join join-vertical">
           <div *ngFor="let option of options">
             <div class="form-control">
-              <span class="label-text">{{ option.label }}</span>
-              <input
-                type="radio"
-                name="radio-10"
-                class="radio checked:primary"
-                value="{{ option.value }}"
-                (change)="artFilterSetter($event.target!)" />
+              <label class="label cursor-pointer">
+                <span class="label-text">{{ option.label }}</span>
+                <input
+                  type="radio"
+                  name="radio-10"
+                  class="radio checked:primary"
+                  value="{{ option.value }}"
+                  (change)="artFilterSetter($event.target!)" />
+              </label>
             </div>
           </div>
         </div>

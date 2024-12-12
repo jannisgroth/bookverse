@@ -1,4 +1,4 @@
-import { Component, Injector, QueryList, ViewChildren } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { BuchArt } from '../../../../models/buch.model';
 import { ReadService } from '../../../../../core/api/http-get.service';
 import { CommonModule } from '@angular/common';
