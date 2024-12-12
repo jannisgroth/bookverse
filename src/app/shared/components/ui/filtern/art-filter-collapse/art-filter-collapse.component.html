@@ -1,41 +1,22 @@
 <div class="collapse bg-base-200">
-  <input type="checkbox" />
-  <div class="collapse-title text-xl font-medium">BuchArt</div>
+  <input type="checkbox" (change)="uncheck($event.target!)" />
+  <div class="collapse-title text-xl font-medium">Art</div>
   <div class="collapse-content">
     <div class="form-control">
       <label class="label cursor-pointer">
-        <span class="label-text">E-Pub</span>
-        <input
-          type="radio"
-          name="radio-10"
-          class="radio checked:primary"
-          checked="checked"
-          value="EPUB"
-          (change)="artFilterSetter($event.target!)" />
-      </label>
-    </div>
-    <div class="form-control">
-      <label class="label cursor-pointer">
-        <span class="label-text">Hardcover</span>
-        <input
-          type="radio"
-          name="radio-10"
-          class="radio checked:primary"
-          checked="checked"
-          value="HARDCOVER"
-          (change)="artFilterSetter($event.target!)" />
-      </label>
-    </div>
-    <div class="form-control">
-      <label class="label cursor-pointer">
-        <span class="label-text">Paperback</span>
-        <input
-          type="radio"
-          name="radio-10"
-          class="radio checked:primary"
-          checked="checked"
-          value="PAPERBACK"
-          (change)="artFilterSetter($event.target!)" />/>
+        <div class="join join-vertical">
+          <div *ngFor="let option of options">
+            <div class="form-control">
+              <span class="label-text">{{ option.label }}</span>
+              <input
+                type="radio"
+                name="radio-10"
+                class="radio checked:primary"
+                value="{{ option.value }}"
+                (change)="artFilterSetter($event.target!)" />
+            </div>
+          </div>
+        </div>
       </label>
     </div>
   </div>

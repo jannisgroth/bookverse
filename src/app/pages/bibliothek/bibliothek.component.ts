@@ -7,6 +7,7 @@ import { ModalComponent } from '../../shared/components/ui/modal/modal.component
 import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-alert/error-alert.component';
 import { LoggerService } from '../../core/logging/logger.service';
 import { SortierServiceComponent } from '../../shared/components/ui/sortier-service/sortier-service.component';
+import { FilternComponent } from '../../shared/components/ui/filtern/filtern.component';
 
 @Component({
   standalone: true,
@@ -18,6 +19,7 @@ import { SortierServiceComponent } from '../../shared/components/ui/sortier-serv
     ModalComponent,
     ErrorAlertComponent,
     SortierServiceComponent,
+    FilternComponent,
   ],
   templateUrl: './bibliothek.component.html',
   styleUrl: './bibliothek.component.css',

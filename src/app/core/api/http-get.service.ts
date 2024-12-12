@@ -1,4 +1,4 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
+import { Injectable, signal, effect } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Buch, BuchArt } from '../../shared/models/buch.model';
 import { LoggerService } from '../logging/logger.service';
@@ -18,10 +18,14 @@ export class ReadService {
     message: '',
   });
 
-  artFilter = signal<BuchArt | undefined>(undefined);
-  lieferbarFilter = signal<boolean | undefined>(undefined);
-  titelFilter = signal<string | undefined>(undefined);
-  schlagwoerterFilter = signal<string[]>([]);
+  readonly artFilter = signal<BuchArt | undefined>(undefined);
+  readonly lieferbarFilter = signal<boolean | undefined>(undefined);
+  readonly titelFilter = signal<string | undefined>(undefined);
+  readonly schlagwoerterFilter = signal<string[]>([]);
+
+  onSignalChange() {
+    console.log('Signal wurde gesetzt!');
+  }
 
   constructor(
     private readonly http: HttpClient,

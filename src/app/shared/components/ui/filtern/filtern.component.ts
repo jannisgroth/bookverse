@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input, WritableSignal } from '@angular/core';
+import { ArtFilterCollapseComponent } from './art-filter-collapse/art-filter-collapse.component';
 
 @Component({
   selector: 'app-filtern',
-  imports: [],
+  imports: [ArtFilterCollapseComponent],
   templateUrl: './filtern.component.html',
-  styleUrl: './filtern.component.css'
+  styleUrl: './filtern.component.css',
 })
-export class FilternComponent {
-
-}
+export class FilternComponent {}
