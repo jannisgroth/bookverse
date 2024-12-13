@@ -128,7 +128,7 @@ export class ReadService {
     });
   }
 
-  paramsBuilder(): HttpParams {
+  private paramsBuilder(): HttpParams {
     let params = new HttpParams();
     if (this.artFilter()) params = params.append('art', this.artFilter()!);
     if (this.lieferbarFilter() !== undefined) {
