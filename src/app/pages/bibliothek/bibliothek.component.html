@@ -28,7 +28,12 @@
       </div>
       <div class="mt-6 mb-6">
         <label class="input input-md flex items-center gap-2 max-w-96">
-          <input type="text" class="grow" placeholder="Suche nach Titel" />
+          <input
+            type="text"
+            class="grow"
+            placeholder="Suche nach Titel"
+            [(ngModel)]="titelInput"
+            (keyup)="onSubmit()" />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"

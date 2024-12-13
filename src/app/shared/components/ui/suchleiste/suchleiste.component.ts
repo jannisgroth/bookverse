@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { ReadService } from '../../../../core/api/http-read.service';
 
 @Component({
   selector: 'app-suchleiste',
