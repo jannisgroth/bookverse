@@ -45,7 +45,6 @@ export class ReadService {
       this.schlagwoerterFilter()!.forEach(schlagwort => {
         params = params.append(schlagwort, true);
       });
-    console.log(params.get('lieferbar'));
 
     this.http
       .get<{ _embedded: { buecher: Buch[] } }>(`${this.restUrl}`, { params })
