@@ -34,17 +34,7 @@ export class ReadService {
 
   getBuecherMitBild() {
     //params enthält die Queryparameter aus den Signals
-    let params = new HttpParams();
-    if (this.artFilter()) params = params.append('art', this.artFilter()!);
-    if (this.lieferbarFilter()) {
-      params = params.append('lieferbar', this.lieferbarFilter()!);
-    }
-    if (this.titelFilter())
-      params = params.append('titel', this.titelFilter()!);
-    if (this.schlagwoerterFilter())
-      this.schlagwoerterFilter()!.forEach(schlagwort => {
-        params = params.append(schlagwort, true);
-      });
+    const params = this.paramsBuilder();
 
     this.http
       .get<{ _embedded: { buecher: Buch[] } }>(`${this.restUrl}`, { params })
@@ -136,5 +126,20 @@ export class ReadService {
         alert('fehler beim anlegen des buches');
       },
     });
+  }
+
+  paramsBuilder(): HttpParams {
+    let params = new HttpParams();
+    if (this.artFilter()) params = params.append('art', this.artFilter()!);
+    if (this.lieferbarFilter()) {
+      params = params.append('lieferbar', this.lieferbarFilter()!);
+    }
+    if (this.titelFilter())
+      params = params.append('titel', this.titelFilter()!);
+    if (this.schlagwoerterFilter())
+      this.schlagwoerterFilter()!.forEach(schlagwort => {
+        params = params.append(schlagwort, true);
+      });
+    return params;
   }
 }
