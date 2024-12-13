@@ -131,7 +131,7 @@ export class ReadService {
   paramsBuilder(): HttpParams {
     let params = new HttpParams();
     if (this.artFilter()) params = params.append('art', this.artFilter()!);
-    if (this.lieferbarFilter()) {
+    if (this.lieferbarFilter() !== undefined) {
       params = params.append('lieferbar', this.lieferbarFilter()!);
     }
     if (this.titelFilter())
