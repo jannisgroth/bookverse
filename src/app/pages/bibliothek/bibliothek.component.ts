@@ -8,6 +8,7 @@ import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-ale
 import { LoggerService } from '../../core/logging/logger.service';
 import { SortierServiceComponent } from '../../shared/components/ui/sortier-service/sortier-service.component';
 import { FilternComponent } from '../../shared/components/ui/filtern/filtern.component';
+import { SuchleisteComponent } from '../../shared/components/ui/suchleiste/suchleiste.component';
 
 @Component({
   standalone: true,
@@ -20,6 +21,7 @@ import { FilternComponent } from '../../shared/components/ui/filtern/filtern.com
     ErrorAlertComponent,
     SortierServiceComponent,
     FilternComponent,
+    SuchleisteComponent,
   ],
   templateUrl: './bibliothek.component.html',
   styleUrl: './bibliothek.component.css',
