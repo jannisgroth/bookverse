@@ -36,12 +36,12 @@ export class ReadService {
     //params enthält die Queryparameter aus den Signals
     let params = new HttpParams();
     if (this.artFilter()) params = params.append('art', this.artFilter()!);
-    if (this.lieferbarFilter() !== undefined) {
+    if (this.lieferbarFilter()) {
       params = params.append('lieferbar', this.lieferbarFilter()!);
     }
     if (this.titelFilter())
       params = params.append('titel', this.titelFilter()!);
-    if (this.schlagwoerterFilter() !== undefined)
+    if (this.schlagwoerterFilter())
       this.schlagwoerterFilter()!.forEach(schlagwort => {
         params = params.append(schlagwort, true);
       });
