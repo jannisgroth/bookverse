@@ -1,1 +1,38 @@
-<p>rating-filter-collapse works!</p>
+<div class="collapse bg-base-200">
+  <input type="checkbox" (change)="uncheck($event.target!)" />
+  <div class="collapse-title text-xl font-medium">Rating</div>
+  <div class="collapse-content">
+    <div class="form-control">
+      <label class="label cursor-pointer">
+        <div class="rating">
+          <input
+            type="radio"
+            value=""
+            class="rating-hidden"
+            name="defaultRatingFilter" />
+          <input
+            type="radio"
+            (select)="RatingFilterSetter(1)"
+            class="mask mask-star-2 bg-primary"
+            bg:primary />
+          <input
+            type="radio"
+            (select)="RatingFilterSetter(2)"
+            class="mask mask-star-2 bg-primary" />
+          <input
+            type="radio"
+            (select)="RatingFilterSetter(3)"
+            class="mask mask-star-2 bg-primary" />
+          <input
+            type="radio"
+            (select)="RatingFilterSetter(4)"
+            class="mask mask-star-2 bg-primary" />
+          <input
+            type="radio"
+            (select)="RatingFilterSetter(5)"
+            class="mask mask-star-2 bg-primary" />
+        </div>
+      </label>
+    </div>
+  </div>
+</div>
