@@ -8,6 +8,7 @@ import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-ale
 import { LoggerService } from '../../core/logging/logger.service';
 import { SortierServiceComponent } from '../../shared/components/ui/sortier-service/sortier-service.component';
 import { FilternComponent } from '../../shared/components/ui/filtern/filtern.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
@@ -20,6 +21,7 @@ import { FilternComponent } from '../../shared/components/ui/filtern/filtern.com
     ErrorAlertComponent,
     SortierServiceComponent,
     FilternComponent,
+    FormsModule,
   ],
   templateUrl: './bibliothek.component.html',
   styleUrl: './bibliothek.component.css',
@@ -27,27 +29,28 @@ import { FilternComponent } from '../../shared/components/ui/filtern/filtern.com
 })
 export class BibliothekComponent implements OnInit {
   readonly selectedBuchSignal = signal<Buch | undefined>(undefined);
+  titelInput: string = '';
 
   /**
    * Erzeugt ein neues BibliothekComponent
-   * @param readservice Der Service, der die API-Aufrufe durchführt
+   * @param readService Der Service, der die API-Aufrufe durchführt
    * @param logger Der Logger, der zum Protokollieren von Ereignissen verwendet wird
    */
   constructor(
-    private readservice: ReadService,
+    private readService: ReadService,
     private logger: LoggerService
   ) {}
   get buecher() {
-    return this.readservice.buecher;
+    return this.readService.buecher;
   }
   get loading() {
-    return this.readservice.loading;
+    return this.readService.loading;
   }
   get errorShow() {
-    return this.readservice.error().show;
+    return this.readService.error().show;
   }
   get errorMessage() {
-    return this.readservice.error().message;
+    return this.readService.error().message;
   }
 
   /**
@@ -56,7 +59,7 @@ export class BibliothekComponent implements OnInit {
    */
   ngOnInit(): void {
     // API-Aufruf, um die Bücher zu laden
-    this.readservice.getBuecherMitBild();
+    this.readService.getBuecherMitBild();
   }
   /**
    * Zeigt das Modal an, indem es den selectedBuchSignal mit dem uebergebenen Buch setzt
@@ -67,5 +70,21 @@ export class BibliothekComponent implements OnInit {
     this.selectedBuchSignal.set(buch);
     const modal: HTMLDialogElement = document.querySelector('#modal')!;
     if (modal) modal.showModal();
+  }
+  private debounceZeit: ReturnType<typeof setTimeout> | undefined;
+  onSubmit() {
+    clearTimeout(this.debounceZeit);
+
+    this.debounceZeit = setTimeout(() => {
+      this.titelInput;
+      this.readService.titelFilter.set(this.titelInput);
+      this.readService.loading.set(true);
+
+      this.readService.getBuecherMitBild();
+      this.logger.debug(
+        'buecher wurden mit Titel Filter geladen',
+        this.readService.titelFilter()
+      );
+    }, 800);
   }
 }
