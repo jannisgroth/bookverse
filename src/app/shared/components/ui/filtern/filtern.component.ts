@@ -5,9 +5,9 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { ArtFilterCollapseComponent } from './art-filter-collapse/art-filter-collapse.component';
-import { LieferbarFilterCollapseComponent } from './lieferbar-filter-collapse/lieferbar-filter-collapse.component';
-import { SchlagwoerterFilterCollapseComponent } from './schlagwoerter-filter-collapse/schlagwoerter-filter-collapse.component';
+import { ArtFilterCollapseComponent } from './backend-filter/art-filter-collapse/art-filter-collapse.component';
+import { LieferbarFilterCollapseComponent } from './backend-filter/lieferbar-filter-collapse/lieferbar-filter-collapse.component';
+import { SchlagwoerterFilterCollapseComponent } from './backend-filter/schlagwoerter-filter-collapse/schlagwoerter-filter-collapse.component';
 import { Buch } from '../../../models/buch.model';
 import { RatingFilterCollapseComponent } from './frontend-filter/rating-filter-collapse/rating-filter-collapse.component';
 
