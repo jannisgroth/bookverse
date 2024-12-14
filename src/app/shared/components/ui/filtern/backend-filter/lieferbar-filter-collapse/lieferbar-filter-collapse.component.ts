@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { ReadService } from '../../../../../core/api/http-read.service';
+import { ReadService } from '../../../../../../core/api/http-read.service';
 
 @Component({
   selector: 'app-lieferbar-filter-collapse',

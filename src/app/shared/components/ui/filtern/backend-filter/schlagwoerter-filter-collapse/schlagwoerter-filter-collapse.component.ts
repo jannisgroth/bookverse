@@ -1,6 +1,6 @@
 import { Component, Injector } from '@angular/core';
 
-import { ReadService } from '../../../../../core/api/http-read.service';
+import { ReadService } from '../../../../../../core/api/http-read.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
