@@ -5,7 +5,7 @@
         Bookverse
       </span>
     </div>
-    <div *ngIf="showSearchBar()" class="ml-10 min-w-96">
+    <div *ngIf="showSearchBar()" class="ml-10 w-full max-w-96 min-w-1/4 sm:min-w-1/3">
       <ng-container *ngTemplateOutlet="suchleiste"></ng-container>
     </div>
     <ng-template #suchleiste>

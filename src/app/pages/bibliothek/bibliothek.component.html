@@ -4,7 +4,8 @@
     class="loading loading-spinner loading-lg text-primary flex items-center justify-center m-auto">
   </span>
   <div *ngIf="!loading()">
-    <div class="grid grid-cols-3 gap-8 auto-rows-fr">
+    <!-- Responsive Grid -->
+    <div class="grid gap-8 auto-rows-fr grid-cols-[repeat(auto-fit,minmax(450px,1fr))]">
       <div *ngFor="let buch of buecher()">
         <app-card [buch]="buch" (openModal)="openModal($event)"></app-card>
       </div>
