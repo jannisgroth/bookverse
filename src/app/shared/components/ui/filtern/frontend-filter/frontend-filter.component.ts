@@ -9,7 +9,7 @@ import { Buch } from '../../../../models/buch.model';
 })
 export class FrontendFilterComponent {
   @Input() buecher!: WritableSignal<Buch[]>;
-  gefilterteBuecher: Buch[];
+  entfernteBuecher: Buch[];
   readonly ratingFilter = signal<number | undefined>(undefined);
   readonly preisUntergrenzeFilter = signal<string | undefined>(undefined);
   readonly preisObergrenzeFilter = signal<string | undefined>(undefined);
@@ -18,8 +18,36 @@ export class FrontendFilterComponent {
   readonly datumObergrenzeFilter = signal<Date | undefined>(undefined);
 
   constructor() {
-    this.gefilterteBuecher = [];
+    this.entfernteBuecher = [];
   }
 
-  frontendFilter() {}
+  frontendFilter() {
+    const alleBuecher = this.buecher().concat(this.entfernteBuecher);
+    let passendeElemente: Buch[] = [];
+    let herausgefilterteElemente: Buch[] = [];
+
+    alleBuecher.forEach(buch => {
+      buch.rating! >= this.ratingFilter()!
+        ? passendeElemente.push(buch)
+        : herausgefilterteElemente.push(buch);
+
+      //Typecasting mit Unary Plus Operator (+)
+      +this.preisUntergrenzeFilter()! <= +buch.preis &&
+      +buch.preis <= +this.preisObergrenzeFilter()!
+        ? passendeElemente.push(buch)
+        : herausgefilterteElemente.push(buch);
+
+      buch.rabatt! >= this.rabattFilter()!
+        ? passendeElemente.push(buch)
+        : herausgefilterteElemente.push(buch);
+
+      this.datumUntergrenzeFilter()! <= buch.datum! &&
+      buch.datum! <= this.datumObergrenzeFilter()!
+        ? passendeElemente.push(buch)
+        : herausgefilterteElemente.push(buch);
+    });
+
+    this.buecher.set(passendeElemente);
+    this.entfernteBuecher = herausgefilterteElemente;
+  }
 }
