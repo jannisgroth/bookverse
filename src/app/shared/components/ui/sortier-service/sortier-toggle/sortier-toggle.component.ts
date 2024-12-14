@@ -1,6 +1,5 @@
 import { Component, Input, WritableSignal } from '@angular/core';
-import { SortierServiceComponent } from '../sortier-service/sortier-service.component';
-import { NgModule } from '@angular/core';
+import { SortierServiceComponent } from '../../sortier-service/sortier-service.component';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-sortier-toggle',

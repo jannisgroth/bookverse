@@ -1,8 +1,8 @@
 import { Component, Input, signal, WritableSignal } from '@angular/core';
 import { Buch } from '../../../models/buch.model';
 import { LoggerService } from '../../../../core/logging/logger.service';
-import { SortierDropdownComponent } from '../sortier-dropdown/sortier-dropdown.component';
-import { SortierToggleComponent } from '../sortier-toggle/sortier-toggle.component';
+import { SortierDropdownComponent } from './sortier-dropdown/sortier-dropdown.component';
+import { SortierToggleComponent } from './sortier-toggle/sortier-toggle.component';
 
 @Component({
   selector: 'app-sortier-service',

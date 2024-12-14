@@ -1,7 +1,7 @@
 import { Component, Input, signal, WritableSignal } from '@angular/core';
-import { LoggerService } from '../../../../core/logging/logger.service';
-import { Buch } from '../../../models/buch.model';
-import { SortierServiceComponent } from '../sortier-service/sortier-service.component';
+import { LoggerService } from '../../../../../core/logging/logger.service';
+import { Buch } from '../../../../models/buch.model';
+import { SortierServiceComponent } from '../../sortier-service/sortier-service.component';
 
 @Component({
   selector: 'app-sortier-dropdown',
