@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, Input, signal, WritableSignal } from '@angular/core';
 import { ArtFilterCollapseComponent } from './backend-filter/art-filter-collapse/art-filter-collapse.component';
 import { LieferbarFilterCollapseComponent } from './backend-filter/lieferbar-filter-collapse/lieferbar-filter-collapse.component';
 import { SchlagwoerterFilterCollapseComponent } from './backend-filter/schlagwoerter-filter-collapse/schlagwoerter-filter-collapse.component';
@@ -25,6 +19,7 @@ import { RatingFilterCollapseComponent } from './frontend-filter/rating-filter-c
 export class FilternComponent {
   @Input() buecher!: WritableSignal<Buch[]>;
   private entfernteBuecher: Buch[];
+
   readonly ratingFilter = signal<number | undefined>(undefined);
   readonly preisUntergrenzeFilter = signal<string | undefined>(undefined);
   readonly preisObergrenzeFilter = signal<string | undefined>(undefined);
@@ -41,15 +36,17 @@ export class FilternComponent {
    * GET Request filtern lassen.
    */
   frontendFilter() {
+    console.log(this.buecher);
+    console.log(this.buecher());
     const alleBuecher = [...this.buecher(), ...this.entfernteBuecher];
-    let passendeElemente: Buch[] = [];
-    let herausgefilterteElemente: Buch[] = [];
+    let passendeBuecher: Buch[] = [];
+    let herausgefilterteBuecher: Buch[] = [];
 
     alleBuecher.forEach(buch => {
       // Rating Filter ist gesetzt und kleiner gleich Buchrating
       this.ratingFilter() && this.ratingFilter()! <= buch.rating!
-        ? passendeElemente.push(buch)
-        : herausgefilterteElemente.push(buch);
+        ? passendeBuecher.push(buch)
+        : herausgefilterteBuecher.push(buch);
 
       // Filter für Preisober- und Untergrenze sind gesetzt und
       // Buchpreis ist dazwischen
@@ -58,13 +55,13 @@ export class FilternComponent {
       this.preisObergrenzeFilter() &&
       +this.preisUntergrenzeFilter()! <= +buch.preis &&
       +buch.preis <= +this.preisObergrenzeFilter()!
-        ? passendeElemente.push(buch)
-        : herausgefilterteElemente.push(buch);
+        ? passendeBuecher.push(buch)
+        : herausgefilterteBuecher.push(buch);
 
       // Filter für Rabatt ist gesetzt und kleiner gleich Buchrabatt
       this.rabattFilter() && this.rabattFilter()! <= buch.rabatt!
-        ? passendeElemente.push(buch)
-        : herausgefilterteElemente.push(buch);
+        ? passendeBuecher.push(buch)
+        : herausgefilterteBuecher.push(buch);
 
       // Filter für Datumsober- und Untergrenze sind gesetzt und
       // Buchdatum ist dazwischen
@@ -72,11 +69,11 @@ export class FilternComponent {
       this.datumObergrenzeFilter() &&
       this.datumUntergrenzeFilter()! <= buch.datum! &&
       buch.datum! <= this.datumObergrenzeFilter()!
-        ? passendeElemente.push(buch)
-        : herausgefilterteElemente.push(buch);
+        ? passendeBuecher.push(buch)
+        : herausgefilterteBuecher.push(buch);
     });
 
-    this.buecher.set(passendeElemente);
-    this.entfernteBuecher = herausgefilterteElemente;
+    this.buecher.set(passendeBuecher);
+    this.entfernteBuecher = herausgefilterteBuecher;
   }
 }
