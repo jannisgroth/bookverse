@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { InputComponent } from "../input/input.component";
+import { TitelInputComponent } from "../input/titel-input.component";
 import { UploadInputComponent } from "../upload-input/upload-input.component";
 import { RatingComponent } from "../rating/rating.component";
 import { CheckboxComponent } from "../checkbox/checkbox.component";
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DropDownComponent } from '../drop-down/drop-down.component';
+import { IsbnInputComponent } from '../isbn-input/isbn-input.component';
 
 
 @Component({
   selector: 'app-formular',
-  imports: [InputComponent, UploadInputComponent, RatingComponent, CheckboxComponent, DropDownComponent, ReactiveFormsModule],
+  imports: [TitelInputComponent, IsbnInputComponent, UploadInputComponent, RatingComponent, CheckboxComponent, DropDownComponent, ReactiveFormsModule],
   templateUrl: './formular.component.html',
   styleUrl: './formular.component.css'
 })
@@ -20,11 +21,6 @@ export class FormularComponent {
   buchForm = new FormGroup({});
 
 
-
-  // isbn: new FormControl('', [
-  //   Validators.required,
-  //   Validators.pattern(/^\d{3}-\d{1,5}-\d{1,7}-\d{1,7}-\d{1}$/)
-  // ]),
   // rating: new FormControl('', [
   //   Validators.required,
   //   Validators.min(1),

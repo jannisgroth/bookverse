@@ -1,0 +1,33 @@
+<div [formGroup]="buchForm()"> <!-- Zugriff auf die tatsächliche FormGroup -->
+    <label class="label">
+        <span class="label-text text-lg font-semibold">ISBN</span>
+    </label>
+    <div class="relative flex items-center">
+        <div>
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6 text-gray-500">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                </svg>
+            </div>
+        </div>
+        <input formControlName="isbn" type="text" placeholder="999-9-999-99999-9" [ngClass]="{
+                'border-error focus:ring-error/50 focus:border-error': isbn.invalid && isbn.touched,
+                'border-primary focus:ring-primary/50 focus:border-primary': !(isbn.invalid && isbn.touched)
+            }"
+            class="input w-full px-4 py-2 text-base bg-gray-50 focus:outline-none focus:ring hover:bg-gray-200 ps-10 border-2 rounded-lg" />
+    </div>
+    @if (isbn.invalid && isbn.touched) {
+    <div class="text-base text-error">
+        <label>
+            @if (isbn.hasError('required')) {
+            <span>Bitte füllen Sie diese Feld aus!</span>
+            }
+            @if (isbn.hasError('pattern')) {
+            <span>ISBN hat das falsche Format</span>
+            }
+        </label>
+    </div>
+    }
+</div>
