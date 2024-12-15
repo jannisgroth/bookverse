@@ -5,3 +5,10 @@
 .modal-box {
   position: relative;
 }
+
+.custom-modal {
+  width: 900px;
+  height: 330px;
+  max-width: 90%; /* Optional: um sicherzustellen, dass es nicht zu groß wird */
+  max-height: 90%; /* Optional */
+}
