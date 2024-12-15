@@ -8,9 +8,8 @@ describe('SuchleisteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SuchleisteComponent]
-    })
-    .compileComponents();
+      imports: [SuchleisteComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SuchleisteComponent);
     component = fixture.componentInstance;

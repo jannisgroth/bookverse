@@ -5,10 +5,10 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-rating',
   imports: [ReactiveFormsModule, NgClass],
-  templateUrl: './rating.component.html',
-  styleUrl: './rating.component.css',
+  templateUrl: './rating-radio.component.html',
+  styleUrl: './rating-radio.component.css',
 })
-export class RatingComponent {
+export class RatingRadioComponent {
   // Signal für die FormGroup
   buchForm = input.required<FormGroup>();
 

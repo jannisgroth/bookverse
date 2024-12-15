@@ -4,9 +4,9 @@ import { Component, Input } from '@angular/core';
   selector: 'app-error-alert',
   imports: [],
   templateUrl: './error-alert.component.html',
-  styleUrl: './error-alert.component.css'
+  styleUrl: './error-alert.component.css',
 })
 export class ErrorAlertComponent {
   @Input() message: string = '';
-  constructor() { }
+  constructor() {}
 }

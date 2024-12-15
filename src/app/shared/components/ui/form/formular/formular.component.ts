@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, signal, effect, Signal } from '@angular/core';
 import { TitelInputComponent } from '../titel-input/titel-input.component';
 import { UploadInputComponent } from '../upload-input/upload-input.component';
-import { RatingComponent } from '../rating/rating.component';
+import { RatingRadioComponent } from '../rating-radio/rating-radio.component';
 import { SchlagwoerterCheckboxComponent } from '../sclagwoerter-checkbox/schlagwoerter-checkbox.component';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BuchartDropDownComponent } from '../buchart-drop-down/buchart-drop-down.component';
@@ -25,7 +25,7 @@ import { RabattInputComponent } from '../rabatt-input/rabatt-input.component';
     DatumInputComponent,
     PreisInputComponent,
     RabattInputComponent,
-    RatingComponent,
+    RatingRadioComponent,
     UploadInputComponent
   ],
   templateUrl: './formular.component.html',
@@ -34,6 +34,7 @@ import { RabattInputComponent } from '../rabatt-input/rabatt-input.component';
 export class FormularComponent {
   isbnPattern = /^(?:\d{9}[\dX]|\d{13})$/;
   buchForm = new FormGroup({});
+  validate = signal<boolean>(this.buchForm.valid);
 
   // rating: new FormControl('', [
   //   Validators.required,
@@ -48,4 +49,6 @@ export class FormularComponent {
       console.log('Formular ist ungültig');
     }
   }
+
+
 }

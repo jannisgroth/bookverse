@@ -5,7 +5,6 @@ import { FormularComponent } from '../../shared/components/ui/form/formular/form
   selector: 'app-buchAnlegen',
   imports: [FormularComponent],
   templateUrl: './buchAnlegen.component.html',
-  styleUrl: './buchAnlegen.component.css'
+  styleUrl: './buchAnlegen.component.css',
 })
-export class BuchAnlegenComponent {
-}
+export class BuchAnlegenComponent {}
