@@ -8,12 +8,12 @@ import {
 } from '@angular/forms';
 
 @Component({
-  selector: 'app-isbn-input',
+  selector: 'app-homepage-input',
   imports: [ReactiveFormsModule, NgClass],
-  templateUrl: './isbn-input.component.html',
-  styleUrl: './isbn-input.component.css',
+  templateUrl: './homepage-input.component.html',
+  styleUrl: './homepage-input.component.css',
 })
-export class IsbnInputComponent {
+export class HomepageInputComponent {
   // Signal für die FormGroup
   buchForm = input.required<FormGroup>();
 
@@ -21,14 +21,15 @@ export class IsbnInputComponent {
 
   ngOnInit(): void {
     const formControl = new FormControl('', [
-      Validators.required,
-      Validators.pattern(/^\d{3}-\d{1,5}-\d{1,7}-\d{1,7}-\d{1}$/),
+      Validators.pattern(
+        /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
+      ),
     ]);
 
-    this.buchForm().addControl('isbn', formControl);
+    this.buchForm().addControl('homepage', formControl);
   }
 
-  get isbn() {
-    return this.buchForm().get('isbn')!;
+  get homepage() {
+    return this.buchForm().get('homepage')!;
   }
 }

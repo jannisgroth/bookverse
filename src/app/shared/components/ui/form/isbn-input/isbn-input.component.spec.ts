@@ -8,9 +8,8 @@ describe('IsbnInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IsbnInputComponent]
-    })
-    .compileComponents();
+      imports: [IsbnInputComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IsbnInputComponent);
     component = fixture.componentInstance;

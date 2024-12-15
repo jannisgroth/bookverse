@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-radio',
   imports: [],
   templateUrl: './radio.component.html',
-  styleUrl: './radio.component.css'
+  styleUrl: './radio.component.css',
 })
 export class RadioComponent {
   @Input() name!: string;

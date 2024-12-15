@@ -8,12 +8,12 @@ import {
 } from '@angular/forms';
 
 @Component({
-  selector: 'app-isbn-input',
+  selector: 'app-rabatt-input',
   imports: [ReactiveFormsModule, NgClass],
-  templateUrl: './isbn-input.component.html',
-  styleUrl: './isbn-input.component.css',
+  templateUrl: './rabatt-input.component.html',
+  styleUrl: './rabatt-input.component.css',
 })
-export class IsbnInputComponent {
+export class RabattInputComponent {
   // Signal für die FormGroup
   buchForm = input.required<FormGroup>();
 
@@ -21,14 +21,14 @@ export class IsbnInputComponent {
 
   ngOnInit(): void {
     const formControl = new FormControl('', [
-      Validators.required,
-      Validators.pattern(/^\d{3}-\d{1,5}-\d{1,7}-\d{1,7}-\d{1}$/),
+      Validators.min(0),
+      Validators.max(100),
     ]);
 
-    this.buchForm().addControl('isbn', formControl);
+    this.buchForm().addControl('rabatt', formControl);
   }
 
-  get isbn() {
-    return this.buchForm().get('isbn')!;
+  get rabatt() {
+    return this.buchForm().get('rabatt')!;
   }
 }

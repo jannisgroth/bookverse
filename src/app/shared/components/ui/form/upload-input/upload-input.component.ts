@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-upload-input',
   imports: [],
   templateUrl: './upload-input.component.html',
-  styleUrl: './upload-input.component.css'
+  styleUrl: './upload-input.component.css',
 })
-export class UploadInputComponent {
-
-}
+export class UploadInputComponent {}

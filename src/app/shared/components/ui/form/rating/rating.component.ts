@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-rating',
   imports: [],
   templateUrl: './rating.component.html',
-  styleUrl: './rating.component.css'
+  styleUrl: './rating.component.css',
 })
-export class RatingComponent {
-
-}
+export class RatingComponent {}

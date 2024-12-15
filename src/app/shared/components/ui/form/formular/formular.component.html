@@ -6,8 +6,44 @@
                 <app-titel-input [buchForm]="buchForm"></app-titel-input>
             </div>
             <div class="form-col">
+                <app-untertitel-input [buchForm]="buchForm"></app-untertitel-input>
+
+            </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="form-row">
+            <div class="form-col">
                 <app-isbn-input [buchForm]="buchForm"></app-isbn-input>
             </div>
+            <div class="form-col">
+                <app-homepage-input [buchForm]="buchForm"></app-homepage-input>
+            </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="form-row">
+            <div class="form-col">
+                <app-datum-input [buchForm]="buchForm"></app-datum-input>
+            </div>
+            <div class="form-col">
+                <app-drop-down [buchForm]="buchForm"></app-drop-down>
+            </div>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="form-row">
+            <div class="form-col">
+                <app-preis-input [buchForm]="buchForm"></app-preis-input>
+            </div>
+            <div class="form-col">
+                <app-rabatt-input [buchForm]="buchForm"></app-rabatt-input>
+            </div>
+        </div>
+
+        <!-- Row 5 -->
+        <div lass="grid grid-cols-4 gap-5 place-items-center">
+            <app-schlagwoerter-checkbox [buchForm]="buchForm"></app-schlagwoerter-checkbox>
         </div>
         <!-- Submit Button -->
         <div class="flex justify-end">
