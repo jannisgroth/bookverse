@@ -15,6 +15,7 @@ import {
 export class SchlagwoerterCheckboxComponent {
   // Signal für die FormGroup
   buchForm = input.required<FormGroup>();
+  labelName = input.required<String>();
 
   constructor() { }
 

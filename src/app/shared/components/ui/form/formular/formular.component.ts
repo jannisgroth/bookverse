@@ -25,6 +25,8 @@ import { RabattInputComponent } from '../rabatt-input/rabatt-input.component';
     DatumInputComponent,
     PreisInputComponent,
     RabattInputComponent,
+    RatingComponent,
+    UploadInputComponent
   ],
   templateUrl: './formular.component.html',
   styleUrl: './formular.component.css',
@@ -37,9 +39,6 @@ export class FormularComponent {
   //   Validators.required,
   //   Validators.min(1),
   //   Validators.max(5)
-  // ]),
-  // preis: new FormControl('', [
-  //   Validators.min(0)
   // ]),
 
   onSubmit() {

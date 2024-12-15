@@ -1,34 +1,8 @@
-<div [formGroup]="buchForm()"> <!-- Zugriff auf die tatsächliche FormGroup -->
-    <div class="text-center">
-        <label class="label">
-            <span class="label-text text-lg font-semibold">JavaScript</span>
-        </label>
-        <div>
-            <input type="checkbox" class="checkbox checkbox-primary" />
-        </div>
-    </div>
-    <div class="text-center">
-        <label class="label">
-            <span class="label-text text-lg font-semibold">Java</span>
-        </label>
-        <div>
-            <input type="checkbox" class="checkbox checkbox-primary" />
-        </div>
-    </div>
-    <div class="text-center">
-        <label class="label">
-            <span class="label-text text-lg font-semibold">Python</span>
-        </label>
-        <div>
-            <input type="checkbox" class="checkbox checkbox-primary" />
-        </div>
-    </div>
-    <div class="text-center">
-        <label class="label">
-            <span class="label-text text-lg font-semibold">TypeScript</span>
-        </label>
-        <div>
-            <input type="checkbox" class="checkbox checkbox-primary" />
-        </div>
+<div [formGroup]="buchForm()" class="text-center"> <!-- Zugriff auf die tatsächliche FormGroup -->
+    <label class="label">
+        <span class="label-text text-lg font-semibold">{{ labelName() }}</span>
+    </label>
+    <div>
+        <input type="checkbox" class="checkbox checkbox-primary" />
     </div>
 </div>

@@ -42,8 +42,21 @@
         </div>
 
         <!-- Row 5 -->
-        <div lass="grid grid-cols-4 gap-5 place-items-center">
-            <app-schlagwoerter-checkbox [buchForm]="buchForm"></app-schlagwoerter-checkbox>
+        <div class="grid grid-cols-4 gap-5 place-items-center">
+            <app-schlagwoerter-checkbox [buchForm]="buchForm" labelName="JavaScript"></app-schlagwoerter-checkbox>
+            <app-schlagwoerter-checkbox [buchForm]="buchForm" labelName="Java"></app-schlagwoerter-checkbox>
+            <app-schlagwoerter-checkbox [buchForm]="buchForm" labelName="Python"></app-schlagwoerter-checkbox>
+            <app-schlagwoerter-checkbox [buchForm]="buchForm" labelName="TypeScript"></app-schlagwoerter-checkbox>
+        </div>
+
+        <!-- Row 6 -->
+        <div class="form-row">
+            <div class="form-col place-items-center">
+                <app-rating [buchForm]="buchForm"></app-rating>
+            </div>
+            <div class="form-col place-items-center">
+                <app-upload-input></app-upload-input>
+            </div>
         </div>
         <!-- Submit Button -->
         <div class="flex justify-end">
