@@ -1,0 +1,7 @@
+.subtitle {
+  color: #888; /* Graue Farbe */
+  opacity: 0.7; /* Leicht transparent */
+}
+.modal-box {
+  position: relative;
+}

@@ -1,11 +1,36 @@
 <dialog #modal id="modal" class="modal min-h-96">
-    <div class="modal-box">
-        <h3 class="text-lg font-bold">{{ buch?.titel?.titel }}</h3>
-        <p class="py-4">Press ESC key or click the button below to close</p>
-        <div class="modal-action">
-            <form method="dialog">
-                <button class="btn" (click)="closeModal(modal)">Close</button>
-            </form>
-        </div>
+  <div class="modal-box flex">
+    <figure class="flex-shrink-0">
+      <img [src]="buch?.file" alt="Book-File" class="w-48 h-auto rounded" />
+    </figure>
+    <div class="ml-4">
+      <div class="header">
+        <h3 class="text-lg font-bold">
+          {{ buch?.titel?.titel }}
+          <span style="font-size: 1.5rem; font-weight: 300; margin-left: 50px">
+            {{ buch?.preis }} €
+          </span>
+        </h3>
+        <h3 class="text-lg font-bold subtitle">
+          {{ buch?.titel?.untertitel }}
+          <div class="rating">
+            <span
+              style="margin-left: 50px"
+              class="mask mask-star-2 bg-primary w-5 h-5"></span>
+            <span class="mask mask-star-2 bg-primary w-5 h-5"></span>
+            <span class="mask mask-star-2 bg-primary w-5 h-5"></span>
+            <span class="mask mask-star-2 bg-primary w-5 h-5"></span>
+            <span class="mask mask-star-2 bg-primary w-5 h-5"></span>
+          </div>
+        </h3>
+        <h3 class="text-lg font-bold">{{ buch?.schlagwoerter }}</h3>
+        <h3 class="text-lg font-bold">{{ buch?.art }}</h3>
+      </div>
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn">Close</button>
+        </form>
+      </div>
     </div>
+  </div>
 </dialog>
