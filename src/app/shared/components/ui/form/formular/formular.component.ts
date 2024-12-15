@@ -34,7 +34,13 @@ import { RabattInputComponent } from '../rabatt-input/rabatt-input.component';
 export class FormularComponent {
   isbnPattern = /^(?:\d{9}[\dX]|\d{13})$/;
   buchForm = new FormGroup({});
-  validate = signal<boolean>(this.buchForm.valid);
+  validate = signal(false);
+
+  constructor() {
+    this.buchForm.statusChanges.subscribe(() => {
+      this.validate.set(this.buchForm.invalid);
+    });
+  }
 
   // rating: new FormControl('', [
   //   Validators.required,
@@ -49,6 +55,4 @@ export class FormularComponent {
       console.log('Formular ist ungültig');
     }
   }
-
-
 }
