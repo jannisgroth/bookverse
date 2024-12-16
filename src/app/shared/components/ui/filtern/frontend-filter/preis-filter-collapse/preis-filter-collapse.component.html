@@ -1,1 +1,24 @@
-<p>preis-filter-collapse works!</p>
+<div class="collapse bg-base-200 sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto">
+  <input type="checkbox" />
+  <div class="collapse-title text-xl font-medium">Preis</div>
+  <div class="collapse-content relative">
+    <!-- Slider Input -->
+    <input
+      id="rangeInput"
+      type="range"
+      min="0"
+      max="250"
+      value="40"
+      class="range range-primary w-full"
+      (change)="setPreisFilter($event.target!)"
+      (mouseover)="tooltip = true"
+      (mouseout)="tooltip = false" />
+
+    <!-- Tooltip -->
+    <div
+      id="tooltip"
+      class="hidden absolute top-[-2rem] left-1/2 transform -translate-x-1/2 bg-primary text-white text-xs font-semibold px-2 py-1 rounded">
+      {{ preisFilter() }}
+    </div>
+  </div>
+</div>

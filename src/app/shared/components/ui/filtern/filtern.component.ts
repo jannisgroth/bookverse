@@ -1,17 +1,19 @@
 import { Component, Input, signal, WritableSignal } from '@angular/core';
-import { ArtFilterCollapseComponent } from './backend-filter/art-filter-collapse/art-filter-collapse.component';
-import { LieferbarFilterCollapseComponent } from './backend-filter/lieferbar-filter-collapse/lieferbar-filter-collapse.component';
-import { SchlagwoerterFilterCollapseComponent } from './backend-filter/schlagwoerter-filter-collapse/schlagwoerter-filter-collapse.component';
 import { Buch } from '../../../models/buch.model';
+import { LieferbarFilterCollapseComponent } from './backend-filter/lieferbar-filter-collapse/lieferbar-filter-collapse.component';
+import { ArtFilterCollapseComponent } from './backend-filter/art-filter-collapse/art-filter-collapse.component';
+import { SchlagwoerterFilterCollapseComponent } from './backend-filter/schlagwoerter-filter-collapse/schlagwoerter-filter-collapse.component';
 import { RatingFilterCollapseComponent } from './frontend-filter/rating-filter-collapse/rating-filter-collapse.component';
+import { PreisFilterCollapseComponent } from './frontend-filter/preis-filter-collapse/preis-filter-collapse.component';
 
 @Component({
   selector: 'app-filtern',
   imports: [
-    ArtFilterCollapseComponent,
     LieferbarFilterCollapseComponent,
+    ArtFilterCollapseComponent,
     SchlagwoerterFilterCollapseComponent,
     RatingFilterCollapseComponent,
+    PreisFilterCollapseComponent,
   ],
   templateUrl: './filtern.component.html',
   styleUrl: './filtern.component.css',
@@ -21,8 +23,7 @@ export class FilternComponent {
   private entfernteBuecher: Buch[];
 
   readonly ratingFilter = signal<number | undefined>(undefined);
-  readonly preisUntergrenzeFilter = signal<string | undefined>(undefined);
-  readonly preisObergrenzeFilter = signal<string | undefined>(undefined);
+  readonly preisFilter = signal<string | undefined>(undefined);
   readonly rabattFilter = signal<string | undefined>(undefined);
   readonly datumUntergrenzeFilter = signal<string | undefined>(undefined);
   readonly datumObergrenzeFilter = signal<Date | undefined>(undefined);
@@ -43,14 +44,8 @@ export class FilternComponent {
       buch =>
         // filter nach Rating
         (this.ratingFilter() ? buch.rating! >= this.ratingFilter()! : true) &&
-        // filter nach Preisuntergrenze
-        (this.preisUntergrenzeFilter()
-          ? this.preisUntergrenzeFilter()! <= buch.preis
-          : true) &&
-        // filter nach Preisobergrenze
-        (this.preisObergrenzeFilter()
-          ? buch.preis <= this.preisObergrenzeFilter()!
-          : true) &&
+        // filter nach Preis
+        (this.preisFilter() ? +this.preisFilter()! >= +buch.preis : true) &&
         // filter nach Datumsuntergrenze
         (this.datumUntergrenzeFilter()
           ? this.datumUntergrenzeFilter()! <= buch.datum!
