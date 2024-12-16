@@ -36,44 +36,34 @@ export class FilternComponent {
    * GET Request filtern lassen.
    */
   frontendFilter() {
-    console.log(this.buecher);
-    console.log(this.buecher());
     const alleBuecher = [...this.buecher(), ...this.entfernteBuecher];
     let passendeBuecher: Buch[] = [];
-    let herausgefilterteBuecher: Buch[] = [];
 
-    alleBuecher.forEach(buch => {
-      // Rating Filter ist gesetzt und kleiner gleich Buchrating
-      this.ratingFilter() && this.ratingFilter()! <= buch.rating!
-        ? passendeBuecher.push(buch)
-        : herausgefilterteBuecher.push(buch);
-
-      // Filter für Preisober- und Untergrenze sind gesetzt und
-      // Buchpreis ist dazwischen
-      // Typecasting von string zu number mit Unary Plus Operator (+)
-      this.preisUntergrenzeFilter() &&
-      this.preisObergrenzeFilter() &&
-      +this.preisUntergrenzeFilter()! <= +buch.preis &&
-      +buch.preis <= +this.preisObergrenzeFilter()!
-        ? passendeBuecher.push(buch)
-        : herausgefilterteBuecher.push(buch);
-
-      // Filter für Rabatt ist gesetzt und kleiner gleich Buchrabatt
-      this.rabattFilter() && this.rabattFilter()! <= buch.rabatt!
-        ? passendeBuecher.push(buch)
-        : herausgefilterteBuecher.push(buch);
-
-      // Filter für Datumsober- und Untergrenze sind gesetzt und
-      // Buchdatum ist dazwischen
-      this.datumUntergrenzeFilter() &&
-      this.datumObergrenzeFilter() &&
-      this.datumUntergrenzeFilter()! <= buch.datum! &&
-      buch.datum! <= this.datumObergrenzeFilter()!
-        ? passendeBuecher.push(buch)
-        : herausgefilterteBuecher.push(buch);
-    });
+    passendeBuecher = [...alleBuecher].filter(
+      buch =>
+        // filter nach Rating
+        (this.ratingFilter() ? buch.rating! >= this.ratingFilter()! : true) &&
+        // filter nach Preisuntergrenze
+        (this.preisUntergrenzeFilter()
+          ? this.preisUntergrenzeFilter()! <= buch.preis
+          : true) &&
+        // filter nach Preisobergrenze
+        (this.preisObergrenzeFilter()
+          ? buch.preis <= this.preisObergrenzeFilter()!
+          : true) &&
+        // filter nach Datumsuntergrenze
+        (this.datumUntergrenzeFilter()
+          ? this.datumUntergrenzeFilter()! <= buch.datum!
+          : true) &&
+        // filter nach Datumsobergrenze
+        (this.datumObergrenzeFilter()
+          ? buch.datum! <= this.datumObergrenzeFilter()!
+          : true)
+    );
+    this.entfernteBuecher = [...alleBuecher].filter(
+      buch => !passendeBuecher.includes(buch)
+    );
 
     this.buecher.set(passendeBuecher);
-    this.entfernteBuecher = herausgefilterteBuecher;
   }
 }
