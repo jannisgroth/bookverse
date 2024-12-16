@@ -1,6 +1,6 @@
 <!-- Sortierreihenfolge -->
 <button class="btn no-animation join-item" (click)="buecherRangfolge()">
-  <div [ngSwitch]="rangfolge()">
+  <div [ngSwitch]="rangfolge()()">
     <!-- aufsteigend -->
     <svg
       *ngSwitchCase="'Aufsteigend'"
@@ -31,5 +31,5 @@
         d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
     </svg>
   </div>
-  <label class="hide-label">{{ rangfolge() }} </label>
+  <label class="hide-label">{{ rangfolge()() }} </label>
 </button>

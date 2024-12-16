@@ -1,4 +1,4 @@
-import { Component, Input, WritableSignal } from '@angular/core';
+import { Component, WritableSignal, input } from '@angular/core';
 import { FilternComponent } from '../../filtern.component';
 
 @Component({
@@ -8,7 +8,7 @@ import { FilternComponent } from '../../filtern.component';
   styleUrl: './preis-filter-collapse.component.css',
 })
 export class PreisFilterCollapseComponent {
-  @Input() preisFilter!: WritableSignal<string | undefined>;
+  readonly preisFilter = input.required<WritableSignal<string | undefined>>();
 
   readonly filter: FilternComponent;
   tooltip: boolean = false;
@@ -19,7 +19,7 @@ export class PreisFilterCollapseComponent {
 
   setPreisFilter(target: EventTarget) {
     const value = (target as HTMLInputElement).value;
-    this.preisFilter.set(value);
+    this.preisFilter().set(value);
     this.filter.frontendFilter();
   }
 
@@ -30,7 +30,7 @@ export class PreisFilterCollapseComponent {
         '[name="defaultRatingFilter"]'
       );
       (defaultRating as HTMLInputElement).checked = true;
-      this.preisFilter.set(undefined);
+      this.preisFilter().set(undefined);
       setTimeout(() => {
         this.filter.frontendFilter();
       }, 200);

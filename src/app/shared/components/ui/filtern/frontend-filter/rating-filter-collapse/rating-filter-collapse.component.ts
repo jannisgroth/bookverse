@@ -1,4 +1,4 @@
-import { Component, Input, WritableSignal } from '@angular/core';
+import { Component, WritableSignal, input } from '@angular/core';
 import { FilternComponent } from '../../filtern.component';
 
 @Component({
@@ -8,7 +8,7 @@ import { FilternComponent } from '../../filtern.component';
   styleUrl: './rating-filter-collapse.component.css',
 })
 export class RatingFilterCollapseComponent {
-  @Input() ratingFilter!: WritableSignal<number | undefined>;
+  readonly ratingFilter = input.required<WritableSignal<number | undefined>>();
   readonly filter: FilternComponent;
 
   constructor() {
@@ -16,7 +16,7 @@ export class RatingFilterCollapseComponent {
   }
 
   RatingFilterSetter(rating: number) {
-    this.ratingFilter.set(rating);
+    this.ratingFilter().set(rating);
     this.filter.frontendFilter();
   }
 
@@ -27,7 +27,7 @@ export class RatingFilterCollapseComponent {
         '[name="defaultRatingFilter"]'
       );
       (defaultRating as HTMLInputElement).checked = true;
-      this.ratingFilter.set(undefined);
+      this.ratingFilter().set(undefined);
       setTimeout(() => {
         this.filter.frontendFilter();
       }, 200);

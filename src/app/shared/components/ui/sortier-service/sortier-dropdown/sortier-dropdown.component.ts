@@ -1,4 +1,4 @@
-import { Component, Input, signal, WritableSignal } from '@angular/core';
+import { Component, signal, WritableSignal, input } from '@angular/core';
 import { LoggerService } from '../../../../../core/logging/logger.service';
 import { Buch } from '../../../../models/buch.model';
 import { SortierServiceComponent } from '../../sortier-service/sortier-service.component';
@@ -10,12 +10,15 @@ import { SortierServiceComponent } from '../../sortier-service/sortier-service.c
   styleUrl: './sortier-dropdown.component.css',
 })
 export class SortierDropdownComponent {
-  @Input() sortierkriterium!: WritableSignal<
-    keyof Omit<
-      Buch,
-      'art' | 'lieferbar' | 'homepage' | 'schlagwoerter' | '_links' | 'file'
-    >
-  >;
+  readonly sortierkriterium =
+    input.required<
+      WritableSignal<
+        keyof Omit<
+          Buch,
+          'art' | 'lieferbar' | 'homepage' | 'schlagwoerter' | '_links' | 'file'
+        >
+      >
+    >();
 
   readonly sortierkriterien = [
     'isbn',
@@ -43,8 +46,10 @@ export class SortierDropdownComponent {
       this.logger.error(`Ungültiges Sortierkriterium: ${sortierkriterium}`);
       return;
     }
-    this.sortierkriterium.set(
-      sortierkriterium as ReturnType<typeof this.sortierkriterium>
+    this.sortierkriterium().set(
+      sortierkriterium as unknown as ReturnType<
+        typeof this.sortierkriterium.arguments
+      >
     );
     this.sortierservice.buecherUpdate();
   }
