@@ -29,7 +29,7 @@ import { SuchleisteComponent } from '../../shared/components/ui/suchleiste/suchl
 })
 export class BibliothekComponent implements OnInit {
   readonly selectedBuchSignal = signal<Buch | undefined>(undefined);
-  titelInput: string = '';
+  readonly buecher = signal<Buch[]>([]);
 
   /**
    * Erzeugt ein neues BibliothekComponent
@@ -39,10 +39,10 @@ export class BibliothekComponent implements OnInit {
   constructor(
     private readService: ReadService,
     private logger: LoggerService
-  ) {}
-  get buecher() {
-    return this.readService.buecher;
+  ) {
+    readService.getBuecherMitBild(this.buecher);
   }
+
   get loading() {
     return this.readService.loading;
   }
@@ -59,7 +59,7 @@ export class BibliothekComponent implements OnInit {
    */
   ngOnInit(): void {
     // API-Aufruf, um die Bücher zu laden
-    this.readService.getBuecherMitBild();
+    this.readService.getBuecherMitBild(this.buecher);
   }
   /**
    * Zeigt das Modal an, indem es den selectedBuchSignal mit dem uebergebenen Buch setzt

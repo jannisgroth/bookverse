@@ -1,7 +1,14 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  input,
+  Output,
+  WritableSignal,
+} from '@angular/core';
 import { ReadService } from '../../../../core/api/http-read.service';
 import { LoggerService } from '../../../../core/logging/logger.service';
 import { FormsModule } from '@angular/forms';
+import { Buch } from '../../../models/buch.model';
 
 @Component({
   selector: 'app-suchleiste',
@@ -10,6 +17,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './suchleiste.component.css',
 })
 export class SuchleisteComponent {
+  readonly buecher = input.required<WritableSignal<Buch[]>>();
   constructor(
     private readService: ReadService,
     private logger: LoggerService
@@ -24,7 +32,7 @@ export class SuchleisteComponent {
       this.titelInput;
       this.readService.titelFilter.set(this.titelInput);
 
-      this.readService.getBuecherMitBild();
+      this.readService.getBuecherMitBild(this.buecher());
       this.logger.debug(
         'buecher wurden mit Titel Filter geladen',
         this.readService.titelFilter()

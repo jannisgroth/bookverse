@@ -1,9 +1,10 @@
-import { Component, Injectable, OnInit, signal } from '@angular/core';
+import { Component, Injectable, OnInit, Signal, signal } from '@angular/core';
 import { CarouselComponent } from '../../shared/components/ui/carousel/carousel.component';
 import { ReadService } from '../../core/api/http-read.service';
 import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-alert/error-alert.component';
 import { NgIf } from '@angular/common';
 import { LoggerService } from '../../core/logging/logger.service';
+import { Buch } from '../../shared/models/buch.model';
 
 @Component({
   selector: 'app-overview',
@@ -13,13 +14,12 @@ import { LoggerService } from '../../core/logging/logger.service';
   styleUrl: './overview.component.css',
 })
 export class OverviewComponent implements OnInit {
+  buecher = signal<Buch[]>([]);
   constructor(
     private readservice: ReadService,
     private logger: LoggerService
   ) {}
-  get buecher() {
-    return this.readservice.buecher;
-  }
+
   get loading() {
     return this.readservice.loading;
   }
@@ -37,6 +37,6 @@ export class OverviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.readservice.getBuecherMitBild();
+    this.readservice.getBuecherMitBild(this.buecher);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, signal, WritableSignal } from '@angular/core';
+import { Component, input, Input, signal, WritableSignal } from '@angular/core';
 import { Buch } from '../../../models/buch.model';
 import { LieferbarFilterCollapseComponent } from './backend-filter/lieferbar-filter-collapse/lieferbar-filter-collapse.component';
 import { ArtFilterCollapseComponent } from './backend-filter/art-filter-collapse/art-filter-collapse.component';
@@ -19,7 +19,7 @@ import { PreisFilterCollapseComponent } from './frontend-filter/preis-filter-col
   styleUrl: './filtern.component.css',
 })
 export class FilternComponent {
-  @Input() buecher!: WritableSignal<Buch[]>;
+  readonly buecher = input.required<WritableSignal<Buch[]>>();
   private entfernteBuecher: Buch[];
 
   readonly ratingFilter = signal<number | undefined>(undefined);
@@ -37,7 +37,7 @@ export class FilternComponent {
    * GET Request filtern lassen.
    */
   frontendFilter() {
-    const alleBuecher = [...this.buecher(), ...this.entfernteBuecher];
+    const alleBuecher = [...this.buecher()(), ...this.entfernteBuecher];
     let passendeBuecher: Buch[] = [];
 
     passendeBuecher = [...alleBuecher].filter(
@@ -59,6 +59,6 @@ export class FilternComponent {
       buch => !passendeBuecher.includes(buch)
     );
 
-    this.buecher.set(passendeBuecher);
+    this.buecher().set(passendeBuecher);
   }
 }

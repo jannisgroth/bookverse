@@ -1,4 +1,4 @@
-import { Injectable, signal, effect } from '@angular/core';
+import { Injectable, signal, effect, WritableSignal } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Buch, BuchArt } from '../../shared/models/buch.model';
 import { LoggerService } from '../logging/logger.service';
@@ -7,7 +7,6 @@ import { LoggerService } from '../logging/logger.service';
 export class ReadService {
   readonly restUrl: string = 'https://localhost:3000/rest';
 
-  readonly buecher = signal<Buch[]>([]);
   readonly loading = signal<boolean>(true);
   readonly error = signal<{ show: boolean; message: string }>({
     show: false,
@@ -32,7 +31,7 @@ export class ReadService {
     private readonly logger: LoggerService
   ) {} // Dependency injection
 
-  getBuecherMitBild() {
+  getBuecherMitBild(buecher: WritableSignal<Buch[]>) {
     //params enthält die Queryparameter aus den Signals
     const params = this.paramsBuilder();
 
@@ -40,18 +39,17 @@ export class ReadService {
       .get<{ _embedded: { buecher: Buch[] } }>(`${this.restUrl}`, { params })
       .subscribe({
         next: response => {
-          const buecher = response._embedded.buecher;
+          buecher.set(response._embedded.buecher);
 
           this.getBuecherMitFile(buecher);
 
-          this.buecher.set(buecher);
           this.logger.debug('Bücher erfolgreich geladen:', buecher);
           this.loading.set(false);
         },
         error: error => {
           this.logger.error('Fehler beim Abrufen der Bücher:', error);
           //alert('keine Bücher gefunden!');
-          this.buecher.set([]); // Leere Liste im Fehlerfall
+          buecher.set([]); // Leere Liste im Fehlerfall
           this.loading.set(false);
           this.error.set({
             show: true,
@@ -70,8 +68,8 @@ export class ReadService {
    * Wenn am Ende mindestens ein Buch kein Bild hat, wird eine Fehlermeldung angezeigt.
    * @param buecher Die Bücher, fuer die die Bild-Dateien geladen werden sollen.
    */
-  async getBuecherMitFile(buecher: Buch[]) {
-    const loadFiles = buecher.map(async buch => {
+  async getBuecherMitFile(buecher: WritableSignal<Buch[]>) {
+    const loadFiles = buecher().map(async buch => {
       const url = buch._links.self.href;
       const id = Number(url?.substring(url.lastIndexOf('/') + 1));
 
@@ -85,7 +83,7 @@ export class ReadService {
     });
     await Promise.all(loadFiles);
 
-    const fileExist = buecher.some(buch => buch.file !== undefined);
+    const fileExist = buecher().some(buch => buch.file !== undefined);
 
     if (!fileExist) {
       this.errorBilder.set({

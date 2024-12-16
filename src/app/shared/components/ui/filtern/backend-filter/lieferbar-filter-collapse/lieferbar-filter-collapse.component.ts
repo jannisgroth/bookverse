@@ -1,5 +1,6 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, input, WritableSignal } from '@angular/core';
 import { ReadService } from '../../../../../../core/api/http-read.service';
+import { Buch } from '../../../../../models/buch.model';
 
 @Component({
   selector: 'app-lieferbar-filter-collapse',
@@ -8,6 +9,7 @@ import { ReadService } from '../../../../../../core/api/http-read.service';
   styleUrl: './lieferbar-filter-collapse.component.css',
 })
 export class LieferbarFilterCollapseComponent {
+  readonly buecher = input.required<WritableSignal<Buch[]>>();
   private readService: ReadService;
   private lieferbarFilter;
 
@@ -21,7 +23,7 @@ export class LieferbarFilterCollapseComponent {
       'lieferbarCheckbox'
     ) as HTMLInputElement)!.checked;
     this.lieferbarFilter.set(checked);
-    this.readService.getBuecherMitBild();
+    this.readService.getBuecherMitBild(this.buecher());
   }
 
   uncheck(target: EventTarget) {
@@ -32,7 +34,7 @@ export class LieferbarFilterCollapseComponent {
     if (!(target as HTMLInputElement).checked) {
       this.lieferbarFilter.set(undefined);
       setTimeout(() => {
-        this.readService.getBuecherMitBild();
+        this.readService.getBuecherMitBild(this.buecher());
       }, 200);
     }
   }

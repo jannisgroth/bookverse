@@ -1,7 +1,8 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, input, WritableSignal } from '@angular/core';
 
 import { ReadService } from '../../../../../../core/api/http-read.service';
 import { CommonModule } from '@angular/common';
+import { Buch } from '../../../../../models/buch.model';
 
 @Component({
   selector: 'app-schlagwoerter-filter-collapse',
@@ -10,6 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './schlagwoerter-filter-collapse.component.css',
 })
 export class SchlagwoerterFilterCollapseComponent {
+  readonly buecher = input.required<WritableSignal<Buch[]>>();
   private readService: ReadService;
   private schlagwoerterFilter;
   options = [
@@ -32,7 +34,7 @@ export class SchlagwoerterFilterCollapseComponent {
         ? schlagwoerter.concat(value)
         : schlagwoerter.filter(item => item !== value)
     );
-    this.readService.getBuecherMitBild();
+    this.readService.getBuecherMitBild(this.buecher());
   }
 
   uncheck(target: EventTarget) {
@@ -45,7 +47,7 @@ export class SchlagwoerterFilterCollapseComponent {
       });
       this.schlagwoerterFilter.set([]);
       setTimeout(() => {
-        this.readService.getBuecherMitBild();
+        this.readService.getBuecherMitBild(this.buecher());
       }, 200);
     }
   }
