@@ -8,7 +8,7 @@ import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-ale
 import { LoggerService } from '../../core/logging/logger.service';
 import { SortierServiceComponent } from '../../shared/components/ui/sortier-service/sortier-service.component';
 import { FilternComponent } from '../../shared/components/ui/filtern/filtern.component';
-import { FormsModule } from '@angular/forms';
+import { SuchleisteComponent } from '../../shared/components/ui/suchleiste/suchleiste.component';
 
 @Component({
   standalone: true,
@@ -21,7 +21,7 @@ import { FormsModule } from '@angular/forms';
     ErrorAlertComponent,
     SortierServiceComponent,
     FilternComponent,
-    FormsModule,
+    SuchleisteComponent,
   ],
   templateUrl: './bibliothek.component.html',
   styleUrl: './bibliothek.component.css',
@@ -70,21 +70,5 @@ export class BibliothekComponent implements OnInit {
     this.selectedBuchSignal.set(buch);
     const modal: HTMLDialogElement = document.querySelector('#modal')!;
     if (modal) modal.showModal();
-  }
-  private debounceZeit: ReturnType<typeof setTimeout> | undefined;
-  onSubmit() {
-    clearTimeout(this.debounceZeit);
-
-    this.debounceZeit = setTimeout(() => {
-      this.titelInput;
-      this.readService.titelFilter.set(this.titelInput);
-      this.readService.loading.set(true);
-
-      this.readService.getBuecherMitBild();
-      this.logger.debug(
-        'buecher wurden mit Titel Filter geladen',
-        this.readService.titelFilter()
-      );
-    }, 800);
   }
 }
