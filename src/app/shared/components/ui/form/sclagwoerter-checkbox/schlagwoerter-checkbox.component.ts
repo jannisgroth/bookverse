@@ -1,10 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component, input } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-schlagwoerter-checkbox',
@@ -15,17 +11,17 @@ import {
 export class SchlagwoerterCheckboxComponent {
   // Signal für die FormGroup
   buchForm = input.required<FormGroup>();
-  labelName = input.required<String>();
+  labelName = input.required<string>();
 
   constructor() { }
 
   ngOnInit(): void {
-    const formControl = new FormControl('');
+    const formControl = new FormControl(false);
 
-    this.buchForm().addControl('schlagwoerter', formControl);
+    this.buchForm().addControl(this.labelName(), formControl);
   }
 
   get schlagwoerter() {
-    return this.buchForm().get('schlagwoerter')!;
+    return this.buchForm().get(this.labelName())!;
   }
 }

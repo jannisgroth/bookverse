@@ -12,12 +12,13 @@ export class RatingRadioComponent {
   // Signal für die FormGroup
   buchForm = input.required<FormGroup>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     const formControl = new FormControl('');
 
     this.buchForm().addControl('rating', formControl);
+    this.buchForm;
   }
 
   get rating() {

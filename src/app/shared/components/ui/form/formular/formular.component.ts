@@ -11,6 +11,8 @@ import { HomepageInputComponent } from '../homepage-input/homepage-input.compone
 import { DatumInputComponent } from '../datum-input/datum-input.component';
 import { PreisInputComponent } from '../preis-input/preis-input.component';
 import { RabattInputComponent } from '../rabatt-input/rabatt-input.component';
+import { Buch, BuchPost } from '../../../../models/buch.model';
+import { LieferbarCheckboxComponent } from '../lieferbar-checkbox/lieferbar-checkbox.component';
 
 @Component({
   selector: 'app-formular',
@@ -26,33 +28,34 @@ import { RabattInputComponent } from '../rabatt-input/rabatt-input.component';
     PreisInputComponent,
     RabattInputComponent,
     RatingRadioComponent,
-    UploadInputComponent
+    UploadInputComponent,
+    LieferbarCheckboxComponent,
   ],
   templateUrl: './formular.component.html',
   styleUrl: './formular.component.css',
 })
 export class FormularComponent {
-  isbnPattern = /^(?:\d{9}[\dX]|\d{13})$/;
-  buchForm = new FormGroup({});
-  validate = signal(false);
+  protected buchForm = new FormGroup({});
 
-  constructor() {
-    this.buchForm.statusChanges.subscribe(() => {
-      this.validate.set(this.buchForm.invalid);
-    });
-  }
-
-  // rating: new FormControl('', [
-  //   Validators.required,
-  //   Validators.min(1),
-  //   Validators.max(5)
-  // ]),
-
+  constructor() { }
   onSubmit() {
+    const gewählteSchlagwoerter = Object.keys(this.buchForm.controls).filter(
+      key => this.buchForm.get(key)?.value === true
+    );
+
+    const buchDTO = {
+      isbn: this.buchForm.get('isbn')?.value
+    }
+
     if (this.buchForm.valid) {
-      console.log(this.buchForm.value);
+      console.log(this.buchForm.value, gewählteSchlagwoerter);
+      console.log(buchDTO.isbn)
     } else {
       console.log('Formular ist ungültig');
     }
   }
 }
+
+
+
+// TODO: const Objekt für Buch statt Interface
