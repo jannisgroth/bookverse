@@ -10,8 +10,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class SchlagwoerterCheckboxComponent {
   // Signal für die FormGroup
-  buchForm = input.required<FormGroup>();
-  protected schlagwoerter = ['JAVASCRIPT', 'JAVA', 'PYTHON', 'TYPESCRIPT'];
+  readonly buchForm = input.required<FormGroup>();
+  protected readonly schlagwoerter = ['JAVASCRIPT', 'JAVA', 'PYTHON', 'TYPESCRIPT'];
 
 
   constructor() { }

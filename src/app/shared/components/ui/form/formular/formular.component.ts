@@ -48,8 +48,8 @@ export class FormularComponent {
 
       const buchDTO = {
         isbn: this.buchForm.get('isbn')?.value,
-        rating: this.buchForm.get('rating')?.value,
-        art: this.buchForm.get('buchart')?.value === "wählen" ? undefined : this.buchForm.get('buchart')?.value,
+        rating: Number(this.buchForm.get('rating')?.value),
+        art: this.buchForm.get('buchart')?.value === "wählen" ? null : this.buchForm.get('buchart')?.value,
         preis: this.buchForm.get('preis')?.value,
         rabatt: this.buchForm.get('rabatt')?.value,
         lieferbar: this.buchForm.get('lieferbar')?.value,

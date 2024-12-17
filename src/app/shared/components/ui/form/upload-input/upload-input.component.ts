@@ -8,7 +8,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './upload-input.component.css',
 })
 export class UploadInputComponent {
-  buchForm = input.required<FormGroup>();
+  readonly buchForm = input.required<FormGroup>();
 
   constructor() { }
 

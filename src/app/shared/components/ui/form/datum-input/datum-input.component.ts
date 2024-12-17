@@ -9,7 +9,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class DatumInputComponent {
   // Signal für die FormGroup
-  buchForm = input.required<FormGroup>();
+  readonly buchForm = input.required<FormGroup>();
 
   constructor() { }
 

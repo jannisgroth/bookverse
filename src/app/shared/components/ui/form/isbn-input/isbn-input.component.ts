@@ -15,7 +15,7 @@ import {
 })
 export class IsbnInputComponent {
   // Signal für die FormGroup
-  buchForm = input.required<FormGroup>();
+  readonly buchForm = input.required<FormGroup>();
 
   constructor() { }
 

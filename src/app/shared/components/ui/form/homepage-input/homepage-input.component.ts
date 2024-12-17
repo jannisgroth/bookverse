@@ -15,12 +15,12 @@ import {
 })
 export class HomepageInputComponent {
   // Signal für die FormGroup
-  buchForm = input.required<FormGroup>();
+  readonly buchForm = input.required<FormGroup>();
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
-    const formControl = new FormControl('', [
+    const formControl = new FormControl(undefined, [
       Validators.pattern(
         /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
       ),
