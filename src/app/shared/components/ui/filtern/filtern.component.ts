@@ -55,7 +55,7 @@ export class FilternComponent {
   frontendFilter() {
     this.readService.getBuecherMitBild(this.buecher());
 
-    const passendeBuecher = [...this.buecher()()].filter(
+    const passendeBuecher = this.buecher()().filter(
       buch =>
         // filter nach Rating
         (this.ratingFilter() ? buch.rating! >= this.ratingFilter()! : true) &&
