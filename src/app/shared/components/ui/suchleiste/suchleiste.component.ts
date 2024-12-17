@@ -1,8 +1,10 @@
 import {
   Component,
   EventEmitter,
+  Input,
   input,
   Output,
+  signal,
   WritableSignal,
 } from '@angular/core';
 import { ReadService } from '../../../../core/api/http-read.service';
@@ -17,7 +19,7 @@ import { Buch } from '../../../models/buch.model';
   styleUrl: './suchleiste.component.css',
 })
 export class SuchleisteComponent {
-  readonly buecher = input.required<WritableSignal<Buch[]>>();
+  @Input() buecher = signal<Buch[]>([]);
   constructor(
     private readService: ReadService,
     private logger: LoggerService
@@ -32,7 +34,7 @@ export class SuchleisteComponent {
       this.titelInput;
       this.readService.titelFilter.set(this.titelInput);
 
-      this.readService.getBuecherMitBild(this.buecher());
+      this.readService.getBuecherMitBild(this.buecher);
       this.logger.debug(
         'buecher wurden mit Titel Filter geladen',
         this.readService.titelFilter()

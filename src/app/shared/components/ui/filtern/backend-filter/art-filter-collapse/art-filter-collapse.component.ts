@@ -1,4 +1,11 @@
-import { Component, Injector, input, WritableSignal } from '@angular/core';
+import {
+  Component,
+  Injector,
+  Input,
+  input,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { Buch, BuchArt } from '../../../../../models/buch.model';
 import { ReadService } from '../../../../../../core/api/http-read.service';
 import { CommonModule } from '@angular/common';
@@ -9,7 +16,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './art-filter-collapse.component.css',
 })
 export class ArtFilterCollapseComponent {
-  readonly buecher = input.required<WritableSignal<Buch[]>>();
+  @Input() buecher = signal<Buch[]>([]);
   private readService: ReadService;
   private artFilter;
   options = [
@@ -25,7 +32,7 @@ export class ArtFilterCollapseComponent {
 
   artFilterSetter(target: EventTarget) {
     this.artFilter.set((target as HTMLSelectElement).value as BuchArt);
-    this.readService.getBuecherMitBild(this.buecher());
+    this.readService.getBuecherMitBild(this.buecher);
   }
 
   uncheck(target: EventTarget) {
@@ -38,7 +45,7 @@ export class ArtFilterCollapseComponent {
       });
       this.artFilter.set(undefined);
       setTimeout(() => {
-        this.readService.getBuecherMitBild(this.buecher());
+        this.readService.getBuecherMitBild(this.buecher);
       }, 200);
     }
   }

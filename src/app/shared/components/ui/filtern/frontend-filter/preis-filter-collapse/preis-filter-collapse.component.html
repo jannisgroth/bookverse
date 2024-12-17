@@ -1,24 +1,18 @@
 <div class="collapse bg-base-200 sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto">
-  <input type="checkbox" />
+  <input type="checkbox" (change)="uncheck($event.target!)" />
   <div class="collapse-title text-xl font-medium">Preis</div>
   <div class="collapse-content relative">
-    <!-- Slider Input -->
-    <input
-      id="rangeInput"
-      type="range"
-      min="0"
-      max="250"
-      value="40"
-      class="range range-primary w-full"
-      (change)="setPreisFilter($event.target!)"
-      (mouseover)="tooltip = true"
-      (mouseout)="tooltip = false" />
+    <div class="flex">
+      <input
+        id="rangeInput"
+        type="range"
+        min="0"
+        max="100"
+        value="100"
+        class="range range-primary w-full"
+        (change)="setPreisFilter($event.target!)" />
 
-    <!-- Tooltip -->
-    <div
-      id="tooltip"
-      class="hidden absolute top-[-2rem] left-1/2 transform -translate-x-1/2 bg-primary text-white text-xs font-semibold px-2 py-1 rounded">
-      {{ preisFilter()() }}
+      <label>{{ preisFilter() ? preisFilter() : '100' }}</label>
     </div>
   </div>
 </div>

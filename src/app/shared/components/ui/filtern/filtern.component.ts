@@ -1,4 +1,10 @@
-import { Component, input, Input, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  input,
+  InputSignal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { Buch } from '../../../models/buch.model';
 import { LieferbarFilterCollapseComponent } from './backend-filter/lieferbar-filter-collapse/lieferbar-filter-collapse.component';
 import { ArtFilterCollapseComponent } from './backend-filter/art-filter-collapse/art-filter-collapse.component';
@@ -19,7 +25,7 @@ import { PreisFilterCollapseComponent } from './frontend-filter/preis-filter-col
   styleUrl: './filtern.component.css',
 })
 export class FilternComponent {
-  readonly buecher = input.required<WritableSignal<Buch[]>>();
+  readonly buecher = input(signal<Buch[]>([]));
   private entfernteBuecher: Buch[];
 
   readonly ratingFilter = signal<number | undefined>(undefined);
@@ -45,7 +51,7 @@ export class FilternComponent {
         // filter nach Rating
         (this.ratingFilter() ? buch.rating! >= this.ratingFilter()! : true) &&
         // filter nach Preis
-        (this.preisFilter() ? +this.preisFilter()! >= +buch.preis : true) &&
+        (this.preisFilter() ? +buch.preis <= +this.preisFilter()! : true) &&
         // filter nach Datumsuntergrenze
         (this.datumUntergrenzeFilter()
           ? this.datumUntergrenzeFilter()! <= buch.datum!

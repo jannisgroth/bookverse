@@ -1,4 +1,4 @@
-import { Component, WritableSignal, input } from '@angular/core';
+import { Component, Injector, WritableSignal, input } from '@angular/core';
 import { FilternComponent } from '../../filtern.component';
 
 @Component({
@@ -11,12 +11,13 @@ export class RatingFilterCollapseComponent {
   readonly ratingFilter = input.required<WritableSignal<number | undefined>>();
   readonly filter: FilternComponent;
 
-  constructor() {
-    this.filter = new FilternComponent();
+  constructor(injector: Injector) {
+    this.filter = injector.get(FilternComponent);
   }
 
-  RatingFilterSetter(rating: number) {
-    this.ratingFilter().set(rating);
+  RatingFilterSetter(target: EventTarget) {
+    const value = (target as HTMLSelectElement).value;
+    this.ratingFilter().set(+value);
     this.filter.frontendFilter();
   }
 
