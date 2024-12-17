@@ -10,7 +10,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class UploadInputComponent {
   readonly buchForm = input.required<FormGroup>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     const formControl = new FormControl();

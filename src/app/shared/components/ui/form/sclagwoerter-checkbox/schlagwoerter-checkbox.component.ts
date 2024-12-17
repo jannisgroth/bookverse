@@ -11,7 +11,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class SchlagwoerterCheckboxComponent {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.buchForm().addControl('JAVASCRIPT', new FormControl(false));

@@ -1,4 +1,4 @@
-import { Component, signal, effect, Signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { TitelInputComponent } from '../titel-input/titel-input.component';
 import { UploadInputComponent } from '../upload-input/upload-input.component';
 import { RatingRadioComponent } from '../rating-radio/rating-radio.component';
@@ -11,11 +11,9 @@ import { HomepageInputComponent } from '../homepage-input/homepage-input.compone
 import { DatumInputComponent } from '../datum-input/datum-input.component';
 import { PreisInputComponent } from '../preis-input/preis-input.component';
 import { RabattInputComponent } from '../rabatt-input/rabatt-input.component';
-import { Buch, BuchPost } from '../../../../models/buch.model';
+import { Buch } from '../../../../models/buch.model';
 import { LieferbarCheckboxComponent } from '../lieferbar-checkbox/lieferbar-checkbox.component';
-import { LoggerService } from '../../../../../core/logging/logger.service';
-import { startWith } from 'rxjs';
-import { Titel } from '../../../../models/titel.model';
+import { WriteService } from '../../../../../core/api/http-write.service';
 
 @Component({
   selector: 'app-formular',
@@ -41,16 +39,21 @@ export class FormularComponent {
   protected buchForm = new FormGroup({});
   protected schlagwoerter = ['JAVASCRIPT', 'JAVA', 'PYTHON', 'TYPESCRIPT'];
 
-  constructor() { }
-  onSubmit() {
+  constructor(private writeService: WriteService) {}
+  async onSubmit() {
     if (this.buchForm.valid) {
       console.log('valide eingaben');
-      const gewählteSchlagwoerter = this.schlagwoerter.filter(schlagwort => this.buchForm.get(schlagwort)?.value === true);
+      const gewählteSchlagwoerter = this.schlagwoerter.filter(
+        schlagwort => this.buchForm.get(schlagwort)?.value === true
+      );
 
       const buchDTO: Omit<Buch, '_links'> = {
         isbn: this.buchForm.get('isbn')!.value,
         rating: Number(this.buchForm.get('rating')?.value),
-        art: this.buchForm.get('buchart')?.value === "wählen" ? undefined : this.buchForm.get('buchart')?.value,
+        art:
+          this.buchForm.get('buchart')?.value === 'wählen'
+            ? undefined
+            : this.buchForm.get('buchart')?.value,
         preis: this.buchForm.get('preis')!.value!,
         rabatt: this.buchForm.get('rabatt')?.value ?? undefined,
         lieferbar: this.buchForm.get('lieferbar')?.value ?? undefined,
@@ -62,8 +65,10 @@ export class FormularComponent {
           untertitel: this.buchForm.get('untertitel')?.value ?? undefined,
         },
         file: this.buchForm.get('upload')?.value ?? undefined,
-      }
+      };
       console.log(buchDTO);
+
+      await this.writeService.createBuch(buchDTO);
     } else {
       console.log('Formular ist ungültig');
     }

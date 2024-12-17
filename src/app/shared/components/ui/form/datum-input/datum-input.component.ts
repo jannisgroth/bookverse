@@ -11,7 +11,7 @@ export class DatumInputComponent {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     const formControl = new FormControl(undefined);

@@ -5,13 +5,13 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   selector: 'app-lieferbar-checkbox',
   imports: [ReactiveFormsModule],
   templateUrl: './lieferbar-checkbox.component.html',
-  styleUrl: './lieferbar-checkbox.component.css'
+  styleUrl: './lieferbar-checkbox.component.css',
 })
 export class LieferbarCheckboxComponent {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     const formControl = new FormControl(false);

@@ -11,8 +11,7 @@ export class RatingRadioComponent {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
 
-
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     const formControl = new FormControl(5);

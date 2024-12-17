@@ -18,7 +18,7 @@ export class UntertitelInputComponent implements OnInit {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     const formControl = new FormControl(undefined);

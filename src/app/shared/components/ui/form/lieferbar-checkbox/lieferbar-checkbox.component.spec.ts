@@ -8,9 +8,8 @@ describe('LieferbarCheckboxComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LieferbarCheckboxComponent]
-    })
-    .compileComponents();
+      imports: [LieferbarCheckboxComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LieferbarCheckboxComponent);
     component = fixture.componentInstance;

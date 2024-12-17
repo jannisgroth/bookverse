@@ -17,7 +17,7 @@ export class PreisInputComponent {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     const formControl = new FormControl(undefined, [
