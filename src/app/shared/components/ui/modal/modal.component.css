@@ -12,3 +12,51 @@
   max-width: 90%; /* Optional: um sicherzustellen, dass es nicht zu groß wird */
   max-height: 90%; /* Optional */
 }
+
+.form-row {
+  display: flex; /* Flexbox aktivieren */
+  align-items: center; /* Vertikale Ausrichtung auf der gleichen Höhe */
+  gap: 80px;
+  justify-content: flex-start;
+}
+
+.form-col {
+  display: flex; /* Flexbox für jedes Form-Element */
+  align-items: center; /* Vertikale Ausrichtung auf der gleichen Höhe */
+  width: 100%; /* Volle Breite innerhalb des Containers */
+}
+
+.buch-titel {
+  font-size: 45px; /* Größerer Titel */
+  font-weight: bold; /* Fett */
+}
+
+.buch-preis {
+  font-size: 50px; /* Sehr groß */
+  font-weight: lighter; /* Dünn */
+}
+
+.buch-untertitel {
+  color: #6c757d; /* Ausgegraut (dunkles Grau) */
+  font-weight: bold; /* Etwas dicker machen */
+}
+
+.buch-schlagwoerter {
+  font-size: 18px; /* Setzt die Größe des Schlagworts */
+  font-weight: bold; /* Optional: Schlagwort fett darstellen */
+}
+
+.buch-art {
+  font-size: 18px; /* Setzt die Größe des Schlagworts */
+  font-weight: bold; /* Optional: Schlagwort fett darstellen */
+}
+
+.buch-isbn {
+  font-size: 18px; /* Setzt die Größe des Schlagworts */
+  font-weight: bold; /* Optional: Schlagwort fett darstellen */
+}
+
+.buch-lieferbar {
+  font-size: 18px; /* Setzt die Größe des Schlagworts */
+  font-weight: bold; /* Macht den Text dicker */
+}

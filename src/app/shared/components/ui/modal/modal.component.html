@@ -1,41 +1,88 @@
 <dialog #modal id="modal" class="modal min-h-96">
   <div class="modal-box flex custom-modal">
     <figure class="flex-shrink-0">
-      <img
+      <!-- <img
         src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-        alt="Movie" />
-      <!-- <img [src]="buch?.file" alt="Book-File" class="w-48 h-auto rounded" /> -->
+        alt="Movie" /> -->
+      <img [src]="buch?.file" alt="Book-File" class="w-48 h-auto rounded" />
     </figure>
     <div class="ml-4">
-      <div class="header">
-        <!-- Titel und Preis -->
-        <h3 class="text-5xl font-bold">
-          {{ buch?.titel?.titel }}
-          <span style="font-size: 4rem; font-weight: 300; margin-left: 50px">
-            {{ buch?.preis }} €
+      <!-- 1. Reihe -->
+      <div class="form-row">
+        <div class="form-col">
+          <span class="buch-titel">{{ buch?.titel?.titel }}</span>
+        </div>
+        <div class="form-col">
+          <!-- {{ (1 - (+buch?.rabatt || 1)) * (buch?.preis ?? 0) }} -->
+          <span class="buch-preis">{{ buch?.preis }} €</span>
+        </div>
+      </div>
+
+      <!-- 2. Reihe -->
+      <div class="form-row">
+        <div class="form-col">
+          <span class="buch-untertitel">{{ buch?.titel?.untertitel }}</span>
+        </div>
+
+        <div class="form-col">
+          <span
+            style="margin-left: 120px"
+            class="mask mask-star-2 bg-primary w-8 h-8"></span>
+          <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
+          <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
+          <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
+          <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
+        </div>
+      </div>
+
+      <!-- 3. Reihe -->
+      <div class="form-row">
+        <div class="form-col">
+          <span class="buch-schlagwoerter">
+            {{ buch?.schlagwoerter ? '-' + buch?.schlagwoerter : '' }}
           </span>
-        </h3>
+        </div>
+        <div class="form-col">
+          <span class="buch-datum">{{ buch?.datum }} </span>
+        </div>
+      </div>
 
-        <!-- Untertitel-->
-        <h3 class="text-lg font-bold subtitle">
-          {{ buch?.titel?.untertitel }}
+      <!-- 4. Reihe -->
+      <div class="form-row">
+        <div class="form-col">
+          <span class="buch-art">{{ buch?.art ? '-' + buch?.art : '' }}</span>
+        </div>
+      </div>
 
-          <!-- Rating -->
-          <div class="rating">
-            <span
-              style="margin-left: 150px"
-              class="mask mask-star-2 bg-primary w-8 h-8"></span>
-            <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
-            <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
-            <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
-            <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
-          </div>
-        </h3>
+      <!-- 5. Reihe -->
+      <div class="form-row">
+        <div class="form-col">
+          <span class="buch-isbn">-ISBN: {{ buch?.isbn }}</span>
+        </div>
+      </div>
 
-        <!-- Infos -->
-        <h3 class="text-lg font-bold mt-4">- {{ buch?.schlagwoerter }}</h3>
-        <h3 class="text-lg font-bold mt-4">- {{ buch?.art }}</h3>
-        <h3 class="text-lg font-bold mt-4">- ISBN: {{ buch?.isbn }}</h3>
+      <!-- 6. Reihe -->
+      <div class="form-row">
+        <div class="form-col">
+          <span class="buch-lieferbar">-Lieferbar: </span>
+          <label
+            class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+            for="lieferbar-checkbox-material">
+            <input
+              type="checkbox"
+              id="lieferbar-checkbox-material"
+              class="mdl-checkbox__input"
+              [checked]="buch?.lieferbar"
+              disabled />
+          </label>
+        </div>
+      </div>
+
+      <!-- 7. Reihe -->
+      <div class="form-row">
+        <div class="form-col">
+          <span class="buch-homepage"> {{ buch?.homepage }}</span>
+        </div>
       </div>
 
       <!-- Close -->
