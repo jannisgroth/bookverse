@@ -15,6 +15,7 @@ import { Buch, BuchPost } from '../../../../models/buch.model';
 import { LieferbarCheckboxComponent } from '../lieferbar-checkbox/lieferbar-checkbox.component';
 import { LoggerService } from '../../../../../core/logging/logger.service';
 import { startWith } from 'rxjs';
+import { Titel } from '../../../../models/titel.model';
 
 @Component({
   selector: 'app-formular',
@@ -44,23 +45,23 @@ export class FormularComponent {
   onSubmit() {
     if (this.buchForm.valid) {
       console.log('valide eingaben');
-      const gewählteSchlagwoerter = this.schlagwoerter.filter(schlagwort => this.buchForm.get(schlagwort)?.value);
+      const gewählteSchlagwoerter = this.schlagwoerter.filter(schlagwort => this.buchForm.get(schlagwort)?.value === true);
 
-      const buchDTO = {
-        isbn: this.buchForm.get('isbn')?.value,
+      const buchDTO: Omit<Buch, '_links'> = {
+        isbn: this.buchForm.get('isbn')!.value,
         rating: Number(this.buchForm.get('rating')?.value),
-        art: this.buchForm.get('buchart')?.value === "wählen" ? null : this.buchForm.get('buchart')?.value,
-        preis: this.buchForm.get('preis')?.value,
-        rabatt: this.buchForm.get('rabatt')?.value,
-        lieferbar: this.buchForm.get('lieferbar')?.value,
-        datum: this.buchForm.get('datum')?.value,
-        homepage: this.buchForm.get('homepage')?.value,
+        art: this.buchForm.get('buchart')?.value === "wählen" ? undefined : this.buchForm.get('buchart')?.value,
+        preis: this.buchForm.get('preis')!.value!,
+        rabatt: this.buchForm.get('rabatt')?.value ?? undefined,
+        lieferbar: this.buchForm.get('lieferbar')?.value ?? undefined,
+        datum: this.buchForm.get('datum')?.value ?? undefined,
+        homepage: this.buchForm.get('homepage')?.value ?? undefined,
         schlagwoerter: gewählteSchlagwoerter,
         titel: {
-          titel: this.buchForm.get('titel')?.value,
-          untertitel: this.buchForm.get('untertitel')?.value,
+          titel: this.buchForm.get('titel')?.value!,
+          untertitel: this.buchForm.get('untertitel')?.value ?? undefined,
         },
-        file: this.buchForm.get('upload')?.value,
+        file: this.buchForm.get('upload')?.value ?? undefined,
       }
       console.log(buchDTO);
     } else {
@@ -68,7 +69,3 @@ export class FormularComponent {
     }
   }
 }
-
-
-
-// TODO: const Objekt für Buch statt Interface

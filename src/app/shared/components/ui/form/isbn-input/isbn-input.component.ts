@@ -20,7 +20,7 @@ export class IsbnInputComponent {
   constructor() { }
 
   ngOnInit(): void {
-    const formControl = new FormControl('', [
+    const formControl = new FormControl(undefined, [
       Validators.required,
       Validators.pattern(/^\d{3}-\d{1,5}-\d{1,7}-\d{1,7}-\d{1}$/),
     ]);

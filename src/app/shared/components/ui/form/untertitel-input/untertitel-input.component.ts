@@ -21,7 +21,7 @@ export class UntertitelInputComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    const formControl = new FormControl('');
+    const formControl = new FormControl(undefined);
 
     this.buchForm().addControl('untertitel', formControl);
   }

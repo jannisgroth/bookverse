@@ -11,16 +11,12 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class SchlagwoerterCheckboxComponent {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
-  protected readonly schlagwoerter = ['JAVASCRIPT', 'JAVA', 'PYTHON', 'TYPESCRIPT'];
-
-
   constructor() { }
 
   ngOnInit(): void {
-    const formControl = new FormControl(false);
-
-    this.schlagwoerter.forEach(name => {
-      this.buchForm().addControl(name, formControl);
-    });
+    this.buchForm().addControl('JAVASCRIPT', new FormControl(false));
+    this.buchForm().addControl('JAVA', new FormControl(false));
+    this.buchForm().addControl('PYTHON', new FormControl(false));
+    this.buchForm().addControl('TYPESCRIPT', new FormControl(false));
   }
 }

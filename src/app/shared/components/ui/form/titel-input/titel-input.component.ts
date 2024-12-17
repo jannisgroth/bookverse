@@ -18,11 +18,11 @@ export class TitelInputComponent implements OnInit {
   // Signal für die FormGroup
   buchForm = input.required<FormGroup>();
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     //const form = this.buchForm().addControl('', [Validators.maxLength(3)]);
-    const formControl = new FormControl('', [Validators.required]);
+    const formControl = new FormControl(undefined, [Validators.required]);
 
     this.buchForm().addControl('titel', formControl);
   }
