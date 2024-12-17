@@ -1,5 +1,6 @@
 import {
   Component,
+  Injector,
   input,
   InputSignal,
   signal,
@@ -12,6 +13,7 @@ import { SchlagwoerterFilterCollapseComponent } from './backend-filter/schlagwoe
 import { RatingFilterCollapseComponent } from './frontend-filter/rating-filter-collapse/rating-filter-collapse.component';
 import { PreisFilterCollapseComponent } from './frontend-filter/preis-filter-collapse/preis-filter-collapse.component';
 import { RabattFilterCollapseComponent } from './frontend-filter/rabatt-filter-collapse/rabatt-filter-collapse.component';
+import { ReadService } from '../../../../core/api/http-read.service';
 
 @Component({
   selector: 'app-filtern',
@@ -28,16 +30,22 @@ import { RabattFilterCollapseComponent } from './frontend-filter/rabatt-filter-c
 })
 export class FilternComponent {
   readonly buecher = input(signal<Buch[]>([]));
-  private entfernteBuecher: Buch[];
+  readonly readService: ReadService;
 
+  readonly artFilter;
+  readonly lieferbarFilter;
+  readonly schlagworterFilter;
   readonly ratingFilter = signal<number | undefined>(undefined);
   readonly preisFilter = signal<string | undefined>(undefined);
   readonly rabattFilter = signal<string | undefined>(undefined);
   readonly datumUntergrenzeFilter = signal<string | undefined>(undefined);
   readonly datumObergrenzeFilter = signal<Date | undefined>(undefined);
 
-  constructor() {
-    this.entfernteBuecher = [];
+  constructor(injector: Injector) {
+    this.readService = injector.get(ReadService);
+    this.artFilter = this.readService.artFilter;
+    this.lieferbarFilter = this.readService.lieferbarFilter;
+    this.schlagworterFilter = this.readService.schlagwoerterFilter;
   }
 
   /**
@@ -45,10 +53,10 @@ export class FilternComponent {
    * GET Request filtern lassen.
    */
   frontendFilter() {
-    const alleBuecher = [...this.buecher()(), ...this.entfernteBuecher];
-    let passendeBuecher: Buch[] = [];
+    // TODO : bei Backend Filter am Ende Frontend Filter aufrufen, entfernte Bücher filtern nach Filterkriterien
+    this.readService.getBuecherMitBild(this.buecher());
 
-    passendeBuecher = [...alleBuecher].filter(
+    const passendeBuecher = [...this.buecher()()].filter(
       buch =>
         // filter nach Rating
         (this.ratingFilter() ? buch.rating! >= this.ratingFilter()! : true) &&
@@ -67,10 +75,8 @@ export class FilternComponent {
           ? buch.datum! <= this.datumObergrenzeFilter()!
           : true)
     );
-    this.entfernteBuecher = [...alleBuecher].filter(
-      buch => !passendeBuecher.includes(buch)
-    );
-
+    console.log(`Passende Bücher: ${passendeBuecher}`);
     this.buecher().set(passendeBuecher);
+    console.log(`Buecher: ${this.buecher()()}`);
   }
 }

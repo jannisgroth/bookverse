@@ -1,8 +1,15 @@
-import { Component, Injector, input, WritableSignal } from '@angular/core';
+import {
+  Component,
+  Injector,
+  input,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 
 import { ReadService } from '../../../../../../core/api/http-read.service';
 import { CommonModule } from '@angular/common';
 import { Buch } from '../../../../../models/buch.model';
+import { FilternComponent } from '../../filtern.component';
 
 @Component({
   selector: 'app-schlagwoerter-filter-collapse',
@@ -11,9 +18,8 @@ import { Buch } from '../../../../../models/buch.model';
   styleUrl: './schlagwoerter-filter-collapse.component.css',
 })
 export class SchlagwoerterFilterCollapseComponent {
-  readonly buecher = input.required<WritableSignal<Buch[]>>();
-  private readService: ReadService;
-  private schlagwoerterFilter;
+  readonly schlagwoerterFilter = input(signal<string[]>([]));
+  private filter: FilternComponent;
   options = [
     { value: 'java', label: 'Java' },
     { value: 'javascript', label: 'JavaScript' },
@@ -22,19 +28,18 @@ export class SchlagwoerterFilterCollapseComponent {
   ];
 
   constructor(injector: Injector) {
-    this.readService = injector.get(ReadService);
-    this.schlagwoerterFilter = this.readService.schlagwoerterFilter;
+    this.filter = injector.get(FilternComponent);
   }
 
   schlagwoerterFilterSetter(target: EventTarget) {
     const checkboxInput = (target as HTMLInputElement).checked;
     const value = (target as HTMLInputElement).value;
-    this.schlagwoerterFilter.update(schlagwoerter =>
+    this.schlagwoerterFilter().update(schlagwoerter =>
       checkboxInput
         ? schlagwoerter.concat(value)
         : schlagwoerter.filter(item => item !== value)
     );
-    this.readService.getBuecherMitBild(this.buecher());
+    this.filter.frontendFilter();
   }
 
   uncheck(target: EventTarget) {
@@ -45,9 +50,9 @@ export class SchlagwoerterFilterCollapseComponent {
       checkboxInputs.forEach(checkbox => {
         checkbox.checked = false;
       });
-      this.schlagwoerterFilter.set([]);
+      this.schlagwoerterFilter().set([]);
       setTimeout(() => {
-        this.readService.getBuecherMitBild(this.buecher());
+        this.filter.frontendFilter();
       }, 200);
     }
   }

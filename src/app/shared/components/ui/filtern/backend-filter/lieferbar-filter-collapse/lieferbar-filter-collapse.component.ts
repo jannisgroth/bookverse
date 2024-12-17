@@ -1,6 +1,13 @@
-import { Component, Injector, input, WritableSignal } from '@angular/core';
+import {
+  Component,
+  Injector,
+  input,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { ReadService } from '../../../../../../core/api/http-read.service';
 import { Buch } from '../../../../../models/buch.model';
+import { FilternComponent } from '../../filtern.component';
 
 @Component({
   selector: 'app-lieferbar-filter-collapse',
@@ -9,21 +16,19 @@ import { Buch } from '../../../../../models/buch.model';
   styleUrl: './lieferbar-filter-collapse.component.css',
 })
 export class LieferbarFilterCollapseComponent {
-  readonly buecher = input.required<WritableSignal<Buch[]>>();
-  private readService: ReadService;
-  private lieferbarFilter;
+  readonly lieferbarFilter = input(signal<boolean | undefined>(undefined));
+  readonly filter: FilternComponent;
 
   constructor(injector: Injector) {
-    this.readService = injector.get(ReadService);
-    this.lieferbarFilter = this.readService.lieferbarFilter;
+    this.filter = injector.get(FilternComponent);
   }
 
   lieferbarAendern() {
     const checked = (document.getElementById(
       'lieferbarCheckbox'
     ) as HTMLInputElement)!.checked;
-    this.lieferbarFilter.set(checked);
-    this.readService.getBuecherMitBild(this.buecher());
+    this.lieferbarFilter().set(checked);
+    this.filter.frontendFilter();
   }
 
   uncheck(target: EventTarget) {
@@ -32,9 +37,9 @@ export class LieferbarFilterCollapseComponent {
     ) as HTMLInputElement;
     toggle.checked = true;
     if (!(target as HTMLInputElement).checked) {
-      this.lieferbarFilter.set(undefined);
+      this.lieferbarFilter().set(undefined);
       setTimeout(() => {
-        this.readService.getBuecherMitBild(this.buecher());
+        this.filter.frontendFilter();
       }, 200);
     }
   }

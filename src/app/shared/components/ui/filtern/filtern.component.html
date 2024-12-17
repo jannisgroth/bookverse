@@ -1,10 +1,12 @@
 <div class="join join-vertical">
   <label>Filter</label>
-  <app-art-filter-collapse [buecher]="buecher()"></app-art-filter-collapse>
+  <app-art-filter-collapse [artFilter]="artFilter"></app-art-filter-collapse>
   <app-lieferbar-filter-collapse
-    [buecher]="buecher()"></app-lieferbar-filter-collapse>
+    [lieferbarFilter]="lieferbarFilter"></app-lieferbar-filter-collapse>
   <app-schlagwoerter-filter-collapse
-    [buecher]="buecher()"></app-schlagwoerter-filter-collapse>
+    [schlagwoerterFilter]="
+      schlagworterFilter
+    "></app-schlagwoerter-filter-collapse>
   <app-rating-filter-collapse
     [ratingFilter]="ratingFilter"></app-rating-filter-collapse>
   <app-preis-filter-collapse

@@ -1,7 +1,6 @@
 import {
   Component,
   Injector,
-  Input,
   input,
   signal,
   WritableSignal,
@@ -9,6 +8,7 @@ import {
 import { Buch, BuchArt } from '../../../../../models/buch.model';
 import { ReadService } from '../../../../../../core/api/http-read.service';
 import { CommonModule } from '@angular/common';
+import { FilternComponent } from '../../filtern.component';
 @Component({
   selector: 'app-art-filter-collapse',
   imports: [CommonModule],
@@ -16,9 +16,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './art-filter-collapse.component.css',
 })
 export class ArtFilterCollapseComponent {
-  @Input() buecher = signal<Buch[]>([]);
-  private readService: ReadService;
-  private artFilter;
+  readonly artFilter = input(signal<BuchArt | undefined>(undefined));
+  private filter: FilternComponent;
   options = [
     { value: 'EPUB', label: 'E-Pub' },
     { value: 'HARDCOVER', label: 'Hardcover' },
@@ -26,13 +25,12 @@ export class ArtFilterCollapseComponent {
   ];
 
   constructor(injector: Injector) {
-    this.readService = injector.get(ReadService);
-    this.artFilter = this.readService.artFilter;
+    this.filter = injector.get(FilternComponent);
   }
 
   artFilterSetter(target: EventTarget) {
-    this.artFilter.set((target as HTMLSelectElement).value as BuchArt);
-    this.readService.getBuecherMitBild(this.buecher);
+    this.artFilter().set((target as HTMLSelectElement).value as BuchArt);
+    this.filter.frontendFilter();
   }
 
   uncheck(target: EventTarget) {
@@ -43,9 +41,9 @@ export class ArtFilterCollapseComponent {
       radioInputs.forEach(radio => {
         radio.checked = false;
       });
-      this.artFilter.set(undefined);
+      this.artFilter().set(undefined);
       setTimeout(() => {
-        this.readService.getBuecherMitBild(this.buecher);
+        this.filter.frontendFilter();
       }, 200);
     }
   }
