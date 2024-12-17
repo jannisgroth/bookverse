@@ -11,6 +11,7 @@ import { ArtFilterCollapseComponent } from './backend-filter/art-filter-collapse
 import { SchlagwoerterFilterCollapseComponent } from './backend-filter/schlagwoerter-filter-collapse/schlagwoerter-filter-collapse.component';
 import { RatingFilterCollapseComponent } from './frontend-filter/rating-filter-collapse/rating-filter-collapse.component';
 import { PreisFilterCollapseComponent } from './frontend-filter/preis-filter-collapse/preis-filter-collapse.component';
+import { RabattFilterCollapseComponent } from './frontend-filter/rabatt-filter-collapse/rabatt-filter-collapse.component';
 
 @Component({
   selector: 'app-filtern',
@@ -20,6 +21,7 @@ import { PreisFilterCollapseComponent } from './frontend-filter/preis-filter-col
     SchlagwoerterFilterCollapseComponent,
     RatingFilterCollapseComponent,
     PreisFilterCollapseComponent,
+    RabattFilterCollapseComponent,
   ],
   templateUrl: './filtern.component.html',
   styleUrl: './filtern.component.css',
@@ -54,6 +56,8 @@ export class FilternComponent {
         (this.preisFilter()
           ? +buch.preis * (1 - +buch.rabatt!) <= +this.preisFilter()!
           : true) &&
+        //filter nach Rabatt
+        (this.rabattFilter() ? +buch.rabatt! >= +this.rabattFilter()! : true) &&
         // filter nach Datumsuntergrenze
         (this.datumUntergrenzeFilter()
           ? this.datumUntergrenzeFilter()! <= buch.datum!
