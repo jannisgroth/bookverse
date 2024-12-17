@@ -51,7 +51,9 @@ export class FilternComponent {
         // filter nach Rating
         (this.ratingFilter() ? buch.rating! >= this.ratingFilter()! : true) &&
         // filter nach Preis
-        (this.preisFilter() ? +buch.preis <= +this.preisFilter()! : true) &&
+        (this.preisFilter()
+          ? +buch.preis * (1 - +buch.rabatt!) <= +this.preisFilter()!
+          : true) &&
         // filter nach Datumsuntergrenze
         (this.datumUntergrenzeFilter()
           ? this.datumUntergrenzeFilter()! <= buch.datum!

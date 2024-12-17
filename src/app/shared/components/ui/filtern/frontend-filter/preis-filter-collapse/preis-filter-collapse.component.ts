@@ -28,9 +28,7 @@ export class PreisFilterCollapseComponent {
 
   setPreisFilter(target: EventTarget) {
     const value = (target as HTMLInputElement).value;
-    console.log(`Value: ${value}`);
     this.preisFilter.set(value);
-    console.log(`Signal in Preiskomponente: ${this.preisFilter()}`);
     this.filter.frontendFilter();
   }
 

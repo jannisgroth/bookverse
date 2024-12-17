@@ -22,12 +22,9 @@ export class RatingFilterCollapseComponent {
   }
 
   uncheck(target: EventTarget) {
-    console.log((target as HTMLInputElement).checked);
     if (!(target as HTMLInputElement).checked) {
-      const defaultRating = document.querySelector<HTMLInputElement>(
-        '[name="defaultRatingFilter"]'
-      );
-      (defaultRating as HTMLInputElement).checked = true;
+      const defaultRating = document.getElementById('rangeFilter');
+      (defaultRating as HTMLInputElement).value = '1';
       this.ratingFilter().set(undefined);
       setTimeout(() => {
         this.filter.frontendFilter();
