@@ -20,7 +20,7 @@ export class PreisInputComponent {
   constructor() { }
 
   ngOnInit(): void {
-    const formControl = new FormControl('', [
+    const formControl = new FormControl(undefined, [
       Validators.required,
       Validators.min(0),
     ]);

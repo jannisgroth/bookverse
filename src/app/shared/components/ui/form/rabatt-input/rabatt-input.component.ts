@@ -17,10 +17,10 @@ export class RabattInputComponent {
   // Signal für die FormGroup
   buchForm = input.required<FormGroup>();
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
-    const formControl = new FormControl('', [
+    const formControl = new FormControl(undefined, [
       Validators.min(0),
       Validators.max(100),
     ]);

@@ -13,6 +13,8 @@ import { PreisInputComponent } from '../preis-input/preis-input.component';
 import { RabattInputComponent } from '../rabatt-input/rabatt-input.component';
 import { Buch, BuchPost } from '../../../../models/buch.model';
 import { LieferbarCheckboxComponent } from '../lieferbar-checkbox/lieferbar-checkbox.component';
+import { LoggerService } from '../../../../../core/logging/logger.service';
+import { startWith } from 'rxjs';
 
 @Component({
   selector: 'app-formular',
@@ -36,20 +38,31 @@ import { LieferbarCheckboxComponent } from '../lieferbar-checkbox/lieferbar-chec
 })
 export class FormularComponent {
   protected buchForm = new FormGroup({});
+  protected schlagwoerter = ['JAVASCRIPT', 'JAVA', 'PYTHON', 'TYPESCRIPT'];
 
   constructor() { }
   onSubmit() {
-    const gewählteSchlagwoerter = Object.keys(this.buchForm.controls).filter(
-      key => this.buchForm.get(key)?.value === true
-    );
-
-    const buchDTO = {
-      isbn: this.buchForm.get('isbn')?.value
-    }
-
     if (this.buchForm.valid) {
-      console.log(this.buchForm.value, gewählteSchlagwoerter);
-      console.log(buchDTO.isbn)
+      console.log('valide eingaben');
+      const gewählteSchlagwoerter = this.schlagwoerter.filter(schlagwort => this.buchForm.get(schlagwort)?.value);
+
+      const buchDTO = {
+        isbn: this.buchForm.get('isbn')?.value,
+        rating: this.buchForm.get('rating')?.value,
+        art: this.buchForm.get('buchart')?.value === "wählen" ? undefined : this.buchForm.get('buchart')?.value,
+        preis: this.buchForm.get('preis')?.value,
+        rabatt: this.buchForm.get('rabatt')?.value,
+        lieferbar: this.buchForm.get('lieferbar')?.value,
+        datum: this.buchForm.get('datum')?.value,
+        homepage: this.buchForm.get('homepage')?.value,
+        schlagwoerter: gewählteSchlagwoerter,
+        titel: {
+          titel: this.buchForm.get('titel')?.value,
+          untertitel: this.buchForm.get('untertitel')?.value,
+        },
+        file: this.buchForm.get('upload')?.value,
+      }
+      console.log(buchDTO);
     } else {
       console.log('Formular ist ungültig');
     }

@@ -1,6 +1,7 @@
 import { NgClass } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { startWith } from 'rxjs';
 
 @Component({
   selector: 'app-rating',
@@ -12,16 +13,16 @@ export class RatingRadioComponent {
   // Signal für die FormGroup
   buchForm = input.required<FormGroup>();
 
-  constructor() {}
+
+  constructor() { }
 
   ngOnInit(): void {
-    const formControl = new FormControl('');
+    const formControl = new FormControl(false);
 
     this.buchForm().addControl('rating', formControl);
-    this.buchForm;
   }
 
-  get rating() {
-    return this.buchForm().get('rating')!;
+  getRating(): number {
+    return this.buchForm().get('rating')?.value;
   }
 }

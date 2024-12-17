@@ -11,10 +11,10 @@ export class DatumInputComponent {
   // Signal für die FormGroup
   buchForm = input.required<FormGroup>();
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
-    const formControl = new FormControl('');
+    const formControl = new FormControl(undefined);
 
     this.buchForm().addControl('datum', formControl);
   }
