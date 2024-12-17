@@ -53,7 +53,6 @@ export class FilternComponent {
    * GET Request filtern lassen.
    */
   frontendFilter() {
-    // TODO : bei Backend Filter am Ende Frontend Filter aufrufen, entfernte Bücher filtern nach Filterkriterien
     this.readService.getBuecherMitBild(this.buecher());
 
     const passendeBuecher = [...this.buecher()()].filter(
@@ -75,8 +74,6 @@ export class FilternComponent {
           ? buch.datum! <= this.datumObergrenzeFilter()!
           : true)
     );
-    console.log(`Passende Bücher: ${passendeBuecher}`);
     this.buecher().set(passendeBuecher);
-    console.log(`Buecher: ${this.buecher()()}`);
   }
 }
