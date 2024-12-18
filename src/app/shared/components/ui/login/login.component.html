@@ -1,4 +1,5 @@
-<div class="flex flex-col space-y-5">
+  <form [formGroup]="loginForm">
+    <div class="flex flex-col space-y-5">
   <label>
     <span class="text-2xl font-bold">LOGIN</span>
   </label>
@@ -11,7 +12,10 @@
       <path
         d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
     </svg>
-    <input type="text" class="grow" placeholder="Username" />
+    <input formControlName="benutzername" type="text" class="grow" placeholder="Username" />
+    @if (loginForm.get('benutzername')?.invalid && loginForm.get('benutzername')?.touched) {
+      <label><span>Das Feld muss ausgefüllt sein!</span></label>
+    }
   </label>
   <label class="input input-bordered flex items-center gap-2">
     <svg
@@ -24,7 +28,11 @@
         d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
         clip-rule="evenodd" />
     </svg>
-    <input type="password" class="grow" placeholder="passwort" />
+    <input formControlName="passwort" type="password" class="grow" placeholder="passwort" />
+    @if (loginForm.get('passwort')?.invalid && loginForm.get('passwort')?.touched) {
+      <label><span>Das Feld muss ausgefüllt sein!</span></label>
+    }
   </label>
-  <button class="btn btn-primary" (click)="onLogin()">login</button>
+  <button class="btn btn-primary" [disabled]="loginForm.invalid" (click)="onLogin()">login</button>
 </div>
+</form>
