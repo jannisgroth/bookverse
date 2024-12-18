@@ -12,7 +12,7 @@
                 </svg>
             </div>
         </div>
-        <input formControlName="rabatt" type="number" placeholder="0.999" min="0" max="0.999" step="0.001" [ngClass]="{
+        <input formControlName="rabatt" type="number" placeholder="50" min="0" max="100" [ngClass]="{
                 'border-error focus:ring-error/50 focus:border-error': rabatt.invalid && rabatt.touched,
                 'border-primary focus:ring-primary/50 focus:border-primary': !(rabatt.invalid && rabatt.touched)
             }"

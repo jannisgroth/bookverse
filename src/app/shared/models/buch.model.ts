@@ -11,7 +11,7 @@ export interface Buch {
   datum: Date | string | undefined;
   homepage: string | undefined;
   schlagwoerter: string[] | undefined;
-  titel: Titel | undefined;
+  titel: Titel;
   _links: {
     self: {
       href: string | undefined;
