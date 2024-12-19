@@ -4,7 +4,10 @@ button {
 }
 
 @media (max-width: 600px) {
-  .hide-label {
+  #rangfolgeLabel {
     display: none;
+  }
+  #sortierToggleButton {
+    width: 32px;
   }
 }

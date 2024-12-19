@@ -20,6 +20,11 @@ import { FilternComponent } from '../../filtern.component';
 export class SchlagwoerterFilterCollapseComponent {
   readonly schlagwoerterFilter = input(signal<string[]>([]));
   private filter: FilternComponent;
+  get checked() {
+    const checkbox = document.getElementById('schlagwoerterFilterCheckbox')!;
+    return (checkbox as HTMLInputElement).checked;
+  }
+
   options = [
     { value: 'java', label: 'Java' },
     { value: 'javascript', label: 'JavaScript' },
@@ -42,8 +47,8 @@ export class SchlagwoerterFilterCollapseComponent {
     this.filter.filter();
   }
 
-  uncheck(target: EventTarget) {
-    if (!(target as HTMLInputElement).checked) {
+  uncheck() {
+    if (!this.checked) {
       const checkboxInputs = document.querySelectorAll<HTMLInputElement>(
         'input[type="checkbox"][name="schlagwoertercheckbox"]'
       );

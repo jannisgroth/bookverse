@@ -18,6 +18,11 @@ import { FilternComponent } from '../../filtern.component';
 export class ArtFilterCollapseComponent {
   readonly artFilter = input(signal<BuchArt | undefined>(undefined));
   private filter: FilternComponent;
+  get checked() {
+    const checkbox = document.getElementById('artFilterCheckbox')!;
+    return (checkbox as HTMLInputElement).checked;
+  }
+
   options = [
     { value: 'EPUB', label: 'E-Pub' },
     { value: 'HARDCOVER', label: 'Hardcover' },
@@ -33,8 +38,8 @@ export class ArtFilterCollapseComponent {
     this.filter.filter();
   }
 
-  uncheck(target: EventTarget) {
-    if (!(target as HTMLInputElement).checked) {
+  uncheck() {
+    if (!this.checked) {
       const radioInputs = document.querySelectorAll<HTMLInputElement>(
         'input[type="radio"][name="radio-10"]'
       );

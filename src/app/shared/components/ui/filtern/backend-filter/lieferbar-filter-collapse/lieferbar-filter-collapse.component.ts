@@ -18,6 +18,10 @@ import { FilternComponent } from '../../filtern.component';
 export class LieferbarFilterCollapseComponent {
   readonly lieferbarFilter = input(signal<boolean | undefined>(undefined));
   readonly filter: FilternComponent;
+  get checked() {
+    const checkbox = document.getElementById('lieferbarFilterCheckbox')!;
+    return (checkbox as HTMLInputElement).checked;
+  }
 
   constructor(injector: Injector) {
     this.filter = injector.get(FilternComponent);
@@ -31,12 +35,12 @@ export class LieferbarFilterCollapseComponent {
     this.filter.filter();
   }
 
-  uncheck(target: EventTarget) {
+  uncheck() {
     const toggle = document.getElementById(
       'lieferbarCheckbox'
     ) as HTMLInputElement;
     toggle.checked = true;
-    if (!(target as HTMLInputElement).checked) {
+    if (!this.checked) {
       this.lieferbarFilter().set(undefined);
       setTimeout(() => {
         this.filter.filter();
