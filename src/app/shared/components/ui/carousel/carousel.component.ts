@@ -1,6 +1,5 @@
 import { Component, Input, signal, WritableSignal } from '@angular/core';
 import { Buch } from '../../../models/buch.model';
-import { ReadService } from '../../../../core/api/http-read.service';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({

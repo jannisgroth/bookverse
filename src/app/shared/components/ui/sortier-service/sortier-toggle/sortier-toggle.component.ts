@@ -1,6 +1,5 @@
-import { Component, Input, WritableSignal } from '@angular/core';
-import { SortierServiceComponent } from '../sortier-service/sortier-service.component';
-import { NgModule } from '@angular/core';
+import { Component, WritableSignal, input } from '@angular/core';
+import { SortierServiceComponent } from '../../sortier-service/sortier-service.component';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-sortier-toggle',
@@ -9,7 +8,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './sortier-toggle.component.css',
 })
 export class SortierToggleComponent {
-  @Input() rangfolge!: WritableSignal<'Aufsteigend' | 'Absteigend'>;
+  readonly rangfolge =
+    input.required<WritableSignal<'Aufsteigend' | 'Absteigend'>>();
 
   /**
    * Erzeugt eine neue SortierToggleComponent
@@ -21,8 +21,8 @@ export class SortierToggleComponent {
    * ruft die Funktion buecherUpdate() im SortierService auf
    */
   buecherRangfolge() {
-    this.rangfolge.set(
-      this.rangfolge() === 'Aufsteigend' ? 'Absteigend' : 'Aufsteigend'
+    this.rangfolge().set(
+      this.rangfolge()() === 'Aufsteigend' ? 'Absteigend' : 'Aufsteigend'
     );
     this.sortierservice.buecherUpdate();
   }
