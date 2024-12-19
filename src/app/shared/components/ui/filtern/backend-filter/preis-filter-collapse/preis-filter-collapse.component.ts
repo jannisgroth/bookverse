@@ -29,7 +29,7 @@ export class PreisFilterCollapseComponent {
   setPreisFilter(target: EventTarget) {
     const value = (target as HTMLInputElement).value;
     this.preisFilter.set(value);
-    this.filter.frontendFilter();
+    this.filter.filter();
   }
 
   uncheck(target: EventTarget) {
@@ -38,7 +38,7 @@ export class PreisFilterCollapseComponent {
       const preisSelector = document.getElementById('rangeInput');
       (preisSelector as HTMLSelectElement)!.value = '100';
       setTimeout(() => {
-        this.filter.frontendFilter();
+        this.filter.filter();
       }, 200);
     }
   }

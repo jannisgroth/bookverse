@@ -30,7 +30,7 @@ export class ArtFilterCollapseComponent {
 
   artFilterSetter(target: EventTarget) {
     this.artFilter().set((target as HTMLSelectElement).value as BuchArt);
-    this.filter.frontendFilter();
+    this.filter.filter();
   }
 
   uncheck(target: EventTarget) {
@@ -43,7 +43,7 @@ export class ArtFilterCollapseComponent {
       });
       this.artFilter().set(undefined);
       setTimeout(() => {
-        this.filter.frontendFilter();
+        this.filter.filter();
       }, 200);
     }
   }

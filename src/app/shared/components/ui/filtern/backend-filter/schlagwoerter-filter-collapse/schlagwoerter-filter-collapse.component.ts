@@ -39,7 +39,7 @@ export class SchlagwoerterFilterCollapseComponent {
         ? schlagwoerter.concat(value)
         : schlagwoerter.filter(item => item !== value)
     );
-    this.filter.frontendFilter();
+    this.filter.filter();
   }
 
   uncheck(target: EventTarget) {
@@ -52,7 +52,7 @@ export class SchlagwoerterFilterCollapseComponent {
       });
       this.schlagwoerterFilter().set([]);
       setTimeout(() => {
-        this.filter.frontendFilter();
+        this.filter.filter();
       }, 200);
     }
   }

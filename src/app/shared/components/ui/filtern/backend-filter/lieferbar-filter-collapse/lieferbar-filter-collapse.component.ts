@@ -28,7 +28,7 @@ export class LieferbarFilterCollapseComponent {
       'lieferbarCheckbox'
     ) as HTMLInputElement)!.checked;
     this.lieferbarFilter().set(checked);
-    this.filter.frontendFilter();
+    this.filter.filter();
   }
 
   uncheck(target: EventTarget) {
@@ -39,7 +39,7 @@ export class LieferbarFilterCollapseComponent {
     if (!(target as HTMLInputElement).checked) {
       this.lieferbarFilter().set(undefined);
       setTimeout(() => {
-        this.filter.frontendFilter();
+        this.filter.filter();
       }, 200);
     }
   }

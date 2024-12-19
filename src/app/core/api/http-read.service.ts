@@ -21,6 +21,9 @@ export class ReadService {
   readonly lieferbarFilter = signal<boolean | undefined>(undefined);
   readonly titelFilter = signal<string | undefined>(undefined);
   readonly schlagwoerterFilter = signal<string[]>([]);
+  readonly ratingFilter = signal<number | undefined>(undefined);
+  readonly preisFilter = signal<string | undefined>(undefined);
+  readonly rabattFilter = signal<string | undefined>(undefined);
 
   onSignalChange() {
     console.log('Signal wurde gesetzt!');
@@ -138,6 +141,12 @@ export class ReadService {
       this.schlagwoerterFilter()!.forEach(schlagwort => {
         params = params.append(schlagwort, true);
       });
+    if (this.preisFilter())
+      params = params.append('preis', this.preisFilter()!);
+    if (this.rabattFilter())
+      params = params.append('rabatt', this.rabattFilter()!);
+    if (this.ratingFilter())
+      params = params.append('rating', this.ratingFilter()!);
     return params;
   }
 }

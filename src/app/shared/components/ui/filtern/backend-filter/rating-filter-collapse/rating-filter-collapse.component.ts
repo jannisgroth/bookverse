@@ -18,7 +18,7 @@ export class RatingFilterCollapseComponent {
   RatingFilterSetter(target: EventTarget) {
     const value = (target as HTMLSelectElement).value;
     this.ratingFilter().set(+value);
-    this.filter.frontendFilter();
+    this.filter.filter();
   }
 
   uncheck(target: EventTarget) {
@@ -27,7 +27,7 @@ export class RatingFilterCollapseComponent {
       (defaultRating as HTMLInputElement).value = '1';
       this.ratingFilter().set(undefined);
       setTimeout(() => {
-        this.filter.frontendFilter();
+        this.filter.filter();
       }, 200);
     }
   }

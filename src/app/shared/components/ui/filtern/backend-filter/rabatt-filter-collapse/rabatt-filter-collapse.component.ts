@@ -18,7 +18,7 @@ export class RabattFilterCollapseComponent {
   RabattFilterSetter(target: EventTarget) {
     const value = (target as HTMLSelectElement).value;
     this.rabattFilter().set(value);
-    this.filter.frontendFilter();
+    this.filter.filter();
   }
 
   uncheck(target: EventTarget) {
@@ -27,7 +27,7 @@ export class RabattFilterCollapseComponent {
       (defaultRating as HTMLInputElement).value = '0';
       this.rabattFilter().set(undefined);
       setTimeout(() => {
-        this.filter.frontendFilter();
+        this.filter.filter();
       }, 200);
     }
   }

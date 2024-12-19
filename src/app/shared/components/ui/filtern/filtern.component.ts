@@ -10,9 +10,9 @@ import { Buch } from '../../../models/buch.model';
 import { LieferbarFilterCollapseComponent } from './backend-filter/lieferbar-filter-collapse/lieferbar-filter-collapse.component';
 import { ArtFilterCollapseComponent } from './backend-filter/art-filter-collapse/art-filter-collapse.component';
 import { SchlagwoerterFilterCollapseComponent } from './backend-filter/schlagwoerter-filter-collapse/schlagwoerter-filter-collapse.component';
-import { RatingFilterCollapseComponent } from './frontend-filter/rating-filter-collapse/rating-filter-collapse.component';
-import { PreisFilterCollapseComponent } from './frontend-filter/preis-filter-collapse/preis-filter-collapse.component';
-import { RabattFilterCollapseComponent } from './frontend-filter/rabatt-filter-collapse/rabatt-filter-collapse.component';
+import { RatingFilterCollapseComponent } from './backend-filter/rating-filter-collapse/rating-filter-collapse.component';
+import { PreisFilterCollapseComponent } from './backend-filter/preis-filter-collapse/preis-filter-collapse.component';
+import { RabattFilterCollapseComponent } from './backend-filter/rabatt-filter-collapse/rabatt-filter-collapse.component';
 import { ReadService } from '../../../../core/api/http-read.service';
 
 @Component({
@@ -35,45 +35,25 @@ export class FilternComponent {
   readonly artFilter;
   readonly lieferbarFilter;
   readonly schlagworterFilter;
-  readonly ratingFilter = signal<number | undefined>(undefined);
-  readonly preisFilter = signal<string | undefined>(undefined);
-  readonly rabattFilter = signal<string | undefined>(undefined);
-  readonly datumUntergrenzeFilter = signal<string | undefined>(undefined);
-  readonly datumObergrenzeFilter = signal<Date | undefined>(undefined);
+  readonly ratingFilter;
+  readonly preisFilter;
+  readonly rabattFilter;
 
   constructor(injector: Injector) {
     this.readService = injector.get(ReadService);
     this.artFilter = this.readService.artFilter;
     this.lieferbarFilter = this.readService.lieferbarFilter;
     this.schlagworterFilter = this.readService.schlagwoerterFilter;
+    this.ratingFilter = this.readService.ratingFilter;
+    this.preisFilter = this.readService.preisFilter;
+    this.rabattFilter = this.readService.rabattFilter;
   }
 
   /**
    * Filtert eine Buchliste anhand der Kriterien, die sich nicht über eine
    * GET Request filtern lassen.
    */
-  frontendFilter() {
+  filter() {
     this.readService.getBuecherMitBild(this.buecher());
-
-    const passendeBuecher = this.buecher()().filter(
-      buch =>
-        // filter nach Rating
-        (this.ratingFilter() ? buch.rating! >= this.ratingFilter()! : true) &&
-        // filter nach Preis
-        (this.preisFilter()
-          ? +buch.preis * (1 - +buch.rabatt!) <= +this.preisFilter()!
-          : true) &&
-        //filter nach Rabatt
-        (this.rabattFilter() ? +buch.rabatt! >= +this.rabattFilter()! : true) &&
-        // filter nach Datumsuntergrenze
-        (this.datumUntergrenzeFilter()
-          ? this.datumUntergrenzeFilter()! <= buch.datum!
-          : true) &&
-        // filter nach Datumsobergrenze
-        (this.datumObergrenzeFilter()
-          ? buch.datum! <= this.datumObergrenzeFilter()!
-          : true)
-    );
-    this.buecher().set(passendeBuecher);
   }
 }
