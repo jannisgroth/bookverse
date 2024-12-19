@@ -4,9 +4,9 @@ import { BibliothekComponent } from './pages/bibliothek/bibliothek.component';
 import { BuchAnlegenComponent } from './pages/buchAnlegen/buchAnlegen.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'ueberblick', pathMatch: 'full' },
-  { path: 'ueberblick', component: RegistrierungComponent },
+  { path: '', redirectTo: 'registrierung', pathMatch: 'full' },
+  { path: 'registrierung', component: RegistrierungComponent },
   { path: 'bibliothek', component: BibliothekComponent },
   { path: 'buchAnlegen', component: BuchAnlegenComponent },
-  { path: '**', redirectTo: 'ueberblick' },
+  { path: '**', redirectTo: 'registrierung' },
 ];
