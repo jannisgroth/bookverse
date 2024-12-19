@@ -1,5 +1,5 @@
 .subtitle {
-  color: #888; /* Graue Farbe */
+  color: #888;
   opacity: 0.7; /* Leicht transparent */
 }
 .modal-box {
@@ -9,15 +9,19 @@
 .custom-modal {
   width: 900px;
   height: 330px;
-  max-width: 90%; /* Optional: um sicherzustellen, dass es nicht zu groß wird */
-  max-height: 90%; /* Optional */
+  max-width: 90%;
+  max-height: 90%;
 }
 
 .form-row {
   display: flex; /* Flexbox aktivieren */
   align-items: center; /* Vertikale Ausrichtung auf der gleichen Höhe */
-  gap: 80px;
+  gap: 20px;
   justify-content: flex-start;
+}
+
+.form-row > .form-col:first-child {
+  margin-right: 130px; /* Abstand nach rechts für das erste Element */
 }
 
 .form-col {
@@ -27,36 +31,50 @@
 }
 
 .buch-titel {
-  font-size: 45px; /* Größerer Titel */
-  font-weight: bold; /* Fett */
+  font-size: 40px;
+  font-weight: bold;
 }
 
 .buch-preis {
-  font-size: 50px; /* Sehr groß */
-  font-weight: lighter; /* Dünn */
+  font-size: 25px;
+  font-weight: 300;
+  color: #888;
+  opacity: 0.7;
+  text-decoration: line-through;
+}
+
+.berechneterRabatt {
+  color: red;
+  font-size: 25px;
+  font-weight: lighter;
+}
+
+.berechneterPreis {
+  font-size: 40px;
+  font-weight: 600;
 }
 
 .buch-untertitel {
-  color: #6c757d; /* Ausgegraut (dunkles Grau) */
-  font-weight: bold; /* Etwas dicker machen */
+  color: #6c757d;
+  font-weight: bold;
 }
 
 .buch-schlagwoerter {
-  font-size: 18px; /* Setzt die Größe des Schlagworts */
-  font-weight: bold; /* Optional: Schlagwort fett darstellen */
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .buch-art {
-  font-size: 18px; /* Setzt die Größe des Schlagworts */
-  font-weight: bold; /* Optional: Schlagwort fett darstellen */
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .buch-isbn {
-  font-size: 18px; /* Setzt die Größe des Schlagworts */
-  font-weight: bold; /* Optional: Schlagwort fett darstellen */
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .buch-lieferbar {
-  font-size: 18px; /* Setzt die Größe des Schlagworts */
-  font-weight: bold; /* Macht den Text dicker */
+  font-size: 18px;
+  font-weight: bold;
 }

@@ -10,8 +10,12 @@
           <span class="buch-titel">{{ buch?.titel?.titel }}</span>
         </div>
         <div class="form-col">
-          <!-- <span class="berechneterPreis">{{ berechneterPreis }}€</span>
-          <span class="berechneterRabatt">{{ berechneterRabatt }}% </span> -->
+          <span class="berechneterPreis">{{ berechneterPreis }}€</span>
+        </div>
+        <div class="form-col">
+          <span class="berechneterRabatt">-{{ berechneterRabatt }}% </span>
+        </div>
+        <div class="form-col">
           <span class="buch-preis">{{ buch?.preis }}€</span>
         </div>
       </div>
@@ -21,11 +25,8 @@
         <div class="form-col">
           <span class="buch-untertitel">{{ buch?.titel?.untertitel }}</span>
         </div>
-
         <div class="form-col">
-          <span
-            style="margin-left: 120px"
-            class="mask mask-star-2 bg-primary w-8 h-8"></span>
+          <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
           <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
           <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
           <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
