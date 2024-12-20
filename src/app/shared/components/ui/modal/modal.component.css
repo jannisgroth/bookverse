@@ -20,10 +20,6 @@
   justify-content: flex-start;
 }
 
-.form-row > .form-col:first-child {
-  margin-right: 130px; /* Abstand nach rechts für das erste Element */
-}
-
 .form-col {
   display: flex; /* Flexbox für jedes Form-Element */
   align-items: center; /* Vertikale Ausrichtung auf der gleichen Höhe */

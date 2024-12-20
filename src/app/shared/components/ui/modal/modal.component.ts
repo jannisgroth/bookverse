@@ -37,4 +37,19 @@ export class ModalComponent {
     const berechneterPreis = preis * (1 - rabatt); // Berechnung des Preises mit Rabatt
     return Math.round(berechneterPreis * 100) / 100; // Runden auf 2 Dezimalstellen
   }
+
+  formatDate(date: string | Date | undefined): string {
+    if (!date) {
+      return ''; // Falls kein Datum vorhanden ist, gibt die Methode einen leeren String zurück
+    }
+
+    // Falls es sich bereits um ein Date-Objekt handelt, in String umwandeln
+    if (date instanceof Date) {
+      date = date.toISOString().split('T')[0]; // Umwandlung in "YYYY-MM-DD"
+    }
+
+    // Falls es ein Datum im String-Format ist (z. B. '2022-02-01')
+    const [year, month, day] = date.split('-');
+    return `${day}.${month}.${year}`;
+  }
 }
