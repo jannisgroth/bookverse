@@ -3,6 +3,7 @@ import { Injectable, signal } from '@angular/core';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 interface JwtPayloadWithRole extends JwtPayload {
+  email?: string,
   resource_access?: {
     [key: string]: {
       roles: string[];
@@ -17,6 +18,8 @@ export class AuthService {
   zugriff = signal<boolean | undefined>(undefined);
   token = signal<JwtPayloadWithRole | undefined>(undefined);
   role = signal<string | undefined>(undefined);
+  email = signal<string | undefined>(undefined);
+
   private readonly tokenUrl = 'https://localhost:3000/auth/token';
 
   constructor(private http: HttpClient) {}
@@ -54,8 +57,11 @@ export class AuthService {
           this.role.set(
             this.token()?.resource_access?.['nest-client']?.roles[0]
           );
+          this.email.set(
+            this.token()?.email
+          );
 
-          console.log(this.token(), this.role());
+          console.log(this.token(), this.role(), this.email());
           this.zugriff.set(true);
           setTimeout(() => {
             this.zugriff.set(undefined);
