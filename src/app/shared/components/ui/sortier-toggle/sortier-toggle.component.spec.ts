@@ -8,9 +8,8 @@ describe('SortierToggleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SortierToggleComponent]
-    })
-    .compileComponents();
+      imports: [SortierToggleComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SortierToggleComponent);
     component = fixture.componentInstance;

@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-input',
   imports: [],
   templateUrl: './input.component.html',
-  styleUrl: './input.component.css'
+  styleUrl: './input.component.css',
 })
 export class InputComponent {
   @Input() titel!: string;

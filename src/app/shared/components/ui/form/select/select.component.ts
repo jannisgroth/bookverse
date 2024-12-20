@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-select',
   imports: [],
   templateUrl: './select.component.html',
-  styleUrl: './select.component.css'
+  styleUrl: './select.component.css',
 })
-export class SelectComponent {
-
-}
+export class SelectComponent {}

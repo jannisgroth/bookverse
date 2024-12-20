@@ -13,7 +13,7 @@ export class CardComponent {
   @Input() buch: Buch | undefined;
   @Output() openModal = new EventEmitter<any>();
 
-  constructor() { }
+  constructor() {}
 
   showDetails() {
     this.openModal.emit(this.buch);

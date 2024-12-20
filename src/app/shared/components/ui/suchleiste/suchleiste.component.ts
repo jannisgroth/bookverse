@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-suchleiste',
   imports: [],
   templateUrl: './suchleiste.component.html',
-  styleUrl: './suchleiste.component.css'
+  styleUrl: './suchleiste.component.css',
 })
-export class SuchleisteComponent {
-
-}
+export class SuchleisteComponent {}

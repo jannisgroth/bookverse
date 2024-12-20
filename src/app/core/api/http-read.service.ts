@@ -21,7 +21,7 @@ export class ReadService {
   constructor(
     private readonly http: HttpClient,
     private readonly logger: LoggerService
-  ) { } // Dependency injection
+  ) {} // Dependency injection
 
   getBuecherMitBild() {
     this.http
@@ -107,13 +107,12 @@ export class ReadService {
 
   createBuch(buch: Buch) {
     this.http.post(this.restUrl, buch).subscribe({
-      next: (response) => {
+      next: response => {
         alert('Buch wurde erfolgreich angelegt!');
       },
-      error: (err) => {
+      error: err => {
         alert('fehler beim anlegen des buches');
-      }
-    })
+      },
+    });
   }
-
 }

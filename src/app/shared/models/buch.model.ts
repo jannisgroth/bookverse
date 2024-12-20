@@ -15,7 +15,7 @@ export interface Buch {
   _links: {
     self: {
       href: string | undefined;
-    }
-  }
+    };
+  };
   file: string | undefined;
 }

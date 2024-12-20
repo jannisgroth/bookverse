@@ -8,9 +8,8 @@ describe('SuccessAlertComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SuccessAlertComponent]
-    })
-    .compileComponents();
+      imports: [SuccessAlertComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SuccessAlertComponent);
     component = fixture.componentInstance;
