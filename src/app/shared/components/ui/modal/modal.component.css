@@ -9,7 +9,7 @@
 .custom-modal {
   width: 900px;
   height: 330px;
-  max-width: 90%;
+  max-width: 78%;
   max-height: 90%;
 }
 
@@ -73,4 +73,15 @@
 .buch-lieferbar {
   font-size: 18px;
   font-weight: bold;
+}
+
+.btn-close {
+  background-color: #f8d7da; /* Helles Rot */
+  color: #721c24; /* Dunkelroter Text */
+  border: 1px solid #f5c6cb; /* Rot als Rand */
+}
+
+.btn-close:hover {
+  background-color: #f5c6cb; /* Etwas intensiver beim Hover */
+  color: #721c24;
 }

@@ -22,7 +22,7 @@ export class ModalComponent {
 
   get berechneterRabatt(): number | undefined {
     if (!this.buch) return undefined;
-    if (this.buch.rabatt == undefined || null) return undefined;
+    if (this.buch.rabatt === undefined) return undefined;
 
     const rabatt = Number(this.buch.rabatt) * 100; // Rabatt-string in eine Zahl konvertieren
     return Math.round(rabatt * 100) / 100; // Runden auf 2 Dezimalstellen
@@ -45,7 +45,7 @@ export class ModalComponent {
 
     // Falls es sich bereits um ein Date-Objekt handelt, in String umwandeln
     if (date instanceof Date) {
-      date = date.toISOString().split('T')[0]; // Umwandlung in "YYYY-MM-DD"
+      date = date.toISOString().split('T')[0]; // Umwandlung in "YYYY-MM-DD" von z.B "2022-02-01T12:34:56.789Z"
     }
 
     // Falls es ein Datum im String-Format ist (z. B. '2022-02-01')
