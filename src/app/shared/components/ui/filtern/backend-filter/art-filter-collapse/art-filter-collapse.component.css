@@ -1,0 +1,10 @@
+.column {
+  flex: 1;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.radio {
+  margin-left: 60px;
+}

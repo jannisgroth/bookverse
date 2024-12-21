@@ -12,19 +12,11 @@ import {
   NgTemplateOutlet,
 } from '@angular/common';
 import { DrawerComponent } from '../../ui/drawer/drawer.component';
-import { SuchleisteComponent } from '../../ui/suchleiste/suchleiste.component';
 
 @Component({
   standalone: true,
   selector: 'app-navbar',
-  imports: [
-    CommonModule,
-    DrawerComponent,
-    RouterLink,
-    RouterLinkActive,
-    SuchleisteComponent,
-    NgTemplateOutlet,
-  ],
+  imports: [CommonModule, DrawerComponent, RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
