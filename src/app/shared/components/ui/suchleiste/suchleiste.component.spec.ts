@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SuchleisteComponent } from './suchleiste.component';
+import SuchleisteComponent from './suchleiste.component';
 
 describe('SuchleisteComponent', () => {
   let component: SuchleisteComponent;

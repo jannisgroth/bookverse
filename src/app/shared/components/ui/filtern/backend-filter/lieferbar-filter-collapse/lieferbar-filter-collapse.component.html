@@ -1,0 +1,17 @@
+<div class="collapse collapse-arrow bg-base-200">
+  <input type="checkbox" id="lieferbarFilterCheckbox" (change)="uncheck()" />
+  <div class="collapse-title text-xl font-medium">Verfügbarkeit</div>
+  <div class="collapse-content">
+    <div class="form-control">
+      <label class="label cursor-pointer">
+        <span class="label-text">Lieferbar</span>
+        <input
+          type="checkbox"
+          id="lieferbarCheckbox"
+          (change)="lieferbarAendern()"
+          class="toggle toggle-primary"
+          checked="checked" />
+      </label>
+    </div>
+  </div>
+</div>

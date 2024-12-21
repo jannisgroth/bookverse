@@ -7,6 +7,8 @@ import { ModalComponent } from '../../shared/components/ui/modal/modal.component
 import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-alert/error-alert.component';
 import { LoggerService } from '../../core/logging/logger.service';
 import { SortierServiceComponent } from '../../shared/components/ui/sortier-service/sortier-service.component';
+import { FilternComponent } from '../../shared/components/ui/filtern/filtern.component';
+import { SuchleisteComponent } from '../../shared/components/ui/suchleiste/suchleiste.component';
 
 @Component({
   standalone: true,
@@ -18,6 +20,8 @@ import { SortierServiceComponent } from '../../shared/components/ui/sortier-serv
     ModalComponent,
     ErrorAlertComponent,
     SortierServiceComponent,
+    FilternComponent,
+    SuchleisteComponent,
   ],
   templateUrl: './bibliothek.component.html',
   styleUrl: './bibliothek.component.css',
@@ -25,27 +29,28 @@ import { SortierServiceComponent } from '../../shared/components/ui/sortier-serv
 })
 export class BibliothekComponent implements OnInit {
   readonly selectedBuchSignal = signal<Buch | undefined>(undefined);
+  readonly buecher = signal<Buch[]>([]);
 
   /**
    * Erzeugt ein neues BibliothekComponent
-   * @param readservice Der Service, der die API-Aufrufe durchführt
+   * @param readService Der Service, der die API-Aufrufe durchführt
    * @param logger Der Logger, der zum Protokollieren von Ereignissen verwendet wird
    */
   constructor(
-    private readservice: ReadService,
+    private readService: ReadService,
     private logger: LoggerService
-  ) {}
-  get buecher() {
-    return this.readservice.buecher;
+  ) {
+    readService.getBuecherMitBild(this.buecher);
   }
+
   get loading() {
-    return this.readservice.loading;
+    return this.readService.loading;
   }
   get errorShow() {
-    return this.readservice.error().show;
+    return this.readService.error().show;
   }
   get errorMessage() {
-    return this.readservice.error().message;
+    return this.readService.error().message;
   }
 
   /**
@@ -54,7 +59,7 @@ export class BibliothekComponent implements OnInit {
    */
   ngOnInit(): void {
     // API-Aufruf, um die Bücher zu laden
-    this.readservice.getBuecherMitBild();
+    this.readService.getBuecherMitBild(this.buecher);
   }
   /**
    * Zeigt das Modal an, indem es den selectedBuchSignal mit dem uebergebenen Buch setzt

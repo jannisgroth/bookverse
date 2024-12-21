@@ -1,8 +1,8 @@
-import { Component, Input, signal, WritableSignal } from '@angular/core';
+import { Component, signal, WritableSignal, input } from '@angular/core';
 import { Buch } from '../../../models/buch.model';
 import { LoggerService } from '../../../../core/logging/logger.service';
-import { SortierDropdownComponent } from '../sortier-dropdown/sortier-dropdown.component';
-import { SortierToggleComponent } from '../sortier-toggle/sortier-toggle.component';
+import { SortierDropdownComponent } from './sortier-dropdown/sortier-dropdown.component';
+import { SortierToggleComponent } from './sortier-toggle/sortier-toggle.component';
 
 @Component({
   selector: 'app-sortier-service',
@@ -11,7 +11,7 @@ import { SortierToggleComponent } from '../sortier-toggle/sortier-toggle.compone
   styleUrl: './sortier-service.component.css',
 })
 export class SortierServiceComponent {
-  @Input() buecher!: WritableSignal<Buch[]>;
+  readonly buecher = input.required<WritableSignal<Buch[]>>();
 
   /**
    * Erzeugt eine neue SortierServiceComponent
@@ -36,7 +36,7 @@ export class SortierServiceComponent {
     this.logger.info(
       `Sortierung mit Sortierkriterium: ${this.sortierkriterium()} und Rangfolge: ${this.rangfolge()}`
     );
-    this.buecher.update(buecher => {
+    this.buecher().update(buecher => {
       // Spread Operator (...) ab ES2015
       return [...buecher].sort((erstesBuch, zweitesBuch) => {
         const erstesBuchWert =
