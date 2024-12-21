@@ -12,22 +12,40 @@ import {
   NgTemplateOutlet,
 } from '@angular/common';
 import { DrawerComponent } from '../../ui/drawer/drawer.component';
+import { SuchleisteComponent } from '../../ui/suchleiste/suchleiste.component';
+import { AuthService } from '../../../../core/api/auth.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
   selector: 'app-navbar',
-  imports: [CommonModule, DrawerComponent, RouterLink, RouterLinkActive],
+  imports: [
+    CommonModule,
+    DrawerComponent,
+    RouterLink,
+    RouterLinkActive,
+    SuchleisteComponent,
+    NgTemplateOutlet,
+    ReactiveFormsModule
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
   showSearchBar = signal<boolean>(false);
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private auth :AuthService) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.showSearchBar.set(this.router.url === '/bibliothek');
       }
     });
+  }
+
+  get role() {
+    return this.auth.role();
+  }
+  get email() {
+    return this.auth.email();
   }
 }

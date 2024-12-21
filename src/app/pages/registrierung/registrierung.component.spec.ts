@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SortierToggleComponent } from './sortier-toggle.component';
+import { RegistrierungComponent } from './registrierung.component';
 
-describe('SortierToggleComponent', () => {
-  let component: SortierToggleComponent;
-  let fixture: ComponentFixture<SortierToggleComponent>;
+describe('OverviewComponent', () => {
+  let component: RegistrierungComponent;
+  let fixture: ComponentFixture<RegistrierungComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SortierToggleComponent],
+      imports: [RegistrierungComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SortierToggleComponent);
+    fixture = TestBed.createComponent(RegistrierungComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

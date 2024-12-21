@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SortierToggleComponent } from './sortier-toggle.component';
+import { SuccessAlertComponent } from './success-alert.component';
 
-describe('SortierToggleComponent', () => {
-  let component: SortierToggleComponent;
-  let fixture: ComponentFixture<SortierToggleComponent>;
+describe('SuccessAlertComponent', () => {
+  let component: SuccessAlertComponent;
+  let fixture: ComponentFixture<SuccessAlertComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SortierToggleComponent],
+      imports: [SuccessAlertComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SortierToggleComponent);
+    fixture = TestBed.createComponent(SuccessAlertComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
