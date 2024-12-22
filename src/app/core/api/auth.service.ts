@@ -78,3 +78,6 @@ export class AuthService {
       });
   }
 }
+
+
+// TODO -> Validierung wenn backend nicht läuft
