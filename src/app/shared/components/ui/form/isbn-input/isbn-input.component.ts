@@ -22,7 +22,7 @@ export class IsbnInputComponent {
   ngOnInit(): void {
     const formControl = new FormControl(undefined, [
       Validators.required,
-      Validators.pattern(/^\d{3}-\d{1,5}-\d{1,7}-\d{1,7}-\d{1}$/),
+      Validators.pattern(/^(97[89]-?\d{1,5}-?\d{1,7}-?\d{1,7}-?\d{1})$/),
     ]);
 
     this.buchForm().addControl('isbn', formControl);

@@ -47,16 +47,18 @@ export class FormularComponent {
         schlagwort => this.buchForm.get(schlagwort)?.value === true
       );
 
-      const buchDTO: Omit<Buch, '_links'> = {
+      const buchDTO: Omit<Buch, '_links' | 'file'> = {
         isbn: this.buchForm.get('isbn')!.value,
         rating: Number(this.buchForm.get('rating')?.value),
         art:
           this.buchForm.get('buchart')?.value === 'wählen'
             ? undefined
             : this.buchForm.get('buchart')?.value,
-        preis: this.buchForm.get('preis')!.value!,
-        rabatt: (Number(this.buchForm.get('rabatt')?.value) / 100).toString() ?? undefined,
-        lieferbar: this.buchForm.get('lieferbar')?.value ?? undefined,
+        preis: String(this.buchForm.get('preis')!.value),
+        rabatt: this.buchForm.get('rabatt')?.value
+        ? (Number(this.buchForm.get('rabatt')?.value) / 100).toFixed(3)
+        : undefined,
+              lieferbar: this.buchForm.get('lieferbar')?.value ?? undefined,
         datum: this.buchForm.get('datum')?.value ?? undefined,
         homepage: this.buchForm.get('homepage')?.value ?? undefined,
         schlagwoerter: gewählteSchlagwoerter,
@@ -64,7 +66,7 @@ export class FormularComponent {
           titel: this.buchForm.get('titel')?.value!,
           untertitel: this.buchForm.get('untertitel')?.value ?? undefined,
         },
-        file: this.buchForm.get('upload')?.value ?? undefined,
+        //file: this.buchForm.get('upload')?.value ?? undefined,
       };
       console.log(buchDTO);
 

@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { Token } from '@angular/compiler';
 
 interface JwtPayloadWithRole extends JwtPayload {
   email?: string,
@@ -16,7 +17,8 @@ interface JwtPayloadWithRole extends JwtPayload {
 })
 export class AuthService {
   zugriff = signal<boolean | undefined>(undefined);
-  token = signal<JwtPayloadWithRole | undefined>(undefined);
+  token = signal<string | undefined>(undefined);
+  tokenEncoded = signal<JwtPayloadWithRole | undefined>(undefined);
   role = signal<string | undefined>(undefined);
   email = signal<string | undefined>(undefined);
 
@@ -50,18 +52,18 @@ export class AuthService {
       }>(this.tokenUrl, loginDaten)
       .subscribe({
         next: response => {
-          console.log(response);
-
+          //console.log(response);
+          this.token.set(response.access_token);
           // https://www.npmjs.com/package/jwt-decode
-          this.token.set(jwtDecode<JwtPayloadWithRole>(response.access_token));
+          this.tokenEncoded.set(jwtDecode<JwtPayloadWithRole>(response.access_token));
           this.role.set(
-            this.token()?.resource_access?.['nest-client']?.roles[0]
+            this.tokenEncoded()?.resource_access?.['nest-client']?.roles[0]
           );
           this.email.set(
-            this.token()?.email
+            this.tokenEncoded()?.email
           );
 
-          console.log(this.token(), this.role(), this.email());
+          console.log(this.tokenEncoded(), this.role(), this.email());
           this.zugriff.set(true);
           setTimeout(() => {
             this.zugriff.set(undefined);
