@@ -25,13 +25,13 @@
         <div class="form-col">
           <span class="buch-untertitel">{{ buch?.titel?.untertitel }}</span>
         </div>
+        <!-- Rating -->
         <div class="form-col">
-          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+          <!-- Iteriere über das Array von Sternen -->
+          <ng-container *ngFor="let star of generateStars(buch?.rating ?? 0)">
             <span
               class="mask mask-star-2 w-8 h-8"
-              [ngClass]="
-                star <= (buch?.rating || 0) ? 'bg-primary' : 'bg-secondary'
-              "></span>
+              [ngClass]="star ? 'ausgefüllt' : 'nicht-ausgefüllt'"></span>
           </ng-container>
         </div>
       </div>

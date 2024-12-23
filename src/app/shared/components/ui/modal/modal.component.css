@@ -55,11 +55,11 @@
   font-weight: bold;
 }
 
-.bg-primary {
+.ausgefüllt {
   background-color: gold;
 }
 
-.bg-secondary {
+.nicht-ausgefüllt {
   background-color: lightgray;
 }
 

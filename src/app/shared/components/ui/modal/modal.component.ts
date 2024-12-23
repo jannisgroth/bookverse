@@ -53,4 +53,12 @@ export class ModalComponent {
     const [year, month, day] = date.split('-');
     return `${day}.${month}.${year}`;
   }
+
+  generateStars(rating: number): boolean[] {
+    const stars: boolean[] = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(i <= rating); // true für ausgefüllte Sterne, false für leere
+    }
+    return stars;
+  }
 }
