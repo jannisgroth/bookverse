@@ -13,7 +13,7 @@ import {
 } from '@angular/common';
 import { DrawerComponent } from '../../ui/drawer/drawer.component';
 import { SuchleisteComponent } from '../../ui/suchleiste/suchleiste.component';
-import { AuthService } from '../../../../core/api/auth.service';
+import { AuthService } from '../../../../core/api/auth/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -24,8 +24,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     DrawerComponent,
     RouterLink,
     RouterLinkActive,
-    SuchleisteComponent,
-    NgTemplateOutlet,
     ReactiveFormsModule
   ],
   templateUrl: './navbar.component.html',
@@ -42,10 +40,10 @@ export class NavbarComponent {
     });
   }
 
-  get role() {
-    return this.auth.role();
+  get zugriff() {
+    return this.auth.zugriff();
   }
-  get email() {
-    return this.auth.email();
+  get userData() {
+    return this.auth.userData();
   }
 }

@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { AuthService } from '../../../../core/api/auth.service';
+import { AuthService } from '../../../../core/api/auth/auth.service';
 import { getTestBed } from '@angular/core/testing';
 import {
   FormGroup,
@@ -64,7 +64,7 @@ export class LoginComponent {
     return this.auth.zugriff();
   }
 
-  get role() {
-    return this.auth.role();
+  get userData() {
+    return this.auth.userData();
   }
 }

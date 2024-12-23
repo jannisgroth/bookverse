@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Buch } from '../../shared/models/buch.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from './auth.service';
+import { AuthService } from './auth/auth.service';
 
 @Injectable({
   providedIn: 'root',

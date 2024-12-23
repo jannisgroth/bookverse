@@ -12,7 +12,7 @@
       routerLinkActive="text-2xl font-bold text-xl text-sky-500">Login</a>
     <a class="btn btn-link hover:text-sky-500 dark:hover:text-sky-400 text-lg" routerLink="/bibliothek"
       routerLinkActive="text-2xl font-bold text-xl text-sky-500">Bibliothek</a>
-    @if (role === 'admin') {
+    @if (userData.rolle === "admin" || userData.rolle === "user") {
       <a class="btn btn-link hover:text-sky-500 dark:hover:text-sky-400 text-lg" routerLink="/buchAnlegen"
       routerLinkActive="text-2xl font-bold text-xl text-sky-500">Buch Anlegen</a>
     }
@@ -35,8 +35,8 @@
           </svg>
         </ng-template>
         <li><a>Profil</a></li>
-        <li><a>Rolle: {{ role }}</a></li>
-        <li><a>Email: {{ email }}</a></li>
+        <li><a>Rolle: {{ userData.rolle }}</a></li>
+        <li><a>Email: {{ userData.email }}</a></li>
       </app-drawer>
     </div>
     <div>

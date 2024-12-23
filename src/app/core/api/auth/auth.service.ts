@@ -19,8 +19,7 @@ export class AuthService {
   zugriff = signal<boolean | undefined>(undefined);
   token = signal<string | undefined>(undefined);
   tokenEncoded = signal<JwtPayloadWithRole | undefined>(undefined);
-  role = signal<string | undefined>(undefined);
-  email = signal<string | undefined>(undefined);
+  userData = signal<{ email: string, rolle: string }>({ email: '', rolle: ''});
 
   private readonly tokenUrl = 'https://localhost:3000/auth/token';
 
@@ -56,14 +55,13 @@ export class AuthService {
           this.token.set(response.access_token);
           // https://www.npmjs.com/package/jwt-decode
           this.tokenEncoded.set(jwtDecode<JwtPayloadWithRole>(response.access_token));
-          this.role.set(
-            this.tokenEncoded()?.resource_access?.['nest-client']?.roles[0]
-          );
-          this.email.set(
-            this.tokenEncoded()?.email
-          );
+  
+          this.userData.set({
+            email: this.tokenEncoded()!.resource_access?.['nest-client']!.roles[0]!,
+            rolle: this.tokenEncoded()!.email!,
+          });
 
-          console.log(this.tokenEncoded(), this.role(), this.email());
+          //console.log(this.tokenEncoded(), this.role(), this.email());
           this.zugriff.set(true);
           setTimeout(() => {
             this.zugriff.set(undefined);
