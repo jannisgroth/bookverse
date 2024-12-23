@@ -8,9 +8,8 @@ describe('LieferbarFilterCollapseComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LieferbarFilterCollapseComponent]
-    })
-    .compileComponents();
+      imports: [LieferbarFilterCollapseComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LieferbarFilterCollapseComponent);
     component = fixture.componentInstance;

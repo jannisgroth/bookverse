@@ -8,9 +8,8 @@ describe('RabattFilterCollapseComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RabattFilterCollapseComponent]
-    })
-    .compileComponents();
+      imports: [RabattFilterCollapseComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RabattFilterCollapseComponent);
     component = fixture.componentInstance;

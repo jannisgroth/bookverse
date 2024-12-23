@@ -8,9 +8,8 @@ describe('ArtFilterCollapseComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ArtFilterCollapseComponent]
-    })
-    .compileComponents();
+      imports: [ArtFilterCollapseComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ArtFilterCollapseComponent);
     component = fixture.componentInstance;

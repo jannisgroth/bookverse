@@ -4,7 +4,7 @@ import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { Token } from '@angular/compiler';
 
 interface JwtPayloadWithRole extends JwtPayload {
-  email?: string,
+  email?: string;
   resource_access?: {
     [key: string]: {
       roles: string[];
@@ -16,10 +16,11 @@ interface JwtPayloadWithRole extends JwtPayload {
   providedIn: 'root',
 })
 export class AuthService {
-  zugriff = signal<boolean | undefined>(undefined);
+  zugriffAlert = signal<boolean | undefined>(undefined);
   token = signal<string | undefined>(undefined);
   tokenEncoded = signal<JwtPayloadWithRole | undefined>(undefined);
-  userData = signal<{ email: string, rolle: string }>({ email: '', rolle: ''});
+  userData = signal<{ email: string; rolle: string }>({ email: '', rolle: '' });
+  loggedIn = signal<boolean>(false);
 
   private readonly tokenUrl = 'https://localhost:3000/auth/token';
 
@@ -54,30 +55,33 @@ export class AuthService {
           //console.log(response);
           this.token.set(response.access_token);
           // https://www.npmjs.com/package/jwt-decode
-          this.tokenEncoded.set(jwtDecode<JwtPayloadWithRole>(response.access_token));
-  
+          this.tokenEncoded.set(
+            jwtDecode<JwtPayloadWithRole>(response.access_token)
+          );
+
           this.userData.set({
-            email: this.tokenEncoded()!.resource_access?.['nest-client']!.roles[0]!,
-            rolle: this.tokenEncoded()!.email!,
+            email: this.tokenEncoded()!.email!,
+            rolle:
+              this.tokenEncoded()!.resource_access?.['nest-client']!.roles[0]!,
           });
 
           //console.log(this.tokenEncoded(), this.role(), this.email());
-          this.zugriff.set(true);
+          this.loggedIn.set(true);
+          this.zugriffAlert.set(true);
           setTimeout(() => {
-            this.zugriff.set(undefined);
+            this.zugriffAlert.set(undefined);
           }, 4000);
         },
         error: error => {
           if (error instanceof HttpErrorResponse && error.status === 401) {
-            this.zugriff.set(false);
+            this.zugriffAlert.set(false);
             setTimeout(() => {
-              this.zugriff.set(undefined);
+              this.zugriffAlert.set(undefined);
             }, 4000);
           }
         },
       });
   }
 }
-
 
 // TODO -> Validierung wenn backend nicht läuft

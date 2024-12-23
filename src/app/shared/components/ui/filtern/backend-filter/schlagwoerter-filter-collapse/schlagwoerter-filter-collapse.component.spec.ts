@@ -8,9 +8,8 @@ describe('SchlagwoerterFilterCollapseComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SchlagwoerterFilterCollapseComponent]
-    })
-    .compileComponents();
+      imports: [SchlagwoerterFilterCollapseComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SchlagwoerterFilterCollapseComponent);
     component = fixture.componentInstance;

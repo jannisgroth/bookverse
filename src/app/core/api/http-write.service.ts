@@ -9,18 +9,20 @@ import { AuthService } from './auth/auth.service';
 export class WriteService {
   private readonly restUrl: string = 'https://localhost:3000/rest';
 
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(
+    private http: HttpClient,
+    private auth: AuthService
+  ) {}
 
   async createBuch(buch: Omit<Buch, '_links' | 'file'>) {
     console.log(this.auth.token());
-    this.http.post(
-      this.restUrl,
-      buch,
-      {
+    this.http
+      .post(this.restUrl, buch, {
         headers: new HttpHeaders({
-          'Authorization': `Bearer ${this.auth.token()}`,
+          Authorization: `Bearer ${this.auth.token()}`,
         }),
-      }).subscribe({
+      })
+      .subscribe({
         next: response => {
           alert('Buch wurde erfolgreich angelegt!');
         },

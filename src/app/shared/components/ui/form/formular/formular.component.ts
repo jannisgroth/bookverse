@@ -39,7 +39,7 @@ export class FormularComponent {
   protected buchForm = new FormGroup({});
   protected schlagwoerter = ['JAVASCRIPT', 'JAVA', 'PYTHON', 'TYPESCRIPT'];
 
-  constructor(private writeService: WriteService) { }
+  constructor(private writeService: WriteService) {}
   async onSubmit() {
     if (this.buchForm.valid) {
       console.log('valide eingaben');
@@ -56,9 +56,9 @@ export class FormularComponent {
             : this.buchForm.get('buchart')?.value,
         preis: String(this.buchForm.get('preis')!.value),
         rabatt: this.buchForm.get('rabatt')?.value
-        ? (Number(this.buchForm.get('rabatt')?.value) / 100).toFixed(3)
-        : undefined,
-              lieferbar: this.buchForm.get('lieferbar')?.value ?? undefined,
+          ? (Number(this.buchForm.get('rabatt')?.value) / 100).toFixed(3)
+          : undefined,
+        lieferbar: this.buchForm.get('lieferbar')?.value ?? undefined,
         datum: this.buchForm.get('datum')?.value ?? undefined,
         homepage: this.buchForm.get('homepage')?.value ?? undefined,
         schlagwoerter: gewählteSchlagwoerter,

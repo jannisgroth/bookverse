@@ -24,7 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     DrawerComponent,
     RouterLink,
     RouterLinkActive,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
@@ -32,16 +32,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class NavbarComponent {
   showSearchBar = signal<boolean>(false);
 
-  constructor(private router: Router, private auth :AuthService) {
+  constructor(
+    private router: Router,
+    private auth: AuthService
+  ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.showSearchBar.set(this.router.url === '/bibliothek');
       }
     });
-  }
-
-  get zugriff() {
-    return this.auth.zugriff();
   }
   get userData() {
     return this.auth.userData();

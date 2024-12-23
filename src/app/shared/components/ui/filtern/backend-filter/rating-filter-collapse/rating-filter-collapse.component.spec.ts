@@ -8,9 +8,8 @@ describe('RatingFilterCollapseComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RatingFilterCollapseComponent]
-    })
-    .compileComponents();
+      imports: [RatingFilterCollapseComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RatingFilterCollapseComponent);
     component = fixture.componentInstance;

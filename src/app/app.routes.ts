@@ -8,6 +8,10 @@ export const routes: Routes = [
   { path: '', redirectTo: 'registrierung', pathMatch: 'full' },
   { path: 'registrierung', component: RegistrierungComponent },
   { path: 'bibliothek', component: BibliothekComponent },
-  { path: 'buchAnlegen', component: BuchAnlegenComponent, canActivate: [AuthGuard] },
+  {
+    path: 'buchAnlegen',
+    component: BuchAnlegenComponent,
+    canActivate: [AuthGuard],
+  },
   { path: '**', redirectTo: 'registrierung' },
 ];
