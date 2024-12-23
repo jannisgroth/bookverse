@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Buch } from '../../../models/buch.model';
+import { Location } from '@angular/common';
 
 @Component({
   standalone: true,
@@ -13,9 +14,12 @@ export class CardComponent {
   @Input() buch: Buch | undefined;
   @Output() openModal = new EventEmitter<any>();
 
-  constructor() { }
+  constructor(private location: Location) {}
 
   showDetails() {
+    if (this.buch?.titel?.titel) {
+      this.location.go(`/buch/${this.buch.titel.titel}`);
+    }
     this.openModal.emit(this.buch);
   }
 }
