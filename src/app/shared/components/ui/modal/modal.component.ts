@@ -57,7 +57,7 @@ export class ModalComponent {
   generateStars(rating: number): boolean[] {
     const stars: boolean[] = [];
     for (let i = 1; i <= 5; i++) {
-      stars.push(i <= rating); // true für ausgefüllte Sterne, false für leere
+      stars.push(i <= rating); // true für ausgefüllte Sterne, false für leere z.B [true, true, true, false, false] für 3
     }
     return stars;
   }

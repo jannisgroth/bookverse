@@ -26,17 +26,20 @@
   width: 100%; /* Volle Breite innerhalb des Containers */
 }
 
+.form-row > .form-col:first-child {
+  width: 200px; /* Feste Breite für die erste Spalte */
+  min-width: 250px; /* Stellt sicher, dass die Spalte nicht kleiner wird */
+  max-width: 250px; /* Stellt sicher, dass die Spalte nicht größer wird */
+}
+
 .buch-titel {
   font-size: 40px;
   font-weight: bold;
 }
 
-.buch-preis {
-  font-size: 25px;
-  font-weight: 300;
-  color: #888;
-  opacity: 0.7;
-  text-decoration: line-through;
+.berechneterPreis {
+  font-size: 40px;
+  font-weight: 600;
 }
 
 .berechneterRabatt {
@@ -45,9 +48,12 @@
   font-weight: lighter;
 }
 
-.berechneterPreis {
-  font-size: 40px;
-  font-weight: 600;
+.buch-preis {
+  font-size: 25px;
+  font-weight: 300;
+  color: #888;
+  opacity: 0.7;
+  text-decoration: line-through;
 }
 
 .buch-untertitel {
