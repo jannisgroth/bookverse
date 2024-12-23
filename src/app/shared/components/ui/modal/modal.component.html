@@ -26,11 +26,13 @@
           <span class="buch-untertitel">{{ buch?.titel?.untertitel }}</span>
         </div>
         <div class="form-col">
-          <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
-          <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
-          <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
-          <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
-          <span class="mask mask-star-2 bg-primary w-8 h-8"></span>
+          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+            <span
+              class="mask mask-star-2 w-8 h-8"
+              [ngClass]="
+                star <= (buch?.rating || 0) ? 'bg-primary' : 'bg-secondary'
+              "></span>
+          </ng-container>
         </div>
       </div>
 

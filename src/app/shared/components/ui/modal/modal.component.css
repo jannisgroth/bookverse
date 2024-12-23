@@ -55,6 +55,14 @@
   font-weight: bold;
 }
 
+.bg-primary {
+  background-color: gold;
+}
+
+.bg-secondary {
+  background-color: lightgray;
+}
+
 .buch-schlagwoerter {
   font-size: 18px;
   font-weight: bold;
