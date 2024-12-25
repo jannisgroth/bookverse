@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { TitelInputComponent } from '../titel-input/titel-input.component';
 import { UploadInputComponent } from '../upload/upload-input/upload-input.component';
 import { RatingRadioComponent } from '../rating-radio/rating-radio.component';
@@ -41,8 +41,17 @@ export class FormularComponent {
   protected schlagwoerter = ['JAVASCRIPT', 'JAVA', 'PYTHON', 'TYPESCRIPT'];
   private ausgewähltesFile = signal<File | undefined>(undefined);
 
-  constructor(private writeService: WriteService, private logger: LoggerService) { }
+  constructor(
+    private writeService: WriteService,
+    private logger: LoggerService
+  ) {}
 
+  /**
+   * Submit-Methode, die aufgerufen wird, wenn das Formular
+   * validiert wurde. Hier wird das BuchDTO erstellt und an den
+   * Write-Service gesendet. Wenn eine Datei hochgeladen wurde,
+   * wird diese mit dem BuchDTO gesendet.
+   */
   async onSubmit() {
     if (this.buchForm.valid) {
       console.log('valide eingaben');
@@ -77,19 +86,29 @@ export class FormularComponent {
         // Wenn keine Datei hochgeladen wurde, sende das Buch ohne Datei
         this.logger.debug('Keine Datei hochgeladen', this.ausgewähltesFile());
 
-        await this.writeService.createBuch(buchDTO, { mitFile: false, file: undefined });
+        await this.writeService.createBuch(buchDTO, {
+          mitFile: false,
+          file: undefined,
+        });
       } else {
         const file = this.ausgewähltesFile();
         this.logger.debug('Datei wird hochgeladen:', file);
-        await this.writeService.createBuch(buchDTO, { mitFile: true, file: file });
+        await this.writeService.createBuch(buchDTO, {
+          mitFile: true,
+          file: file,
+        });
       }
     } else {
       console.log('Formular ist ungültig');
     }
   }
 
+  /**
+   * Setzt die Datei, die in der File-Upload Komponente ausgewählt wurde.
+   * Wenn die Datei undefined ist, wird keine Datei hochgeladen.
+   * @param file Die ausgewählte Datei.
+   */
   setSelectedFile(file: File | undefined) {
     this.ausgewähltesFile.set(file);
-    this.logger.debug('FileService File Wert -> ', file)
   }
 }

@@ -1,10 +1,9 @@
-<div [formGroup]="buchForm()">
+<div>
     <label class="label">
         <span class="label-text text-lg font-semibold">Bild *</span>
     </label>
     <label class="flex items-center gap-2 rounded-lg">
-        <input formControlName="upload" type="file"
-            class="file-input file-input-bordered file-input-primary w-full max-w-xs"
+        <input type="file" class="file-input file-input-bordered file-input-primary w-full max-w-xs"
             (change)="onFileSelected($event)" />
     </label>
 </div>
