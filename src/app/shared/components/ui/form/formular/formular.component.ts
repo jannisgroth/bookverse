@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { TitelInputComponent } from '../titel-input/titel-input.component';
-import { UploadInputComponent } from '../upload-input/upload-input.component';
+import { UploadInputComponent } from '../upload/upload-input/upload-input.component';
 import { RatingRadioComponent } from '../rating-radio/rating-radio.component';
 import { SchlagwoerterCheckboxComponent } from '../sclagwoerter-checkbox/schlagwoerter-checkbox.component';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +14,7 @@ import { RabattInputComponent } from '../rabatt-input/rabatt-input.component';
 import { Buch } from '../../../../models/buch.model';
 import { LieferbarCheckboxComponent } from '../lieferbar-checkbox/lieferbar-checkbox.component';
 import { WriteService } from '../../../../../core/api/http-write.service';
+import { LoggerService } from '../../../../../core/logging/logger.service';
 
 @Component({
   selector: 'app-formular',
@@ -38,8 +39,10 @@ import { WriteService } from '../../../../../core/api/http-write.service';
 export class FormularComponent {
   protected buchForm = new FormGroup({});
   protected schlagwoerter = ['JAVASCRIPT', 'JAVA', 'PYTHON', 'TYPESCRIPT'];
+  private ausgewähltesFile = signal<File | undefined>(undefined);
 
-  constructor(private writeService: WriteService) {}
+  constructor(private writeService: WriteService, private logger: LoggerService) { }
+
   async onSubmit() {
     if (this.buchForm.valid) {
       console.log('valide eingaben');
@@ -49,30 +52,44 @@ export class FormularComponent {
 
       const buchDTO: Omit<Buch, '_links' | 'file'> = {
         isbn: this.buchForm.get('isbn')!.value,
-        rating: Number(this.buchForm.get('rating')?.value),
+        rating: Number(this.buchForm.get('rating')!.value),
         art:
-          this.buchForm.get('buchart')?.value === 'wählen'
+          this.buchForm.get('buchart')!.value === 'wählen'
             ? undefined
-            : this.buchForm.get('buchart')?.value,
+            : this.buchForm.get('buchart')!.value,
         preis: String(this.buchForm.get('preis')!.value),
-        rabatt: this.buchForm.get('rabatt')?.value
-          ? (Number(this.buchForm.get('rabatt')?.value) / 100).toFixed(3)
+        rabatt: this.buchForm.get('rabatt')!.value
+          ? (Number(this.buchForm.get('rabatt')!.value) / 100).toFixed(3)
           : undefined,
-        lieferbar: this.buchForm.get('lieferbar')?.value ?? undefined,
-        datum: this.buchForm.get('datum')?.value ?? undefined,
-        homepage: this.buchForm.get('homepage')?.value ?? undefined,
+        lieferbar: this.buchForm.get('lieferbar')!.value ?? undefined,
+        datum: this.buchForm.get('datum')!.value ?? undefined,
+        homepage: this.buchForm.get('homepage')!.value ?? undefined,
         schlagwoerter: gewählteSchlagwoerter,
         titel: {
-          titel: this.buchForm.get('titel')?.value!,
-          untertitel: this.buchForm.get('untertitel')?.value ?? undefined,
+          titel: this.buchForm.get('titel')!.value!,
+          untertitel: this.buchForm.get('untertitel')!.value ?? undefined,
         },
-        //file: this.buchForm.get('upload')?.value ?? undefined,
       };
       console.log(buchDTO);
 
-      await this.writeService.createBuch(buchDTO);
+      // Überprüfen, ob die Datei vorhanden ist oder nicht
+      if (this.ausgewähltesFile() === undefined) {
+        // Wenn keine Datei hochgeladen wurde, sende das Buch ohne Datei
+        this.logger.debug('Keine Datei hochgeladen', this.ausgewähltesFile());
+
+        await this.writeService.createBuch(buchDTO, { mitFile: false, file: undefined });
+      } else {
+        const file = this.ausgewähltesFile();
+        this.logger.debug('Datei wird hochgeladen:', file);
+        await this.writeService.createBuch(buchDTO, { mitFile: true, file: file });
+      }
     } else {
       console.log('Formular ist ungültig');
     }
+  }
+
+  setSelectedFile(file: File | undefined) {
+    this.ausgewähltesFile.set(file);
+    this.logger.debug('FileService File Wert -> ', file)
   }
 }

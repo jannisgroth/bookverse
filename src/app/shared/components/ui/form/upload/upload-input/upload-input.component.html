@@ -4,6 +4,7 @@
     </label>
     <label class="flex items-center gap-2 rounded-lg">
         <input formControlName="upload" type="file"
-            class="file-input file-input-bordered file-input-primary w-full max-w-xs" />
+            class="file-input file-input-bordered file-input-primary w-full max-w-xs"
+            (change)="onFileSelected($event)" />
     </label>
 </div>
