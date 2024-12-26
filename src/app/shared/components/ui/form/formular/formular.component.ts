@@ -15,6 +15,7 @@ import { LieferbarCheckboxComponent } from '../lieferbar-checkbox/lieferbar-chec
 import { WriteService } from '../../../../../core/api/http-write.service';
 import { LoggerService } from '../../../../../core/logging/logger.service';
 import { ErrorAlertComponent } from '../../alerts/error-alert/error-alert.component';
+import { Buch } from '../../../../models/buch.model';
 
 @Component({
   selector: 'app-formular',
@@ -72,27 +73,7 @@ export class FormularComponent {
     // Ladezustand auf true setzen, wenn der Prozess beginnt
     this.loading.set(true);
 
-    const gewählteSchlagwoerter = this.schlagwoerter.filter(
-      schlagwort => this.buchForm.get(schlagwort)?.value === true
-    );
-
-    const buchDTO = {
-      isbn: this.buchForm.get('isbn')!.value,
-      rating: Number(this.buchForm.get('rating')!.value),
-      art: this.buchForm.get('buchart')!.value === 'wählen' ? undefined : this.buchForm.get('buchart')!.value,
-      preis: String(this.buchForm.get('preis')!.value),
-      rabatt: this.buchForm.get('rabatt')!.value
-        ? (Number(this.buchForm.get('rabatt')!.value) / 100).toFixed(3)
-        : undefined,
-      lieferbar: this.buchForm.get('lieferbar')!.value ?? undefined,
-      datum: this.buchForm.get('datum')!.value ?? undefined,
-      homepage: this.buchForm.get('homepage')!.value ?? undefined,
-      schlagwoerter: gewählteSchlagwoerter,
-      titel: {
-        titel: this.buchForm.get('titel')!.value!,
-        untertitel: this.buchForm.get('untertitel')!.value ?? undefined,
-      },
-    };
+    const buchDTO = await this.#inputToBuchDTO();
 
     // Falls keine Datei ausgewählt wurde, rufe den WriteService ohne Datei auf
     const uploadParams = this.ausgewähltesFile() === undefined || null
@@ -115,13 +96,36 @@ export class FormularComponent {
       });
 
   }
+  async #inputToBuchDTO(): Promise<Omit<Buch, '_links' | 'file'>> {
+    const gewählteSchlagwoerter = this.schlagwoerter.filter(
+      schlagwort => this.buchForm.get(schlagwort)?.value === true
+    );
+    return {
+      isbn: this.buchForm.get('isbn')!.value,
+      rating: Number(this.buchForm.get('rating')!.value),
+      art: this.buchForm.get('buchart')!.value === 'wählen' ? undefined : this.buchForm.get('buchart')!.value,
+      preis: String(this.buchForm.get('preis')!.value),
+      rabatt: this.buchForm.get('rabatt')!.value
+        ? (Number(this.buchForm.get('rabatt')!.value) / 100).toFixed(3)
+        : undefined,
+      lieferbar: this.buchForm.get('lieferbar')!.value ?? undefined,
+      datum: this.buchForm.get('datum')!.value ?? undefined,
+      homepage: this.buchForm.get('homepage')!.value ?? undefined,
+      schlagwoerter: gewählteSchlagwoerter,
+      titel: {
+        titel: this.buchForm.get('titel')!.value!,
+        untertitel: this.buchForm.get('untertitel')!.value ?? undefined,
+      },
+    };
+  }
 
   /**
-   * Setzt die Datei, die in der File-Upload Komponente ausgewählt wurde.
-   * Wenn die Datei undefined ist, wird keine Datei hochgeladen.
-   * @param file Die ausgewählte Datei.
-   */
+ * Setzt die Datei, die in der File-Upload Komponente ausgewählt wurde.
+ * Wenn die Datei undefined ist, wird keine Datei hochgeladen.
+ * @param file Die ausgewählte Datei.
+ */
   setSelectedFile(file: File | undefined) {
     this.ausgewähltesFile.set(file);
   }
+
 }

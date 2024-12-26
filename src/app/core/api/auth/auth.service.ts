@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { Token } from '@angular/compiler';
+import { LoggerService } from '../../logging/logger.service';
 
 interface JwtPayloadWithRole extends JwtPayload {
   email?: string;
@@ -22,9 +23,13 @@ export class AuthService {
   userData = signal<{ email: string; rolle: string }>({ email: '', rolle: '' });
   loggedIn = signal<boolean>(false);
 
-  private readonly tokenUrl = 'https://localhost:3000/auth/token';
+  private readonly authUrl = 'https://localhost:3000/auth';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private logger: LoggerService) {
+    if (localStorage.getItem('refresh_token')) {
+      this.getRefreshToken();
+    }
+  }
 
   /**
    * Liefert den Zugriff auf den Auth-Service.
@@ -48,11 +53,12 @@ export class AuthService {
       this.http
         .post<{
           access_token: string;
-          [key: string]: any;
-        }>(this.tokenUrl, loginDaten)
+          refresh_token: string;
+        }>(`${this.authUrl}/token`, loginDaten)
         .subscribe({
           next: response => {
             this.token.set(response.access_token);
+            localStorage.setItem('refresh_token', response.refresh_token);
             // https://www.npmjs.com/package/jwt-decode
             this.tokenEncoded.set(
               jwtDecode<JwtPayloadWithRole>(response.access_token)
@@ -70,6 +76,7 @@ export class AuthService {
             setTimeout(() => {
               this.zugriffAlert.set(undefined);
             }, 4000);
+            this.startTokenTimer();
             resolve();
           },
           error: error => {
@@ -82,9 +89,58 @@ export class AuthService {
             reject();
           },
         });
-    })
+    });
+  }
 
+  private async getRefreshToken() {
+    const refresh_token = localStorage.getItem('refresh_token');
+    if (!refresh_token || refresh_token === null) {
+      return;
+    }
+
+    this.http.post<{
+      access_token: string;
+      refresh_token: string;
+    }>(`${this.authUrl}/refresh`, { refresh_token }).subscribe({
+      next: (response) => {
+        this.token.set(response.access_token);
+        localStorage.setItem('refresh_token', response.refresh_token);
+        this.tokenEncoded.set(
+          jwtDecode<JwtPayloadWithRole>(response.access_token)
+        );
+
+        this.userData.set({
+          email: this.tokenEncoded()!.email!,
+          rolle:
+            this.tokenEncoded()!.resource_access?.['nest-client']!.roles[0]!,
+        });
+        this.loggedIn.set(true);
+
+        this.startTokenTimer();
+      },
+      error: () => {
+        this.logger.error('Fehler beim Refreshen des Token');
+      }
+    });
+  }
+
+  private async checkToken() {
+    if (this.tokenEncoded() === undefined) {
+      return;
+    }
+    if (((this.tokenEncoded()!.exp! * 1000) - Date.now()) < 60000) {
+      this.logger.info('Zeit des Tokens bald rum', this.tokenEncoded()?.exp);
+      await this.getRefreshToken();
+    }
+  }
+
+  private startTokenTimer() {
+    this.logger.info('Token Timer gestartet');
+    setInterval(() => {
+      this.logger.info('Token Timer ausgelöst');
+      this.checkToken();
+    }, 60000);
   }
 }
 
-// TODO -> Validierung wenn backend nicht läuft + Tokenablaufdatum (UI Anzeige)
+// TODO -> Bei den Postrequest genau schauen bezüglich asyncronität einfacher schreiben

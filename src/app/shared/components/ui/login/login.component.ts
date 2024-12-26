@@ -30,9 +30,6 @@ export class LoginComponent {
   });
   protected loading = signal<boolean>(false);
 
-  private effect = effect(() => {
-    this.logger.debug('Loading state geændert:', this.loading());
-  })
   constructor(private auth: AuthService, private logger: LoggerService) { }
 
   /**
@@ -40,7 +37,7 @@ export class LoginComponent {
    */
   async onLogin() {
     this.loading.set(true);
-    console.log('1', this.loading());
+
     if (this.loginForm.valid) {
       await this.auth.getToken({
         username: this.loginForm.get('benutzername')!.value,
@@ -57,6 +54,7 @@ export class LoginComponent {
     this.auth.zugriffAlert.set(undefined);
     this.auth.userData.set({ email: '', rolle: '' });
     this.auth.token.set(undefined);
+    localStorage.removeItem('refresh_token');
   }
 
   /**
