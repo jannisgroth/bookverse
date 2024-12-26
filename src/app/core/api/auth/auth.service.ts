@@ -44,43 +44,46 @@ export class AuthService {
    *          signalisiert.
    */
   async getToken(loginDaten: { username: string; password: string }) {
-    console.log(loginDaten);
-    this.http
-      .post<{
-        access_token: string;
-        [key: string]: any;
-      }>(this.tokenUrl, loginDaten)
-      .subscribe({
-        next: response => {
-          console.log(response);
-          this.token.set(response.access_token);
-          // https://www.npmjs.com/package/jwt-decode
-          this.tokenEncoded.set(
-            jwtDecode<JwtPayloadWithRole>(response.access_token)
-          );
+    return new Promise<void>((resolve, reject) => {
+      this.http
+        .post<{
+          access_token: string;
+          [key: string]: any;
+        }>(this.tokenUrl, loginDaten)
+        .subscribe({
+          next: response => {
+            this.token.set(response.access_token);
+            // https://www.npmjs.com/package/jwt-decode
+            this.tokenEncoded.set(
+              jwtDecode<JwtPayloadWithRole>(response.access_token)
+            );
 
-          this.userData.set({
-            email: this.tokenEncoded()!.email!,
-            rolle:
-              this.tokenEncoded()!.resource_access?.['nest-client']!.roles[0]!,
-          });
+            this.userData.set({
+              email: this.tokenEncoded()!.email!,
+              rolle:
+                this.tokenEncoded()!.resource_access?.['nest-client']!.roles[0]!,
+            });
 
-          //console.log(this.tokenEncoded(), this.role(), this.email());
-          this.loggedIn.set(true);
-          this.zugriffAlert.set(true);
-          setTimeout(() => {
-            this.zugriffAlert.set(undefined);
-          }, 4000);
-        },
-        error: error => {
-          if (error instanceof HttpErrorResponse && error.status === 401) {
-            this.zugriffAlert.set(false);
+            //console.log(this.tokenEncoded(), this.role(), this.email());
+            this.loggedIn.set(true);
+            this.zugriffAlert.set(true);
             setTimeout(() => {
               this.zugriffAlert.set(undefined);
             }, 4000);
-          }
-        },
-      });
+            resolve();
+          },
+          error: error => {
+            if (error instanceof HttpErrorResponse && error.status === 401) {
+              this.zugriffAlert.set(false);
+              setTimeout(() => {
+                this.zugriffAlert.set(undefined);
+              }, 4000);
+            }
+            reject();
+          },
+        });
+    })
+
   }
 }
 

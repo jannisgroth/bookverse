@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, signal, effect } from '@angular/core';
 import { AuthService } from '../../../../core/api/auth/auth.service';
 import {
   FormGroup,
@@ -9,6 +9,7 @@ import {
 import { NgClass } from '@angular/common';
 import { ErrorAlertComponent } from '../alerts/error-alert/error-alert.component';
 import { SuccessAlertComponent } from '../alerts/success-alert/success-alert.component';
+import { LoggerService } from '../../../../core/logging/logger.service';
 
 @Component({
   selector: 'app-login',
@@ -22,23 +23,32 @@ import { SuccessAlertComponent } from '../alerts/success-alert/success-alert.com
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  loginForm: FormGroup = new FormGroup({
+
+  protected loginForm: FormGroup = new FormGroup({
     benutzername: new FormControl(undefined, Validators.required),
     passwort: new FormControl(undefined, Validators.required),
   });
+  protected loading = signal<boolean>(false);
 
-  constructor(private auth: AuthService) {}
+  private effect = effect(() => {
+    this.logger.debug('Loading state geændert:', this.loading());
+  })
+  constructor(private auth: AuthService, private logger: LoggerService) { }
 
   /**
    * Login Funktion die, die Input-Daten an den Auth-Service weiterleitet.
    */
   async onLogin() {
+    this.loading.set(true);
+    console.log('1', this.loading());
     if (this.loginForm.valid) {
       await this.auth.getToken({
         username: this.loginForm.get('benutzername')!.value,
         password: this.loginForm.get('passwort')!.value,
+      }).finally(() => {
+        this.loginForm.reset();
+        this.loading.set(false);
       });
-      this.loginForm.reset();
     }
   }
 

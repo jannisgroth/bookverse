@@ -125,6 +125,3 @@ export class FormularComponent {
     this.ausgewähltesFile.set(file);
   }
 }
-
-
-//TODO Wenn Buchanlegen erfolgreich, ist das Bild immernoch in der variable

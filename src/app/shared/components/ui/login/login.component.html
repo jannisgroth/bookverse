@@ -3,7 +3,11 @@
     <label>
       <span class="text-2xl font-bold">LOGIN</span>
     </label>
-    @if (loggedIn === false) {
+    @if (loading()) {
+    <span class="loading loading-spinner loading-lg text-primary flex items-center justify-center m-auto">
+    </span>
+    }
+    @if (loggedIn === false && !loading()) {
     <div>
       <div class="relative flex items-center">
         <div>
@@ -43,8 +47,7 @@
             </svg>
           </div>
         </div>
-        <input formControlName="passwort" type="password" placeholder="passwort"
-        [ngClass]="{
+        <input formControlName="passwort" type="password" placeholder="passwort" [ngClass]="{
         'border-error focus:ring-error/50 focus:border-error': passwort.invalid && passwort.touched,
         'border-primary focus:ring-primary/50 focus:border-primary': !(passwort.invalid && passwort.touched)}"
           class="input w-full px-4 py-2 text-base bg-gray-50 focus:outline-none focus:ring hover:bg-gray-200 ps-10 border-2 rounded-lg" />
@@ -62,24 +65,24 @@
     <div class="mt-5">
       <button class="btn btn-primary btn-block" [disabled]="loginForm.invalid" (click)="onLogin()">login</button>
     </div>
-  }
-  @if (loggedIn === true && zugriffAlert === undefined) {
+    }
+    @if (loggedIn === true && zugriffAlert === undefined && !loading()) {
     <label><span class="text-xl">Bereits erfolgreich eingeloggt!</span></label>
     <div class="mt-5">
       <button class="btn btn-primary btn-block" (click)="onLogout()">logout</button>
     </div>
-  }
+    }
   </div>
 
 
   @if (zugriffAlert === false) {
-    <div class="mt-5">
-      <app-error-alert message="Benutzername oder Passwort falsch"></app-error-alert>
-    </div>
+  <div class="mt-5">
+    <app-error-alert message="Benutzername oder Passwort falsch"></app-error-alert>
+  </div>
   }
   @if (zugriffAlert === true) {
-    <div class="mt-5">
-      <app-success-alert message="Login als {{ userData.rolle }} erfolgreich!"></app-success-alert>
-    </div>
+  <div class="mt-5">
+    <app-success-alert message="Login als {{ userData.rolle }} erfolgreich!"></app-success-alert>
+  </div>
   }
 </form>
