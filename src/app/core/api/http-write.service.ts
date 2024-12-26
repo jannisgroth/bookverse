@@ -1,6 +1,6 @@
 import { Injectable, resolveForwardRef } from '@angular/core';
 import { Buch } from '../../shared/models/buch.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth/auth.service';
 import { LoggerService } from '../logging/logger.service';
 
@@ -51,7 +51,7 @@ export class WriteService {
             }
             resolve(response.body);
           },
-          error: err => {
+          error: (err: HttpErrorResponse) => {
             this.logger.error('Fehler beim Anlegen des Buches', err);
             reject();
           },
@@ -82,9 +82,9 @@ export class WriteService {
             this.logger.debug('File erfolgreich hochgeladen:', response);
             resolve(response.body);
           },
-          error: error => {
-            this.logger.error('Fehler beim Hochladen der Datei:', error);
-            reject(error);
+          error: err => {
+            this.logger.error('Fehler beim Hochladen der Datei:', err);
+            reject(err);
           },
         })
     })

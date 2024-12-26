@@ -68,7 +68,6 @@ export class FormularComponent {
 
     // Ladezustand auf true setzen, wenn der Prozess beginnt
     this.loading.set(true);
-    this.logger.debug('lade------------', this.loading());
 
     const gewählteSchlagwoerter = this.schlagwoerter.filter(
       schlagwort => this.buchForm.get(schlagwort)?.value === true
@@ -98,9 +97,12 @@ export class FormularComponent {
       : { mitFile: true, file: this.ausgewähltesFile() };
 
     // Erstelle das Buch mit den Parametern
-    await this.writeService.createBuch(buchDTO, uploadParams);
-    this.buchForm.reset();
-    this.loading.set(false);
+    await this.writeService.createBuch(buchDTO, uploadParams).finally(() => {
+      this.buchForm.reset();
+      this.ausgewähltesFile.set(undefined);
+      this.loading.set(false);
+    });
+
   }
 
   /**
