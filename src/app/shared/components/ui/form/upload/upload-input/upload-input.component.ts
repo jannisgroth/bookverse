@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, Injectable, input, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormularComponent } from '../../formular/formular.component';
 
 @Component({
@@ -8,8 +8,10 @@ import { FormularComponent } from '../../formular/formular.component';
   templateUrl: './upload-input.component.html',
   styleUrl: './upload-input.component.css',
 })
+@Injectable({ providedIn: 'root' })
 export class UploadInputComponent {
-  constructor(private formular: FormularComponent) {}
+
+  constructor(private formular: FormularComponent) { }
 
   /**
    * @description Wird aufgerufen, wenn der Nutzer eine Datei auswählt.
@@ -20,7 +22,6 @@ export class UploadInputComponent {
    */
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-
     if (input.files?.length) {
       const file = input.files[0]; // Ausgewählte Datei
       this.formular.setSelectedFile(file);

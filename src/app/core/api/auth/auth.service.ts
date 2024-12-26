@@ -24,7 +24,7 @@ export class AuthService {
 
   private readonly tokenUrl = 'https://localhost:3000/auth/token';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    * Liefert den Zugriff auf den Auth-Service.
@@ -52,7 +52,7 @@ export class AuthService {
       }>(this.tokenUrl, loginDaten)
       .subscribe({
         next: response => {
-          //console.log(response);
+          console.log(response);
           this.token.set(response.access_token);
           // https://www.npmjs.com/package/jwt-decode
           this.tokenEncoded.set(
@@ -84,4 +84,4 @@ export class AuthService {
   }
 }
 
-// TODO -> Validierung wenn backend nicht läuft
+// TODO -> Validierung wenn backend nicht läuft + Tokenablaufdatum (UI Anzeige)

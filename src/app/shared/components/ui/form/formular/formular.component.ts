@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, signal, effect } from '@angular/core';
 import { TitelInputComponent } from '../titel-input/titel-input.component';
 import { UploadInputComponent } from '../upload/upload-input/upload-input.component';
 import { RatingRadioComponent } from '../rating-radio/rating-radio.component';
@@ -11,7 +11,6 @@ import { HomepageInputComponent } from '../homepage-input/homepage-input.compone
 import { DatumInputComponent } from '../datum-input/datum-input.component';
 import { PreisInputComponent } from '../preis-input/preis-input.component';
 import { RabattInputComponent } from '../rabatt-input/rabatt-input.component';
-import { Buch } from '../../../../models/buch.model';
 import { LieferbarCheckboxComponent } from '../lieferbar-checkbox/lieferbar-checkbox.component';
 import { WriteService } from '../../../../../core/api/http-write.service';
 import { LoggerService } from '../../../../../core/logging/logger.service';
@@ -40,11 +39,18 @@ export class FormularComponent {
   protected buchForm = new FormGroup({});
   protected schlagwoerter = ['JAVASCRIPT', 'JAVA', 'PYTHON', 'TYPESCRIPT'];
   private ausgewähltesFile = signal<File | undefined>(undefined);
+  loading = signal(false);
+
+  private effect = effect(() => {
+    this.logger.debug('Loading state geändert:', this.loading());
+    this.cdr.markForCheck(); // Change Detection auslösen
+  });
 
   constructor(
     private writeService: WriteService,
-    private logger: LoggerService
-  ) {}
+    private logger: LoggerService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   /**
    * Submit-Methode, die aufgerufen wird, wenn das Formular
@@ -53,54 +59,48 @@ export class FormularComponent {
    * wird diese mit dem BuchDTO gesendet.
    */
   async onSubmit() {
-    if (this.buchForm.valid) {
-      console.log('valide eingaben');
-      const gewählteSchlagwoerter = this.schlagwoerter.filter(
-        schlagwort => this.buchForm.get(schlagwort)?.value === true
-      );
-
-      const buchDTO: Omit<Buch, '_links' | 'file'> = {
-        isbn: this.buchForm.get('isbn')!.value,
-        rating: Number(this.buchForm.get('rating')!.value),
-        art:
-          this.buchForm.get('buchart')!.value === 'wählen'
-            ? undefined
-            : this.buchForm.get('buchart')!.value,
-        preis: String(this.buchForm.get('preis')!.value),
-        rabatt: this.buchForm.get('rabatt')!.value
-          ? (Number(this.buchForm.get('rabatt')!.value) / 100).toFixed(3)
-          : undefined,
-        lieferbar: this.buchForm.get('lieferbar')!.value ?? undefined,
-        datum: this.buchForm.get('datum')!.value ?? undefined,
-        homepage: this.buchForm.get('homepage')!.value ?? undefined,
-        schlagwoerter: gewählteSchlagwoerter,
-        titel: {
-          titel: this.buchForm.get('titel')!.value!,
-          untertitel: this.buchForm.get('untertitel')!.value ?? undefined,
-        },
-      };
-      console.log(buchDTO);
-
-      // Überprüfen, ob die Datei vorhanden ist oder nicht
-      if (this.ausgewähltesFile() === undefined) {
-        // Wenn keine Datei hochgeladen wurde, sende das Buch ohne Datei
-        this.logger.debug('Keine Datei hochgeladen', this.ausgewähltesFile());
-
-        await this.writeService.createBuch(buchDTO, {
-          mitFile: false,
-          file: undefined,
-        });
-      } else {
-        const file = this.ausgewähltesFile();
-        this.logger.debug('Datei wird hochgeladen:', file);
-        await this.writeService.createBuch(buchDTO, {
-          mitFile: true,
-          file: file,
-        });
-      }
-    } else {
-      console.log('Formular ist ungültig');
+    // Zuerst prüfen, ob das Formular gültig ist
+    if (!this.buchForm.valid) {
+      this.logger.debug('Formular ist nicht valid');
+      //this.loading.set(false); // Ladezustand auf false setzen, falls Formular ungültig ist
+      return; // Beende die Methode frühzeitig
     }
+
+    // Ladezustand auf true setzen, wenn der Prozess beginnt
+    this.loading.set(true);
+    this.logger.debug('lade------------', this.loading());
+
+    const gewählteSchlagwoerter = this.schlagwoerter.filter(
+      schlagwort => this.buchForm.get(schlagwort)?.value === true
+    );
+
+    const buchDTO = {
+      isbn: this.buchForm.get('isbn')!.value,
+      rating: Number(this.buchForm.get('rating')!.value),
+      art: this.buchForm.get('buchart')!.value === 'wählen' ? undefined : this.buchForm.get('buchart')!.value,
+      preis: String(this.buchForm.get('preis')!.value),
+      rabatt: this.buchForm.get('rabatt')!.value
+        ? (Number(this.buchForm.get('rabatt')!.value) / 100).toFixed(3)
+        : undefined,
+      lieferbar: this.buchForm.get('lieferbar')!.value ?? undefined,
+      datum: this.buchForm.get('datum')!.value ?? undefined,
+      homepage: this.buchForm.get('homepage')!.value ?? undefined,
+      schlagwoerter: gewählteSchlagwoerter,
+      titel: {
+        titel: this.buchForm.get('titel')!.value!,
+        untertitel: this.buchForm.get('untertitel')!.value ?? undefined,
+      },
+    };
+
+    // Falls keine Datei ausgewählt wurde, rufe den WriteService ohne Datei auf
+    const uploadParams = this.ausgewähltesFile() === undefined || null
+      ? { mitFile: false, file: undefined }
+      : { mitFile: true, file: this.ausgewähltesFile() };
+
+    // Erstelle das Buch mit den Parametern
+    await this.writeService.createBuch(buchDTO, uploadParams);
+    this.buchForm.reset();
+    this.loading.set(false);
   }
 
   /**
@@ -112,3 +112,6 @@ export class FormularComponent {
     this.ausgewähltesFile.set(file);
   }
 }
+
+
+//TODO Wenn Buchanlegen erfolgreich, ist das Bild immernoch in der variable
