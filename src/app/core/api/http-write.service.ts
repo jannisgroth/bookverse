@@ -20,7 +20,7 @@ export class WriteService {
     buch: Omit<Buch, '_links' | 'file'>,
     upload: { mitFile: boolean; file: File | undefined }
   ) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.http
         .post(this.restUrl, buch, {
           headers: new HttpHeaders({
@@ -40,27 +40,24 @@ export class WriteService {
                 reject(new Error('Id konnte nicht aus dem Header gelesen werden'));
               }
               const id = Number(location.split('/').pop());
-
-              this.logger.debug(
-                'Datei wird hochgeladen:',
-                upload.file,
-                upload.file!.name,
-                upload.file?.size
-              );
-              resolve(await this.uploadFile(upload.file!, id));
+              await this.uploadFile(upload.file!, id);
+              resolve();
             }
-            resolve(response.body);
+            resolve();
           },
           error: (err: HttpErrorResponse) => {
+            if (err.status === 422) {
+              reject(err.error.message);
+            }
             this.logger.error('Fehler beim Anlegen des Buches', err);
-            reject();
+            reject(`Fehler beim anlegen des Buches: ${err.error.message}`);
           },
         });
     })
   }
 
   async uploadFile(file: File, id: number) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       if (!(file instanceof File)) {
         this.logger.error('File ist keine Datei');
         return reject(new Error('File ist keine Datei'));
@@ -80,11 +77,11 @@ export class WriteService {
         .subscribe({
           next: (response) => {
             this.logger.debug('File erfolgreich hochgeladen:', response);
-            resolve(response.body);
+            resolve();
           },
           error: err => {
             this.logger.error('Fehler beim Hochladen der Datei:', err);
-            reject(err);
+            reject();
           },
         })
     })

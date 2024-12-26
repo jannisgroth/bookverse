@@ -14,6 +14,7 @@ import { RabattInputComponent } from '../rabatt-input/rabatt-input.component';
 import { LieferbarCheckboxComponent } from '../lieferbar-checkbox/lieferbar-checkbox.component';
 import { WriteService } from '../../../../../core/api/http-write.service';
 import { LoggerService } from '../../../../../core/logging/logger.service';
+import { ErrorAlertComponent } from '../../alerts/error-alert/error-alert.component';
 
 @Component({
   selector: 'app-formular',
@@ -31,6 +32,7 @@ import { LoggerService } from '../../../../../core/logging/logger.service';
     RatingRadioComponent,
     UploadInputComponent,
     LieferbarCheckboxComponent,
+    ErrorAlertComponent
   ],
   templateUrl: './formular.component.html',
   styleUrl: './formular.component.css',
@@ -40,6 +42,7 @@ export class FormularComponent {
   protected schlagwoerter = ['JAVASCRIPT', 'JAVA', 'PYTHON', 'TYPESCRIPT'];
   private ausgewähltesFile = signal<File | undefined>(undefined);
   loading = signal(false);
+  error = signal({ aktive: false, message: '' });
 
   private effect = effect(() => {
     this.logger.debug('Loading state geändert:', this.loading());
@@ -97,11 +100,19 @@ export class FormularComponent {
       : { mitFile: true, file: this.ausgewähltesFile() };
 
     // Erstelle das Buch mit den Parametern
-    await this.writeService.createBuch(buchDTO, uploadParams).finally(() => {
-      this.buchForm.reset();
-      this.ausgewähltesFile.set(undefined);
-      this.loading.set(false);
-    });
+    await this.writeService.createBuch(buchDTO, uploadParams)
+      .catch((error) => {
+        this.loading.set(false);
+        this.error.set({ aktive: true, message: error });
+        setTimeout(() => {
+          this.error.set({ aktive: false, message: '' });
+        }, 5000);
+      })
+      .finally(() => {
+        this.buchForm.reset();
+        this.ausgewähltesFile.set(undefined);
+        this.loading.set(false);
+      });
 
   }
 
