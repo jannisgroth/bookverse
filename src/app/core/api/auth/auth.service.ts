@@ -92,6 +92,11 @@ export class AuthService {
     });
   }
 
+  /**
+   * Holt ein neues Access-Token mit einem Refresh-Token.
+   * Wird aufgerufen, wenn ein Refresh-Token in LocalStorage vorhanden ist.
+   * Wenn der Refresh-Token ungültig ist, wird der Benutzer ausgeloggt.
+   */
   private async getRefreshToken() {
     const refresh_token = localStorage.getItem('refresh_token');
     if (!refresh_token || refresh_token === null) {
@@ -120,10 +125,20 @@ export class AuthService {
       },
       error: () => {
         this.logger.error('Fehler beim Refreshen des Token');
+        this.loggedIn.set(false);
+        this.token.set(undefined);
+        this.tokenEncoded.set(undefined);
+        this.userData.set({ email: '', rolle: '' });
+        localStorage.removeItem('refresh_token');
+        return;
       }
     });
   }
 
+  /**
+   * Checkt, ob der Token erneuert werden muss.
+   * Wenn der Token innerhalb der nächsten Minute abläuft, wird ein neuer Token angefordert.
+   */
   private async checkToken() {
     if (this.tokenEncoded() === undefined) {
       return;
@@ -131,9 +146,17 @@ export class AuthService {
     if (((this.tokenEncoded()!.exp! * 1000) - Date.now()) < 60000) {
       this.logger.info('Zeit des Tokens bald rum', this.tokenEncoded()?.exp);
       await this.getRefreshToken();
+      console.log('neuen token geholt');
+    } else {
+      console.log('noch kein token nötig', (this.tokenEncoded()!.exp! * 1000) - Date.now());
     }
   }
 
+  /**
+   * Startet den Token-Timer, der alle 60 Sekunden prueft, ob der Token
+   * erneuert werden muss. Wenn der Token erneuert werden muss, wird der
+   * getRefreshToken()-Aufruf gestartet.
+   */
   private startTokenTimer() {
     this.logger.info('Token Timer gestartet');
     setInterval(() => {
