@@ -90,7 +90,9 @@ export class FormularComponent {
         }, 5000);
       })
       .finally(() => {
-        this.buchForm.reset();
+        this.buchForm.reset({
+          buchart: 'wählen',
+        });
         this.ausgewähltesFile.set(undefined);
         this.loading.set(false);
       });
