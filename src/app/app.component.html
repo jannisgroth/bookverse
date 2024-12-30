@@ -1,6 +1,6 @@
 <!-- The main app container -->
 <div
-  class="app-container flex flex-col min-h-screen min-w-fit bg-gradient-to-r from-stone-400 from-10% via-stone-300 via-30% to-neutral-200 to-90%">
+  class="app-container flex flex-col min-h-screen bg-gradient-to-r from-stone-400 from-10% via-stone-300 via-30% to-neutral-200 to-90%">
   <!-- Bunte Variante: bg-gradient-to-r from-indigo-600 from-10% via-sky-600 via-30% to-sky-300 to-90% -->
 
   <header class="app-header mt-3 mx-7 mb-5">
@@ -9,37 +9,14 @@
     </div>
   </header>
 
-  <main class="mx-12 flex-1">
-    <div class="min-h-full">
+  <main class="mx-4 sm:mx-6 lg:mx-12 flex-1">
+    <div>
       <router-outlet></router-outlet>
     </div>
   </main>
 
 
   <footer class="mt-auto">
-    <div>
-      <app-footer></app-footer>
-    </div>
-  </footer>
-</div>
-
-
-
-<!-- <div class="app-container flex flex-col min-h-screen bg-gradient-to-r  bg-cover bg-center"
-  [ngStyle]="{ 'background-image': 'url(assets/libary.jpg)' }">
-  <div class=" flex-grow">
-    <header class="app-header mt-3 mx-7">
-      <app-navbar></app-navbar>
-    </header>
-
-    <main class="mx-12">
-      <div class="mt-8">
-        <router-outlet></router-outlet>
-      </div>
-    </main>
-  </div>
-
-  <footer class="mt-auto">
     <app-footer></app-footer>
   </footer>
-</div> -->
+</div>
