@@ -10,14 +10,15 @@ import { ErrorAlertComponent } from '../../ui/alerts/error-alert/error-alert.com
   styleUrl: './footer.component.css',
 })
 export class FooterComponent {
-  showalert = signal<boolean>(false)
+  showalert = signal<boolean>(false);
   subscribe(email: string) {
     if (email) {
-      alert(`Sie haben unseren Newsletter erfolgreich abonniert mit der E-Mail-Adresse: ${email}`);
+      alert(
+        `Sie haben unseren Newsletter erfolgreich abonniert mit der E-Mail-Adresse: ${email}`
+      );
     } else {
       this.showalert.set(true);
       setTimeout(() => this.showalert.set(false), 3000);
     }
-
   }
 }

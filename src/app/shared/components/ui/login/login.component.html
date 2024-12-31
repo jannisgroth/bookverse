@@ -1,0 +1,88 @@
+<form [formGroup]="loginForm">
+  <div class="flex flex-col space-y-5">
+    <label>
+      <span class="text-2xl font-bold">LOGIN</span>
+    </label>
+    @if (loading()) {
+    <span class="loading loading-spinner loading-lg text-primary flex items-center justify-center m-auto">
+    </span>
+    }
+    @if (loggedIn === false && !loading()) {
+    <div>
+      <div class="relative flex items-center">
+        <div>
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" stroke-width="1.5"
+              stroke="currentColor" class="w-6 h-6 text-gray-500">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+            </svg>
+          </div>
+        </div>
+        <input formControlName="benutzername" type="text" placeholder="benutzername" autocomplete="username"
+          [ngClass]="{
+          'border-error focus:ring-error/50 focus:border-error': benutzername.invalid && benutzername.touched,
+          'border-primary focus:ring-primary/50 focus:border-primary': !(benutzername.invalid && benutzername.touched)}"
+          class="input w-full px-4 py-2 text-base bg-gray-50 focus:outline-none focus:ring hover:bg-gray-200 ps-10 border-2 rounded-lg" />
+      </div>
+      @if (benutzername.invalid && benutzername.touched) {
+      <div class="text-base text-error">
+        <label>
+          @if (benutzername.hasError('required')) {
+          <span class="font-bold">Bitte füllen Sie diese Feld aus!</span>
+          }
+        </label>
+      </div>
+      }
+    </div>
+
+    <div>
+      <div class="relative flex items-center">
+        <div>
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" stroke-width="1.5"
+              stroke="currentColor" class="w-6 h-6 text-gray-500">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" />
+            </svg>
+          </div>
+        </div>
+        <input formControlName="passwort" type="password" placeholder="passwort" [ngClass]="{
+        'border-error focus:ring-error/50 focus:border-error': passwort.invalid && passwort.touched,
+        'border-primary focus:ring-primary/50 focus:border-primary': !(passwort.invalid && passwort.touched)}"
+          class="input w-full px-4 py-2 text-base bg-gray-50 focus:outline-none focus:ring hover:bg-gray-200 ps-10 border-2 rounded-lg" />
+      </div>
+      @if (passwort.invalid && passwort.touched) {
+      <div class="text-base text-error">
+        <label>
+          @if (passwort.hasError('required')) {
+          <span class="font-bold">Bitte füllen Sie diese Feld aus!</span>
+          }
+        </label>
+      </div>
+      }
+    </div>
+    <div class="mt-5">
+      <button class="btn btn-primary btn-block" [disabled]="loginForm.invalid" (click)="onLogin()">login</button>
+    </div>
+    }
+    @if (loggedIn === true && zugriffAlert === undefined && !loading()) {
+    <label><span class="text-xl">Bereits erfolgreich eingeloggt!</span></label>
+    <div class="mt-5">
+      <button class="btn btn-primary btn-block" (click)="onLogout()">logout</button>
+    </div>
+    }
+  </div>
+
+
+  @if (zugriffAlert === false) {
+  <div class="mt-5">
+    <app-error-alert message="Benutzername oder Passwort falsch"></app-error-alert>
+  </div>
+  }
+  @if (zugriffAlert === true) {
+  <div class="mt-5">
+    <app-success-alert message="Login als {{ userData.rolle }} erfolgreich!"></app-success-alert>
+  </div>
+  }
+</form>

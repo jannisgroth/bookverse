@@ -1,0 +1,36 @@
+<div [formGroup]="buchForm()"> <!-- Zugriff auf die tatsächliche FormGroup -->
+    <div class="grid grid-cols-4 gap-5">
+        <div class="form-control w-full place-items-center">
+            <label class="label">
+                <span class="label-text text-lg font-semibold">JAVASCRIPT</span>
+            </label>
+            <div>
+                <input formControlName="JAVASCRIPT" type="checkbox" class="checkbox checkbox-primary" />
+            </div>
+        </div>
+        <div class="form-control w-full place-items-center">
+            <label class="label">
+                <span class="label-text text-lg font-semibold">JAVA</span>
+            </label>
+            <div>
+                <input formControlName="JAVA" type="checkbox" class="checkbox checkbox-primary" />
+            </div>
+        </div>
+        <div class="form-control w-full place-items-center">
+            <label class="label">
+                <span class="label-text text-lg font-semibold">PYTHON</span>
+            </label>
+            <div>
+                <input formControlName="PYTHON" type="checkbox" class="checkbox checkbox-primary" />
+            </div>
+        </div>
+        <div class="form-control w-full place-items-center">
+            <label class="label">
+                <span class="label-text text-lg font-semibold">TYPESCRIPT</span>
+            </label>
+            <div>
+                <input formControlName="TYPESCRIPT" type="checkbox" class="checkbox checkbox-primary" />
+            </div>
+        </div>
+    </div>
+</div>

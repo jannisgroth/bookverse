@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SuchleisteComponent } from './suchleiste.component';
+import SuchleisteComponent from './suchleiste.component';
 
 describe('SuchleisteComponent', () => {
   let component: SuchleisteComponent;
@@ -8,9 +8,8 @@ describe('SuchleisteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SuchleisteComponent]
-    })
-    .compileComponents();
+      imports: [SuchleisteComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SuchleisteComponent);
     component = fixture.componentInstance;

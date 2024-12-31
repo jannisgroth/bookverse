@@ -1,0 +1,12 @@
+<div [formGroup]="buchForm()">
+    <label class="label">
+        <span class="label-text text-lg font-semibold">Rating</span>
+    </label>
+    <div class="rating">
+        <input formControlName="rating" value=1 type="radio" class="mask mask-star-2 bg-primary" />
+        <input formControlName="rating" value=2 type="radio" class="mask mask-star-2 bg-primary" />
+        <input formControlName="rating" value=3 type="radio" class="mask mask-star-2 bg-primary" />
+        <input formControlName="rating" value=4 type="radio" class="mask mask-star-2 bg-primary" />
+        <input formControlName="rating" value=5 type="radio" class="mask mask-star-2 bg-primary" />
+    </div>
+</div>

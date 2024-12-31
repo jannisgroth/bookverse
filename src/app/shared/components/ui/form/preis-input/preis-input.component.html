@@ -1,0 +1,33 @@
+<div [formGroup]="buchForm()"> <!-- Zugriff auf die tatsächliche FormGroup -->
+    <label class="label">
+        <span class="label-text text-lg font-semibold">Preis</span>
+    </label>
+    <div class="relative flex items-center">
+        <div>
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6 text-gray-500">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M14.25 7.756a4.5 4.5 0 1 0 0 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+            </div>
+        </div>
+        <input formControlName="preis" type="number" placeholder="99.99" min="0" [ngClass]="{
+                'border-error focus:ring-error/50 focus:border-error': preis.invalid && preis.touched,
+                'border-primary focus:ring-primary/50 focus:border-primary': !(preis.invalid && preis.touched)
+            }"
+            class="input w-full px-4 py-2 text-base bg-gray-50 focus:outline-none focus:ring hover:bg-gray-200 ps-10 border-2 rounded-lg" />
+    </div>
+    @if (preis.invalid && preis.touched) {
+    <div class="text-base text-error">
+        <label>
+            @if (preis.hasError('required')) {
+            <span>Preis ist erforderlich!</span>
+            }
+            @if (preis.hasError('min')) {
+            <span>Preis kann nicht kleiner als 0 sein!</span>
+            }
+        </label>
+    </div>
+    }
+</div>

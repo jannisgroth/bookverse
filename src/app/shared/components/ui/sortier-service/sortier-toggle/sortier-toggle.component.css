@@ -1,0 +1,13 @@
+button {
+  padding: 10px 20px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  #rangfolgeLabel {
+    display: none;
+  }
+  #sortierToggleButton {
+    width: 32px;
+  }
+}

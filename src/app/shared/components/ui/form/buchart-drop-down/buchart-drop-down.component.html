@@ -1,0 +1,20 @@
+<div [formGroup]="buchForm()"> <!-- Zugriff auf die tatsächliche FormGroup -->
+
+    <label class="label">
+        <span class="label-text text-lg font-semibold">Buchart *</span>
+    </label>
+    <div class="relative">
+        <div [ngClass]="{
+                'border-error focus:ring-error/50 focus:border-error': buchart.invalid && buchart.touched,
+                'border-primary focus:ring-primary/50 focus:border-primary': !(buchart.invalid && buchart.touched)
+            }" class="flex items-center max-w-full border-2 border-primary rounded-lg focus-within:ring-1">
+            <select formControlName="buchart"
+                class="select w-full text-base bg-gray-50 focus:outline-none focus:ring-0 hover:bg-gray-200">
+                <option selected disabled>wählen</option>
+                <option value="EPUB">EPUB</option>
+                <option value="HARDCOVER">HARDCOVER</option>
+                <option value="PAPERBACK">PAPERBACK</option>
+            </select>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div
+  class="collapse collapse-arrow bg-base-200 sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto">
+  <input type="checkbox" id="preisFilterCheckbox" (change)="uncheck()" />
+  <div class="collapse-title text-xl font-medium">Preis</div>
+  <div class="collapse-content relative">
+    <div class="flex justify-center items-center">
+      <input
+        id="rangeInput"
+        type="range"
+        min="0"
+        max="{{ MAX_VALUE }}"
+        step="0.01"
+        value="{{ preisFilter()() ? preisFilter()()!.toString() : MAX_VALUE }}"
+        class="range range-primary pr-4"
+        (input)="setPreisFilter($event.target!)" />
+
+      <input
+        type="text"
+        value="{{
+          preisFilter()()
+            ? (+preisFilter()()!).toFixed(2) + '€'
+            : MAX_VALUE + '€+'
+        }}"
+        [ngClass]="{
+          'input-primary': !manuellerInputError,
+          'input-error': manuellerInputError,
+        }"
+        class="p-3 px-4 w-20 input input-primary input-xs bg-transparent text-center"
+        (change)="manuellerInput($event.target!)" />
+    </div>
+  </div>
+</div>
