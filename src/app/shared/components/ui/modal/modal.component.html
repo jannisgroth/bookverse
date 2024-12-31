@@ -66,25 +66,36 @@
       <div class="form-row">
         <div class="form-col">
           <span class="buch-lieferbar">-Lieferbar: </span>
-          <span *ngIf="buch?.lieferbar === true">✔️</span>
-          <span *ngIf="buch?.lieferbar !== true">❌</span>
+          <span *ngIf="buch?.lieferbar === true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m4.5 12.75 6 6 9-13.5" />
+            </svg>
+          </span>
+          <span *ngIf="buch?.lieferbar !== true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </span>
         </div>
       </div>
-      <!-- <div class="form-row">
-        <div class="form-col">
-          <span class="buch-lieferbar">-Lieferbar: </span>
-          <label
-            class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
-            for="lieferbar-checkbox-material">
-            <input
-              type="checkbox"
-              id="lieferbar-checkbox-material"
-              class="mdl-checkbox__input"
-              [checked]="buch?.lieferbar"
-              disabled />
-          </label>
-        </div>
-      </div> -->
 
       <!-- 7. Reihe -->
       <div class="form-row">
