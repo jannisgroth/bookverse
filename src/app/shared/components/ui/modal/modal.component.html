@@ -66,6 +66,13 @@
       <div class="form-row">
         <div class="form-col">
           <span class="buch-lieferbar">-Lieferbar: </span>
+          <span *ngIf="buch?.lieferbar === true">✔️</span>
+          <span *ngIf="buch?.lieferbar !== true">❌</span>
+        </div>
+      </div>
+      <!-- <div class="form-row">
+        <div class="form-col">
+          <span class="buch-lieferbar">-Lieferbar: </span>
           <label
             class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
             for="lieferbar-checkbox-material">
@@ -77,7 +84,7 @@
               disabled />
           </label>
         </div>
-      </div>
+      </div> -->
 
       <!-- 7. Reihe -->
       <div class="form-row">
@@ -90,7 +97,9 @@
       <div class="modal-action absolute bottom-0 right-0 p-4">
         <button class="btn ml-2">Warenkorb</button>
         <form method="dialog">
-          <button class="btn btn-close">Close</button>
+          <button class="btn btn-close" (click)="closeModal(modal)">
+            Close
+          </button>
         </form>
       </div>
     </div>

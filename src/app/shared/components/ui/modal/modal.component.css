@@ -88,6 +88,13 @@
   font-size: 18px;
   font-weight: bold;
 }
+.lieferbar-true {
+  background-color: green; /* Grün, wenn lieferbar */
+}
+
+.lieferbar-false {
+  background-color: red; /* Rot, wenn nicht lieferbar */
+}
 
 .btn-close {
   background-color: #f8d7da; /* Helles Rot */

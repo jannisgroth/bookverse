@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Buch } from '../../../models/buch.model';
+import { Location } from '@angular/common';
 
 @Component({
   standalone: true,
@@ -13,12 +14,18 @@ export class ModalComponent {
   @Input() buch: Buch | undefined;
   @Input() ausgewähltesBuch: Buch | undefined;
 
+  constructor(private location: Location) {}
+
   openModal(modal: HTMLDialogElement) {
     modal.showModal();
   }
 
   closeModal(modal: HTMLDialogElement) {
     modal.close();
+    this.resetUrl();
+  }
+  private resetUrl() {
+    this.location.replaceState('/bibliothek');
   }
 
   get berechneterRabatt(): number | undefined {
