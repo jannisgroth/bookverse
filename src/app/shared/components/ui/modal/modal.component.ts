@@ -17,9 +17,6 @@ export class ModalComponent {
 
   constructor(private location: Location) {}
 
-  // private get istBuchValide(): Buch | undefined {
-  //   return this.buch ? this.buch() : undefined;
-  // }
   openModal(modal: HTMLDialogElement) {
     modal.showModal();
   }
@@ -61,8 +58,8 @@ export class ModalComponent {
     }
 
     // Falls es ein Datum im String-Format ist (z. B. '2022-02-01')
-    const [year, month, day] = date.split('-');
-    return `${day}.${month}.${year}`;
+    const [jahr, monat, tag] = date.split('-');
+    return `${tag}.${monat}.${jahr}`;
   }
 
   generateStars(rating: number): boolean[] {
