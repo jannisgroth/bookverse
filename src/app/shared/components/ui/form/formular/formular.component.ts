@@ -16,6 +16,7 @@ import { WriteService } from '../../../../../core/api/http-write.service';
 import { LoggerService } from '../../../../../core/logging/logger.service';
 import { ErrorAlertComponent } from '../../alerts/error-alert/error-alert.component';
 import { Buch } from '../../../../models/buch.model';
+import { SuccessAlertComponent } from '../../alerts/success-alert/success-alert.component';
 
 @Component({
   selector: 'app-formular',
@@ -33,7 +34,8 @@ import { Buch } from '../../../../models/buch.model';
     RatingRadioComponent,
     UploadInputComponent,
     LieferbarCheckboxComponent,
-    ErrorAlertComponent
+    ErrorAlertComponent,
+    SuccessAlertComponent,
   ],
   templateUrl: './formular.component.html',
   styleUrl: './formular.component.css',
@@ -44,6 +46,7 @@ export class FormularComponent {
   private ausgewähltesFile = signal<File | undefined>(undefined);
   loading = signal(false);
   error = signal({ aktive: false, message: '' });
+  success = signal(false);
 
   private effect = effect(() => {
     this.logger.debug('Loading state geändert:', this.loading());
@@ -82,6 +85,13 @@ export class FormularComponent {
 
     // Erstelle das Buch mit den Parametern
     await this.writeService.createBuch(buchDTO, uploadParams)
+      .then(() => {
+        this.loading.set(false);
+        this.success.set(true);
+        setTimeout(() => {
+          this.success.set(false);
+        }, 4000);
+      })
       .catch((error) => {
         this.loading.set(false);
         this.error.set({ aktive: true, message: error });

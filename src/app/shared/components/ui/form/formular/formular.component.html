@@ -1,85 +1,79 @@
 <div class="max-w-screen-lg mx-auto">
   @if (loading()) {
-    <span
-      class="loading loading-spinner loading-lg text-primary flex items-center justify-center m-auto">
-    </span>
+  <span class="loading loading-spinner loading-lg text-primary flex items-center justify-center m-auto">
+  </span>
   }
   @if (!loading() && error().aktive) {
-    <app-error-alert message="{{ error().message }}"></app-error-alert>
+  <app-error-alert message="{{ error().message }}"></app-error-alert>
+  }
+  @if (!loading() && success()) {
+  <app-success-alert message="Buch erfolgreich angelegt!"></app-success-alert>
   }
   @if (!loading()) {
-    <form
-      class="flex flex-col gap-10"
-      [formGroup]="buchForm"
-      (ngSubmit)="onSubmit()">
-      <!-- Row 1 -->
-      <div class="form-row">
-        <div class="form-col">
-          <app-titel-input [buchForm]="buchForm"></app-titel-input>
-        </div>
-        <div class="form-col">
-          <app-untertitel-input [buchForm]="buchForm"></app-untertitel-input>
-        </div>
+  <form class="flex flex-col gap-10" [formGroup]="buchForm" (ngSubmit)="onSubmit()">
+    <!-- Row 1 -->
+    <div class="form-row">
+      <div class="form-col">
+        <app-titel-input [buchForm]="buchForm"></app-titel-input>
       </div>
+      <div class="form-col">
+        <app-untertitel-input [buchForm]="buchForm"></app-untertitel-input>
+      </div>
+    </div>
 
-      <!-- Row 2 -->
-      <div class="form-row">
-        <div class="form-col">
-          <app-isbn-input [buchForm]="buchForm"></app-isbn-input>
-        </div>
-        <div class="form-col">
-          <app-homepage-input [buchForm]="buchForm"></app-homepage-input>
-        </div>
+    <!-- Row 2 -->
+    <div class="form-row">
+      <div class="form-col">
+        <app-isbn-input [buchForm]="buchForm"></app-isbn-input>
       </div>
+      <div class="form-col">
+        <app-homepage-input [buchForm]="buchForm"></app-homepage-input>
+      </div>
+    </div>
 
-      <!-- Row 3 -->
-      <div class="form-row">
-        <div class="form-col">
-          <app-datum-input [buchForm]="buchForm"></app-datum-input>
-        </div>
-        <div class="form-col">
-          <app-drop-down [buchForm]="buchForm"></app-drop-down>
-        </div>
+    <!-- Row 3 -->
+    <div class="form-row">
+      <div class="form-col">
+        <app-datum-input [buchForm]="buchForm"></app-datum-input>
       </div>
+      <div class="form-col">
+        <app-drop-down [buchForm]="buchForm"></app-drop-down>
+      </div>
+    </div>
 
-      <!-- Row 4 -->
-      <div class="form-row">
-        <div class="form-col">
-          <app-preis-input [buchForm]="buchForm"></app-preis-input>
-        </div>
-        <div class="form-col">
-          <app-rabatt-input [buchForm]="buchForm"></app-rabatt-input>
-        </div>
+    <!-- Row 4 -->
+    <div class="form-row">
+      <div class="form-col">
+        <app-preis-input [buchForm]="buchForm"></app-preis-input>
       </div>
+      <div class="form-col">
+        <app-rabatt-input [buchForm]="buchForm"></app-rabatt-input>
+      </div>
+    </div>
 
-      <!-- Row 5 -->
-      <div>
-        <app-schlagwoerter-checkbox
-          [buchForm]="buchForm"></app-schlagwoerter-checkbox>
-      </div>
+    <!-- Row 5 -->
+    <div>
+      <app-schlagwoerter-checkbox [buchForm]="buchForm"></app-schlagwoerter-checkbox>
+    </div>
 
-      <!-- Row 6 -->
-      <div class="grid grid-cols-3 gap-5 place-items-center">
-        <div class="form-col place-items-center">
-          <app-rating [buchForm]="buchForm"></app-rating>
-        </div>
-        <div class="form-col place-items-center">
-          <app-upload-input></app-upload-input>
-        </div>
-        <div class="form-col place-items-center">
-          <app-lieferbar-checkbox
-            [buchForm]="buchForm"></app-lieferbar-checkbox>
-        </div>
+    <!-- Row 6 -->
+    <div class="grid grid-cols-3 gap-5 place-items-center">
+      <div class="form-col place-items-center">
+        <app-rating [buchForm]="buchForm"></app-rating>
       </div>
-      <!-- Submit Button -->
-      <div class="flex justify-end">
-        <button
-          class="btn btn-block btn-primary"
-          type="submit"
-          [disabled]="!buchForm.valid">
-          Anlegen
-        </button>
+      <div class="form-col place-items-center">
+        <app-upload-input></app-upload-input>
       </div>
-    </form>
+      <div class="form-col place-items-center">
+        <app-lieferbar-checkbox [buchForm]="buchForm"></app-lieferbar-checkbox>
+      </div>
+    </div>
+    <!-- Submit Button -->
+    <div class="flex justify-end">
+      <button class="btn btn-block btn-primary" type="submit" [disabled]="!buchForm.valid">
+        Anlegen
+      </button>
+    </div>
+  </form>
   }
 </div>
