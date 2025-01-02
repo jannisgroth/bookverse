@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Buch } from '../../../models/buch.model';
 import { Location } from '@angular/common';
@@ -11,11 +11,15 @@ import { Location } from '@angular/common';
   styleUrl: './modal.component.css',
 })
 export class ModalComponent {
-  @Input() buch: Buch | undefined;
-  @Input() ausgewähltesBuch: Buch | undefined;
+  // @Input() buch: Buch | undefined;
+  buch = input<Buch>();
+  ausgewähltesBuch = input<Buch>();
 
   constructor(private location: Location) {}
 
+  // private get istBuchValide(): Buch | undefined {
+  //   return this.buch ? this.buch() : undefined;
+  // }
   openModal(modal: HTMLDialogElement) {
     modal.showModal();
   }
@@ -28,19 +32,19 @@ export class ModalComponent {
     this.location.replaceState('/bibliothek');
   }
 
-  get berechneterRabatt(): number | undefined {
+  get berechneterRabatt() {
     if (!this.buch) return undefined;
-    if (this.buch.rabatt === undefined) return undefined;
+    if (this.buch()!.rabatt === undefined) return undefined;
 
-    const rabatt = Number(this.buch.rabatt) * 100; // Rabatt-string in eine Zahl konvertieren
+    const rabatt = Number(this.buch()!.rabatt) * 100; // Rabatt-string in eine Zahl konvertieren
     return Math.round(rabatt * 100) / 100; // Runden auf 2 Dezimalstellen
   }
 
-  get berechneterPreis(): number | undefined {
+  get berechneterPreis() {
     if (!this.buch) return undefined;
 
-    const preis = Number(this.buch.preis); // Preis-string in eine Zahl konvertieren
-    const rabatt = this.buch.rabatt ? Number(this.buch.rabatt) : 0; // Rabatt direkt aus der Buch-Entität holen
+    const preis = Number(this.buch()!.preis); // Preis-string in eine Zahl konvertieren
+    const rabatt = this.buch()!.rabatt ? Number(this.buch()!.rabatt) : 0; // Rabatt direkt aus der Buch-Entität holen
 
     const berechneterPreis = preis * (1 - rabatt); // Berechnung des Preises mit Rabatt
     return Math.round(berechneterPreis * 100) / 100; // Runden auf 2 Dezimalstellen

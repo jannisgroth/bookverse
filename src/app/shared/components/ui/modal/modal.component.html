@@ -1,13 +1,17 @@
 <dialog #modal id="modal" class="modal min-h-96">
   <div class="modal-box flex custom-modal">
     <figure class="flex-shrink-0 mt-4 mb-4">
-      <img [src]="buch?.file" alt="Book-File" class="w-64 h-auto rounded" />
+      @if (buch()?.file) {
+        <img [src]="buch()?.file" alt="Book-File" class="w-64 h-auto rounded" />
+      }
     </figure>
     <div class="ml-4">
       <!-- 1. Reihe -->
       <div class="form-row">
         <div class="form-col">
-          <span class="buch-titel">{{ buch?.titel?.titel }}</span>
+          @if (buch()?.titel?.titel) {
+            <span class="buch-titel">{{ buch()?.titel?.titel }}</span>
+          }
         </div>
         <div class="form-col">
           <span class="berechneterPreis">{{ berechneterPreis }}€</span>
@@ -16,19 +20,23 @@
           <span class="berechneterRabatt">-{{ berechneterRabatt }}% </span>
         </div>
         <div class="form-col">
-          <span class="buch-preis">{{ buch?.preis }}€</span>
+          @if (buch()?.preis) {
+            <span class="buch-preis">{{ buch()?.preis }}€</span>
+          }
         </div>
       </div>
 
       <!-- 2. Reihe -->
       <div class="form-row">
         <div class="form-col">
-          <span class="buch-untertitel">{{ buch?.titel?.untertitel }}</span>
+          @if (buch()?.titel?.untertitel) {
+            <span class="buch-untertitel">{{ buch()?.titel?.untertitel }}</span>
+          }
         </div>
         <!-- Rating -->
         <div class="form-col">
           <!-- Iteriere über das Array von Sternen -->
-          <ng-container *ngFor="let star of generateStars(buch?.rating ?? 0)">
+          <ng-container *ngFor="let star of generateStars(buch()?.rating ?? 0)">
             <span
               class="mask mask-star-2 w-8 h-8"
               [ngClass]="star ? 'ausgefüllt' : 'nicht-ausgefüllt'"></span>
@@ -40,25 +48,35 @@
       <div class="form-row">
         <div class="form-col">
           <span class="buch-schlagwoerter">
-            {{ buch?.schlagwoerter ? '-' + buch?.schlagwoerter : '' }}
+            @if (buch()?.schlagwoerter) {
+              {{ buch()?.schlagwoerter ? '-' + buch()?.schlagwoerter : '' }}
+            }
           </span>
         </div>
         <div class="form-col">
-          <span class="buch-datum">{{ formatDate(buch?.datum) }}</span>
+          @if (buch()?.datum) {
+            <span class="buch-datum">{{ formatDate(buch()?.datum) }}</span>
+          }
         </div>
       </div>
 
       <!-- 4. Reihe -->
       <div class="form-row">
         <div class="form-col">
-          <span class="buch-art">{{ buch?.art ? '-' + buch?.art : '' }}</span>
+          @if (buch()?.art) {
+            <span class="buch-art">{{
+              buch()?.art ? '-' + buch()?.art : ''
+            }}</span>
+          }
         </div>
       </div>
 
       <!-- 5. Reihe -->
       <div class="form-row">
         <div class="form-col">
-          <span class="buch-isbn">-ISBN: {{ buch?.isbn }}</span>
+          @if (buch()?.isbn) {
+            <span class="buch-isbn">-ISBN: {{ buch()?.isbn }}</span>
+          }
         </div>
       </div>
 
@@ -66,7 +84,8 @@
       <div class="form-row">
         <div class="form-col">
           <span class="buch-lieferbar">-Lieferbar: </span>
-          <span *ngIf="buch?.lieferbar === true">
+          <span *ngIf="buch()?.lieferbar === true">
+            <!-- Haken wenn Buch Lieferbar ist -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -77,10 +96,12 @@
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                stroke="green"
                 d="m4.5 12.75 6 6 9-13.5" />
             </svg>
           </span>
-          <span *ngIf="buch?.lieferbar !== true">
+          <span *ngIf="buch()?.lieferbar !== true">
+            <!-- Kreuz wenn Buch nicht Lieferbar ist -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -100,7 +121,9 @@
       <!-- 7. Reihe -->
       <div class="form-row">
         <div class="form-col">
-          <span class="buch-homepage"> {{ buch?.homepage }}</span>
+          @if (buch()?.homepage) {
+            <span class="buch-homepage"> {{ buch()?.homepage }}</span>
+          }
         </div>
       </div>
 
