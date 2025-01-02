@@ -36,6 +36,15 @@
         <!-- Rating -->
         <div class="form-col">
           <!-- Iteriere über das Array von Sternen -->
+
+          <!-- <ng-container>
+            @for (let star of generateStars(buch()?.rating ?? 0)) {
+              <span
+                class="mask mask-star-2 w-8 h-8"
+                [ngClass]="star ? 'ausgefüllt' : 'nicht-ausgefüllt'"></span>
+            }
+          </ng-container> -->
+
           <ng-container *ngFor="let star of generateStars(buch()?.rating ?? 0)">
             <span
               class="mask mask-star-2 w-8 h-8"
@@ -84,37 +93,41 @@
       <div class="form-row">
         <div class="form-col">
           <span class="buch-lieferbar">-Lieferbar: </span>
-          <span *ngIf="buch()?.lieferbar === true">
+          @if (buch()?.lieferbar === true) {
             <!-- Haken wenn Buch Lieferbar ist -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke="green"
-                d="m4.5 12.75 6 6 9-13.5" />
-            </svg>
-          </span>
-          <span *ngIf="buch()?.lieferbar !== true">
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke="green"
+                  d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
+            </span>
+          }
+          @if (buch()?.lieferbar !== true) {
             <!-- Kreuz wenn Buch nicht Lieferbar ist -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18 18 6M6 6l12 12" />
-            </svg>
-          </span>
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </span>
+          }
         </div>
       </div>
 
