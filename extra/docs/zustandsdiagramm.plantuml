@@ -1,4 +1,4 @@
-@startuml
+@startuml zustandsdiagramm
 
 state "index.html" as index_html {
 [*] --> Bibliothek : menuepunkt Bibliothek
