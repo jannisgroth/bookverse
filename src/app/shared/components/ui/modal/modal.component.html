@@ -146,7 +146,13 @@
       <div class="form-row">
         <div class="form-col">
           @if (buch()?.homepage) {
-            <span class="buch-homepage"> {{ buch()?.homepage }}</span>
+            <a
+              href="{{ buch()?.homepage }}"
+              class="buch-homepage"
+              target="_blank">
+              <!-- öffnet in anderem Tab -->
+              {{ buch()?.homepage }}
+            </a>
           }
         </div>
       </div>

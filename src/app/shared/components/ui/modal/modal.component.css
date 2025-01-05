@@ -96,6 +96,11 @@
   color: red;
 }
 
+.buch-homepage {
+  color: blue; /* Setzt die Farbe auf Blau */
+  text-decoration: underline; /* Unterstreicht den Link */
+}
+
 .btn-close {
   background-color: #f8d7da;
   color: #721c24;
