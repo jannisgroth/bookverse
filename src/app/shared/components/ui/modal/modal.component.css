@@ -97,8 +97,8 @@
 }
 
 .buch-homepage {
-  color: blue; /* Setzt die Farbe auf Blau */
-  text-decoration: underline; /* Unterstreicht den Link */
+  color: blue;
+  text-decoration: underline;
 }
 
 .btn-close {
