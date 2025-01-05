@@ -53,7 +53,7 @@
       <div class="form-row">
         <div class="form-col">
           <span class="buch-schlagwoerter">
-            @if (buch()?.schlagwoerter) {
+            @if (buch()?.schlagwoerter && (buch()?.schlagwoerter)!.length > 0) {
               {{ buch()?.schlagwoerter ? '-' + buch()?.schlagwoerter : '' }}
             }
           </span>
