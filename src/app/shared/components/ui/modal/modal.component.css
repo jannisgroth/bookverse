@@ -1,6 +1,6 @@
 .subtitle {
   color: #888;
-  opacity: 0.7; /* Leicht transparent */
+  opacity: 0.7;
 }
 .modal-box {
   position: relative;
@@ -14,22 +14,22 @@
 }
 
 .form-row {
-  display: flex; /* Flexbox aktivieren */
-  align-items: center; /* Vertikale Ausrichtung auf der gleichen Höhe */
+  display: flex;
+  align-items: center;
   gap: 20px;
   justify-content: flex-start;
 }
 
 .form-col {
-  display: flex; /* Flexbox für jedes Form-Element */
-  align-items: center; /* Vertikale Ausrichtung auf der gleichen Höhe */
-  width: 100%; /* Volle Breite innerhalb des Containers */
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .form-row > .form-col:first-child {
-  width: 200px; /* Feste Breite für die erste Spalte */
-  min-width: 250px; /* Stellt sicher, dass die Spalte nicht kleiner wird */
-  max-width: 250px; /* Stellt sicher, dass die Spalte nicht größer wird */
+  width: 200px;
+  min-width: 250px;
+  max-width: 250px;
 }
 
 .buch-titel {
@@ -89,20 +89,20 @@
   font-weight: bold;
 }
 .lieferbar-true {
-  background-color: green; /* Grün, wenn lieferbar */
+  color: green;
 }
 
 .lieferbar-false {
-  background-color: red; /* Rot, wenn nicht lieferbar */
+  color: red;
 }
 
 .btn-close {
-  background-color: #f8d7da; /* Helles Rot */
-  color: #721c24; /* Dunkelroter Text */
-  border: 1px solid #f5c6cb; /* Rot als Rand */
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
 }
 
 .btn-close:hover {
-  background-color: #f5c6cb; /* Etwas intensiver beim Hover */
+  background-color: #f5c6cb;
   color: #721c24;
 }

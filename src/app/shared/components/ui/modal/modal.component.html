@@ -16,14 +16,16 @@
         <div class="form-col">
           <span class="berechneterPreis">{{ berechneterPreis }}€</span>
         </div>
-        <div class="form-col">
-          <span class="berechneterRabatt">-{{ berechneterRabatt }}% </span>
-        </div>
-        <div class="form-col">
-          @if (buch()?.preis) {
-            <span class="buch-preis">{{ buch()?.preis }}€</span>
-          }
-        </div>
+        @if (berechneterRabatt != 0) {
+          <div class="form-col">
+            <span class="berechneterRabatt">-{{ berechneterRabatt }}% </span>
+          </div>
+          <div class="form-col">
+            @if (buch()?.preis) {
+              <span class="buch-preis">{{ buch()?.preis }}€</span>
+            }
+          </div>
+        }
       </div>
 
       <!-- 2. Reihe -->
@@ -37,18 +39,12 @@
         <div class="form-col">
           <!-- Iteriere über das Array von Sternen -->
 
-          <!-- <ng-container>
-            @for (let star of generateStars(buch()?.rating ?? 0)) {
+          <ng-container>
+            @for (star of generateStars(buch()?.rating ?? 0); track star) {
               <span
                 class="mask mask-star-2 w-8 h-8"
                 [ngClass]="star ? 'ausgefüllt' : 'nicht-ausgefüllt'"></span>
             }
-          </ng-container> -->
-
-          <ng-container *ngFor="let star of generateStars(buch()?.rating ?? 0)">
-            <span
-              class="mask mask-star-2 w-8 h-8"
-              [ngClass]="star ? 'ausgefüllt' : 'nicht-ausgefüllt'"></span>
           </ng-container>
         </div>
       </div>
@@ -95,7 +91,7 @@
           <span class="buch-lieferbar">-Lieferbar: </span>
           @if (buch()?.lieferbar === true) {
             <!-- Haken wenn Buch Lieferbar ist -->
-            <span>
+            <span class="lieferbar-true">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -113,7 +109,7 @@
           }
           @if (buch()?.lieferbar !== true) {
             <!-- Kreuz wenn Buch nicht Lieferbar ist -->
-            <span>
+            <span class="lieferbar-false">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -142,7 +138,7 @@
 
       <!-- Close -->
       <div class="modal-action absolute bottom-0 right-0 p-4">
-        <button class="btn ml-2">Warenkorb</button>
+        <!-- <button class="btn ml-2">Warenkorb</button> -->
         <form method="dialog">
           <button class="btn btn-close" (click)="closeModal(modal)">
             Close
