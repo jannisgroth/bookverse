@@ -25,7 +25,10 @@ export class AuthService {
 
   private readonly authUrl = 'https://localhost:3000/auth';
 
-  constructor(private http: HttpClient, private logger: LoggerService) {
+  constructor(
+    private http: HttpClient,
+    private logger: LoggerService
+  ) {
     if (localStorage.getItem('refresh_token')) {
       this.getRefreshToken();
     }
@@ -67,7 +70,8 @@ export class AuthService {
             this.userData.set({
               email: this.tokenEncoded()!.email!,
               rolle:
-                this.tokenEncoded()!.resource_access?.['nest-client']!.roles[0]!,
+                this.tokenEncoded()!.resource_access?.['nest-client']!
+                  .roles[0]!,
             });
 
             //console.log(this.tokenEncoded(), this.role(), this.email());
@@ -103,36 +107,38 @@ export class AuthService {
       return;
     }
 
-    this.http.post<{
-      access_token: string;
-      refresh_token: string;
-    }>(`${this.authUrl}/refresh`, { refresh_token }).subscribe({
-      next: (response) => {
-        this.token.set(response.access_token);
-        localStorage.setItem('refresh_token', response.refresh_token);
-        this.tokenEncoded.set(
-          jwtDecode<JwtPayloadWithRole>(response.access_token)
-        );
+    this.http
+      .post<{
+        access_token: string;
+        refresh_token: string;
+      }>(`${this.authUrl}/refresh`, { refresh_token })
+      .subscribe({
+        next: response => {
+          this.token.set(response.access_token);
+          localStorage.setItem('refresh_token', response.refresh_token);
+          this.tokenEncoded.set(
+            jwtDecode<JwtPayloadWithRole>(response.access_token)
+          );
 
-        this.userData.set({
-          email: this.tokenEncoded()!.email!,
-          rolle:
-            this.tokenEncoded()!.resource_access?.['nest-client']!.roles[0]!,
-        });
-        this.loggedIn.set(true);
+          this.userData.set({
+            email: this.tokenEncoded()!.email!,
+            rolle:
+              this.tokenEncoded()!.resource_access?.['nest-client']!.roles[0]!,
+          });
+          this.loggedIn.set(true);
 
-        this.startTokenTimer();
-      },
-      error: () => {
-        this.logger.error('Fehler beim Refreshen des Token');
-        this.loggedIn.set(false);
-        this.token.set(undefined);
-        this.tokenEncoded.set(undefined);
-        this.userData.set({ email: '', rolle: '' });
-        localStorage.removeItem('refresh_token');
-        return;
-      }
-    });
+          this.startTokenTimer();
+        },
+        error: () => {
+          this.logger.error('Fehler beim Refreshen des Token');
+          this.loggedIn.set(false);
+          this.token.set(undefined);
+          this.tokenEncoded.set(undefined);
+          this.userData.set({ email: '', rolle: '' });
+          localStorage.removeItem('refresh_token');
+          return;
+        },
+      });
   }
 
   /**
@@ -143,12 +149,15 @@ export class AuthService {
     if (this.tokenEncoded() === undefined) {
       return;
     }
-    if (((this.tokenEncoded()!.exp! * 1000) - Date.now()) < 60000) {
+    if (this.tokenEncoded()!.exp! * 1000 - Date.now() < 60000) {
       this.logger.info('Zeit des Tokens bald rum', this.tokenEncoded()?.exp);
       await this.getRefreshToken();
       console.log('neuen token geholt');
     } else {
-      console.log('noch kein token nötig', (this.tokenEncoded()!.exp! * 1000) - Date.now());
+      console.log(
+        'noch kein token nötig',
+        this.tokenEncoded()!.exp! * 1000 - Date.now()
+      );
     }
   }
 

@@ -11,14 +11,19 @@ import {
   selector: 'app-rabatt-input',
   imports: [ReactiveFormsModule, NgClass],
   templateUrl: './rabatt-input.component.html',
-  styleUrl: './rabatt-input.component.css',
 })
 export class RabattInputComponent {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
 
-  constructor() {}
+  constructor() { }
 
+  /**
+   * Lifecycle-Hook, der beim Initialisieren der Komponente aufgerufen wird.
+   * Erstellt ein FormControl f r den Rabatt mit einem Validator, der sicherstellt,
+   * dass die Eingabe zwischen 0 und 100 liegt.
+   * Fuegt das FormControl der FormGroup hinzu.
+   */
   ngOnInit(): void {
     const formControl = new FormControl(undefined, [
       Validators.min(0),

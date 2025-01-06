@@ -8,6 +8,5 @@ import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-ale
   imports: [LoginComponent],
   providers: [ReadService],
   templateUrl: './registrierung.component.html',
-  styleUrl: './registrierung.component.css',
 })
-export class RegistrierungComponent {}
+export class RegistrierungComponent { }

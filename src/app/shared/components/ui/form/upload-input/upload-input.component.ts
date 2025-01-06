@@ -1,6 +1,6 @@
-import { Component, Injectable, input, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FormularComponent } from '../../formular/formular.component';
+import { Component, Injectable } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormularComponent } from '../formular/formular.component';
 
 @Component({
   selector: 'app-upload-input',
@@ -10,7 +10,6 @@ import { FormularComponent } from '../../formular/formular.component';
 })
 @Injectable({ providedIn: 'root' })
 export class UploadInputComponent {
-
   constructor(private formular: FormularComponent) { }
 
   /**

@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, signal, effect } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { TitelInputComponent } from '../titel-input/titel-input.component';
-import { UploadInputComponent } from '../upload/upload-input/upload-input.component';
+import { UploadInputComponent } from '../upload-input/upload-input.component';
 import { RatingRadioComponent } from '../rating-radio/rating-radio.component';
 import { SchlagwoerterCheckboxComponent } from '../sclagwoerter-checkbox/schlagwoerter-checkbox.component';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -48,22 +48,15 @@ export class FormularComponent {
   error = signal({ aktive: false, message: '' });
   success = signal(false);
 
-  private effect = effect(() => {
-    this.logger.debug('Loading state geändert:', this.loading());
-    this.cdr.markForCheck(); // Change Detection auslösen
-  });
-
   constructor(
     private writeService: WriteService,
     private logger: LoggerService,
-    private cdr: ChangeDetectorRef
   ) { }
 
   /**
-   * Submit-Methode, die aufgerufen wird, wenn das Formular
-   * validiert wurde. Hier wird das BuchDTO erstellt und an den
-   * Write-Service gesendet. Wenn eine Datei hochgeladen wurde,
-   * wird diese mit dem BuchDTO gesendet.
+   * Validiert das Formular und führt den Bucherstellungsprozess durch.
+   * Setzt den Ladezustand, zeigt Erfolgs- oder Fehlermeldungen und
+   * setzt das Formular nach Abschluss zurück.
    */
   async onSubmit() {
     // Zuerst prüfen, ob das Formular gültig ist
@@ -76,15 +69,17 @@ export class FormularComponent {
     // Ladezustand auf true setzen, wenn der Prozess beginnt
     this.loading.set(true);
 
-    const buchDTO = await this.#inputToBuchDTO();
+    const buchDTO = await this.inputToBuchDTO();
 
     // Falls keine Datei ausgewählt wurde, rufe den WriteService ohne Datei auf
-    const uploadParams = this.ausgewähltesFile() === undefined || null
-      ? { mitFile: false, file: undefined }
-      : { mitFile: true, file: this.ausgewähltesFile() };
+    const uploadParams =
+      this.ausgewähltesFile() === undefined || null
+        ? { mitFile: false, file: undefined }
+        : { mitFile: true, file: this.ausgewähltesFile() };
 
     // Erstelle das Buch mit den Parametern
-    await this.writeService.createBuch(buchDTO, uploadParams)
+    await this.writeService
+      .createBuch(buchDTO, uploadParams)
       .then(() => {
         this.loading.set(false);
         this.success.set(true);
@@ -92,7 +87,7 @@ export class FormularComponent {
           this.success.set(false);
         }, 4000);
       })
-      .catch((error) => {
+      .catch(error => {
         this.loading.set(false);
         this.error.set({ aktive: true, message: error });
         setTimeout(() => {
@@ -106,16 +101,23 @@ export class FormularComponent {
         this.ausgewähltesFile.set(undefined);
         this.loading.set(false);
       });
-
   }
-  async #inputToBuchDTO(): Promise<Omit<Buch, '_links' | 'file'>> {
+  /**
+   * Erstellt ein Objekt vom Typ BuchDTO mit den Daten des Formulars
+   * und gibt es zurück.
+   * @returns Ein Objekt vom Typ BuchDTO
+   */
+  async inputToBuchDTO(): Promise<Omit<Buch, '_links' | 'file'>> {
     const gewählteSchlagwoerter = this.schlagwoerter.filter(
       schlagwort => this.buchForm.get(schlagwort)?.value === true
     );
     return {
       isbn: this.buchForm.get('isbn')!.value,
       rating: Number(this.buchForm.get('rating')!.value),
-      art: this.buchForm.get('buchart')!.value === 'wählen' ? undefined : this.buchForm.get('buchart')!.value,
+      art:
+        this.buchForm.get('buchart')!.value === 'wählen'
+          ? undefined
+          : this.buchForm.get('buchart')!.value,
       preis: String(this.buchForm.get('preis')!.value),
       rabatt: this.buchForm.get('rabatt')!.value
         ? (Number(this.buchForm.get('rabatt')!.value) / 100).toFixed(3)
@@ -132,12 +134,11 @@ export class FormularComponent {
   }
 
   /**
- * Setzt die Datei, die in der File-Upload Komponente ausgewählt wurde.
- * Wenn die Datei undefined ist, wird keine Datei hochgeladen.
- * @param file Die ausgewählte Datei.
- */
+   * Setzt die Datei, die in der File-Upload Komponente ausgewählt wurde.
+   * Wenn die Datei undefined ist, wird keine Datei hochgeladen.
+   * @param file Die ausgewählte Datei.
+   */
   setSelectedFile(file: File | undefined) {
     this.ausgewähltesFile.set(file);
   }
-
 }

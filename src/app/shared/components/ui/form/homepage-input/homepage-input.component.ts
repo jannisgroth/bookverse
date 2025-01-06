@@ -11,14 +11,19 @@ import {
   selector: 'app-homepage-input',
   imports: [ReactiveFormsModule, NgClass],
   templateUrl: './homepage-input.component.html',
-  styleUrl: './homepage-input.component.css',
 })
 export class HomepageInputComponent {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
 
-  constructor() {}
+  constructor() { }
 
+  /**
+   * Lifecycle-Hook, der beim Initialisieren der Komponente aufgerufen wird.
+   * Erstellt ein FormControl für die Homepage mit einem Validator, der sicherstellt,
+   * dass die Eingabe das Format einer URL hat.
+   * Fügt das FormControl der FormGroup hinzu.
+   */
   ngOnInit(): void {
     const formControl = new FormControl(undefined, [
       Validators.pattern(
@@ -29,6 +34,11 @@ export class HomepageInputComponent {
     this.buchForm().addControl('homepage', formControl);
   }
 
+  /**
+   * Gibt das FormControl für die Homepage zurück.
+   * 
+   * @returns Das FormControl für die Homepage, das in der FormGroup enthalten ist.
+   */
   get homepage() {
     return this.buchForm().get('homepage')!;
   }

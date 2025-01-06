@@ -1,6 +1,10 @@
 import { Injectable, resolveForwardRef } from '@angular/core';
 import { Buch } from '../../shared/models/buch.model';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { AuthService } from './auth/auth.service';
 import { LoggerService } from '../logging/logger.service';
 
@@ -14,7 +18,7 @@ export class WriteService {
     private http: HttpClient,
     private auth: AuthService,
     private logger: LoggerService
-  ) { }
+  ) {}
 
   async createBuch(
     buch: Omit<Buch, '_links' | 'file'>,
@@ -30,14 +34,18 @@ export class WriteService {
           observe: 'response',
         })
         .subscribe({
-          next: async (response) => {
+          next: async response => {
             this.logger.debug('Buch erfolgreich angelegt:', response);
 
             if (upload.mitFile) {
               const location = response.headers.get('location')!;
               if (!location) {
-                this.logger.error('Id konnte nicht aus dem Header gelesen werden');
-                reject(new Error('Id konnte nicht aus dem Header gelesen werden'));
+                this.logger.error(
+                  'Id konnte nicht aus dem Header gelesen werden'
+                );
+                reject(
+                  new Error('Id konnte nicht aus dem Header gelesen werden')
+                );
               }
               const id = Number(location.split('/').pop());
               await this.uploadFile(upload.file!, id);
@@ -53,7 +61,7 @@ export class WriteService {
             reject(`Fehler beim anlegen des Buches: ${err.error.message}`);
           },
         });
-    })
+    });
   }
 
   async uploadFile(file: File, id: number) {
@@ -75,7 +83,7 @@ export class WriteService {
           observe: 'response',
         })
         .subscribe({
-          next: (response) => {
+          next: response => {
             this.logger.debug('File erfolgreich hochgeladen:', response);
             resolve();
           },
@@ -83,8 +91,7 @@ export class WriteService {
             this.logger.error('Fehler beim Hochladen der Datei:', err);
             reject();
           },
-        })
-    })
-
+        });
+    });
   }
 }
