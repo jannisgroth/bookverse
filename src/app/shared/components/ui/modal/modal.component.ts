@@ -11,11 +11,9 @@ import { Location } from '@angular/common';
   styleUrl: './modal.component.css',
 })
 export class ModalComponent {
-  // @Input() buch: Buch | undefined;
   buch = input<Buch>();
-  ausgewähltesBuch = input<Buch>();
 
-  constructor(private location: Location) {}
+  constructor() {}
 
   openModal(modal: HTMLDialogElement) {
     modal.showModal();
@@ -23,10 +21,6 @@ export class ModalComponent {
 
   closeModal(modal: HTMLDialogElement) {
     modal.close();
-    this.resetUrl();
-  }
-  private resetUrl() {
-    this.location.replaceState('/bibliothek');
   }
 
   get berechneterRabatt() {
