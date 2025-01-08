@@ -43,27 +43,27 @@ export class WriteService {
         })
         .subscribe({
           next: async response => {
-            this.logger.debug('Buch erfolgreich angelegt:', response);
+            this.logger.info('Buch erfolgreich angelegt');
 
             if (upload.mitFile) {
               const location = response.headers.get('location')!;
               if (!location) {
                 this.logger.error(
-                  'Id konnte nicht aus dem Header gelesen werden'
+                  'File-upload konnte nicht durchgeführt werden'
                 );
-                reject(
-                  new Error('Id konnte nicht aus dem Header gelesen werden')
-                );
+                reject();
               }
-              const id = Number(location.split('/').pop());
+              const id = Number(location.split('/').pop()); // die Id aus dem Link ziehen
               await this.uploadFile(upload.file!, id);
               resolve();
             }
             resolve();
           },
           error: (err: HttpErrorResponse) => {
+            // für invalide Daten
             if (err.status === 422) {
               reject(err.error.message);
+              this.logger.error('Invalide Daten, Buch nicht angelegt');
             }
             this.logger.error('Fehler beim Anlegen des Buches', err);
             reject(`Fehler beim anlegen des Buches: ${err.error.message}`);
@@ -82,10 +82,11 @@ export class WriteService {
   async uploadFile(file: File, id: number) {
     return new Promise<void>((resolve, reject) => {
       if (!(file instanceof File)) {
-        this.logger.error('File ist keine Datei');
-        return reject(new Error('File ist keine Datei'));
+        this.logger.error('File konnte nicht erkannt werden');
+        return reject();
       }
 
+      // Speichern des Files zur übergabe ans Backend.
       const formData = new FormData();
       formData.append('file', file);
 
@@ -98,12 +99,12 @@ export class WriteService {
           observe: 'response',
         })
         .subscribe({
-          next: response => {
-            this.logger.debug('File erfolgreich hochgeladen:', response);
+          next: () => {
+            this.logger.info('File erfolgreich zum Buch hochgeladen');
             resolve();
           },
-          error: err => {
-            this.logger.error('Fehler beim Hochladen der Datei:', err);
+          error: () => {
+            this.logger.error('Fehler beim Hochladen der Datei');
             reject();
           },
         });

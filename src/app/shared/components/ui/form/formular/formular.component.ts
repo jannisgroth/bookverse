@@ -45,7 +45,7 @@ export class FormularComponent {
   protected schlagwoerter = ['JAVASCRIPT', 'JAVA', 'PYTHON', 'TYPESCRIPT'];
   private ausgewähltesFile = signal<File | undefined>(undefined);
   loading = signal(false);
-  error = signal({ aktive: false, message: '' });
+  error = signal({ aktiv: false, message: '' });
   success = signal(false);
 
   constructor(
@@ -89,9 +89,9 @@ export class FormularComponent {
       })
       .catch(error => {
         this.loading.set(false);
-        this.error.set({ aktive: true, message: error });
+        this.error.set({ aktiv: true, message: error });
         setTimeout(() => {
-          this.error.set({ aktive: false, message: '' });
+          this.error.set({ aktiv: false, message: '' });
         }, 5000);
       })
       .finally(() => {
