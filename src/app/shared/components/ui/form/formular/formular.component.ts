@@ -51,7 +51,7 @@ export class FormularComponent {
   constructor(
     private writeService: WriteService,
     private logger: LoggerService
-  ) {}
+  ) { }
 
   /**
    * Validiert das Formular und führt den Bucherstellungsprozess durch.
@@ -61,7 +61,7 @@ export class FormularComponent {
   async onSubmit() {
     // Zuerst prüfen, ob das Formular gültig ist
     if (!this.buchForm.valid) {
-      this.logger.debug('Formular ist nicht valid');
+      this.logger.error('Formular ist nicht valid');
       //this.loading.set(false); // Ladezustand auf false setzen, falls Formular ungültig ist
       return; // Beende die Methode frühzeitig
     }

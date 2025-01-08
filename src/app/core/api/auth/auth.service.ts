@@ -1,7 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
-import { Token } from '@angular/compiler';
 import { LoggerService } from '../../logging/logger.service';
 
 /**
@@ -73,6 +72,7 @@ export class AuthService {
             localStorage.setItem('refresh_token', response.refresh_token);
             // https://www.npmjs.com/package/jwt-decode
             this.tokenEncoded.set(
+              // https://www.npmjs.com/package/jwt-decode
               jwtDecode<JwtPayloadWithAttributes>(response.access_token)
             );
 

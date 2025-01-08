@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { RegistrierungComponent } from './pages/registrierung/registrierung.component';
 import { BibliothekComponent } from './pages/bibliothek/bibliothek.component';
 import { BuchAnlegenComponent } from './pages/buchAnlegen/buchAnlegen.component';
-import { AuthGuard } from './core/api/auth/guard.guard';
+import { AuthGuard } from './core/api/auth/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'registrierung', pathMatch: 'full' },
