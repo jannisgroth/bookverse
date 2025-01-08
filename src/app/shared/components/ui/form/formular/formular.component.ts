@@ -70,6 +70,7 @@ export class FormularComponent {
     this.loading.set(true);
 
     const buchDTO = await this.inputToBuchDTO();
+    console.log(buchDTO);
 
     // Falls keine Datei ausgewählt wurde, rufe den WriteService ohne Datei auf
     const uploadParams =
@@ -97,6 +98,7 @@ export class FormularComponent {
       .finally(() => {
         this.buchForm.reset({
           buchart: 'wählen',
+          rating: 5,
         });
         this.ausgewähltesFile.set(undefined);
         this.loading.set(false);
@@ -125,7 +127,7 @@ export class FormularComponent {
       lieferbar: this.buchForm.get('lieferbar')!.value ?? undefined,
       datum: this.buchForm.get('datum')!.value ?? undefined,
       homepage: this.buchForm.get('homepage')!.value ?? undefined,
-      schlagwoerter: gewählteSchlagwoerter,
+      schlagwoerter: gewählteSchlagwoerter === undefined ? undefined : gewählteSchlagwoerter,
       titel: {
         titel: this.buchForm.get('titel')!.value!,
         untertitel: this.buchForm.get('untertitel')!.value ?? undefined,
