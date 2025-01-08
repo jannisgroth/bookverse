@@ -1,5 +1,10 @@
 import { Component, input } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-lieferbar-checkbox',
@@ -10,7 +15,7 @@ export class LieferbarCheckboxComponent {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Lifecycle-Hook, der beim Initialisieren der Komponente aufgerufen wird.

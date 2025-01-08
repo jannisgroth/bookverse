@@ -16,7 +16,7 @@ export class HomepageInputComponent {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Lifecycle-Hook, der beim Initialisieren der Komponente aufgerufen wird.
@@ -36,7 +36,7 @@ export class HomepageInputComponent {
 
   /**
    * Gibt das FormControl für die Homepage zurück.
-   * 
+   *
    * @returns Das FormControl für die Homepage, das in der FormGroup enthalten ist.
    */
   get homepage() {

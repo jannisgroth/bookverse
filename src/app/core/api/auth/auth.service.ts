@@ -20,14 +20,16 @@ interface JwtPayloadWithAttributes extends JwtPayload {
   providedIn: 'root',
 })
 export class AuthService {
-  zugriffAlert = signal<{ show: boolean | undefined; message: string }>({ show: undefined, message: '' });
+  zugriffAlert = signal<{ show: boolean | undefined; message: string }>({
+    show: undefined,
+    message: '',
+  });
   token = signal<string | undefined>(undefined);
   tokenEncoded = signal<JwtPayloadWithAttributes | undefined>(undefined);
   userData = signal<{ email: string; rolle: string }>({ email: '', rolle: '' });
   loggedIn = signal<boolean>(false);
 
   private readonly authUrl = 'https://localhost:3000/auth';
-
 
   constructor(
     private http: HttpClient,
@@ -82,7 +84,10 @@ export class AuthService {
             });
 
             this.loggedIn.set(true);
-            this.zugriffAlert.set({ show: true, message: 'Login erfolgreich!' });
+            this.zugriffAlert.set({
+              show: true,
+              message: 'Login erfolgreich!',
+            });
             setTimeout(() => {
               this.zugriffAlert.set({ show: undefined, message: '' });
             }, 4000);
@@ -91,13 +96,19 @@ export class AuthService {
           },
           error: error => {
             if (error instanceof HttpErrorResponse && error.status === 401) {
-              this.zugriffAlert.set({ show: false, message: 'Benutzername oder Passwort falsch' });
+              this.zugriffAlert.set({
+                show: false,
+                message: 'Benutzername oder Passwort falsch',
+              });
               setTimeout(() => {
                 this.zugriffAlert.set({ show: undefined, message: '' });
               }, 4000);
               reject();
             }
-            this.zugriffAlert.set({ show: false, message: 'Registrierung gerade nicht möglich!' });
+            this.zugriffAlert.set({
+              show: false,
+              message: 'Registrierung gerade nicht möglich!',
+            });
             setTimeout(() => {
               this.zugriffAlert.set({ show: undefined, message: '' });
             }, 4000);

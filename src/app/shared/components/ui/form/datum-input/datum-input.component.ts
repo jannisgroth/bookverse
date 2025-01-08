@@ -10,7 +10,7 @@ export class DatumInputComponent {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Fügt dem Formular eine FormControl für das Datum hinzu.
@@ -22,7 +22,6 @@ export class DatumInputComponent {
 
     this.buchForm().addControl('datum', formControl);
   }
-
 
   /**
    * Liefert das FormControl für das Datum-Feld aus der FormGroup.

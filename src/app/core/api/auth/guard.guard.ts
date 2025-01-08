@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private authService: AuthService,
     private router: Router
-  ) { }
+  ) {}
 
   /**
    * Methode, die überprüft, ob der Benutzer Zugriff auf die Administration
@@ -18,9 +18,7 @@ export class AuthGuard implements CanActivate {
    * @returns true, wenn der Benutzer Zugriff hat, false sonst.
    */
   canActivate(): boolean {
-    if (
-      this.authService.userData().rolle === 'admin'
-    ) {
+    if (this.authService.userData().rolle === 'admin') {
       return true; // Zugriff erlaubt
     } else {
       this.router.navigate(['/registrierung']);

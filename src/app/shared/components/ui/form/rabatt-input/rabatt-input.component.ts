@@ -16,7 +16,7 @@ export class RabattInputComponent {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Lifecycle-Hook, der beim Initialisieren der Komponente aufgerufen wird.

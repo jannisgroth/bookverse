@@ -9,4 +9,4 @@ import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-ale
   providers: [ReadService],
   templateUrl: './registrierung.component.html',
 })
-export class RegistrierungComponent { }
+export class RegistrierungComponent {}

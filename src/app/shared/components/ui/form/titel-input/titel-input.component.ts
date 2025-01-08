@@ -17,7 +17,7 @@ export class TitelInputComponent implements OnInit {
   // Signal für die FormGroup
   buchForm = input.required<FormGroup>();
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Lifecycle-Hook, der beim Initialisieren der Komponente aufgerufen wird.

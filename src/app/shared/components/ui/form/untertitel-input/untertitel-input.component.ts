@@ -1,10 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component, input, OnInit } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-untertitel-input',
@@ -16,8 +12,7 @@ export class UntertitelInputComponent implements OnInit {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
 
-  constructor() { }
-
+  constructor() {}
 
   /**
    * Lifecycle-Hook, der beim Initialisieren der Komponente aufgerufen wird.

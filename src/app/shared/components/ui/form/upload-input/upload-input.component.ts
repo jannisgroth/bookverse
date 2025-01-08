@@ -9,7 +9,7 @@ import { FormularComponent } from '../formular/formular.component';
 })
 @Injectable({ providedIn: 'root' })
 export class UploadInputComponent {
-  constructor(private formular: FormularComponent) { }
+  constructor(private formular: FormularComponent) {}
 
   /**
    * @description Wird aufgerufen, wenn der Nutzer eine Datei auswählt.

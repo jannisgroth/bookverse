@@ -6,4 +6,4 @@ import { FormularComponent } from '../../shared/components/ui/form/formular/form
   imports: [FormularComponent],
   templateUrl: './buchAnlegen.component.html',
 })
-export class BuchAnlegenComponent { }
+export class BuchAnlegenComponent {}

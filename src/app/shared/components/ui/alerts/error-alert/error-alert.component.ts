@@ -7,5 +7,5 @@ import { Component, input } from '@angular/core';
 })
 export class ErrorAlertComponent {
   message = input('');
-  constructor() { }
+  constructor() {}
 }

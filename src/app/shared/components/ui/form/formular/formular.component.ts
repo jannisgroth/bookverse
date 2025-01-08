@@ -50,8 +50,8 @@ export class FormularComponent {
 
   constructor(
     private writeService: WriteService,
-    private logger: LoggerService,
-  ) { }
+    private logger: LoggerService
+  ) {}
 
   /**
    * Validiert das Formular und führt den Bucherstellungsprozess durch.

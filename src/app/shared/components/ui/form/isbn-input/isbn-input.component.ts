@@ -16,10 +16,10 @@ export class IsbnInputComponent {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
 
-  constructor() { }
+  constructor() {}
 
   /**
-   * Initialisiert das ISBN FormControl mit erforderlichem und 
+   * Initialisiert das ISBN FormControl mit erforderlichem und
    * Muster-Validator und fügt es der FormGroup hinzu.
    */
   ngOnInit(): void {

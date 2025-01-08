@@ -9,7 +9,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class SchlagwoerterCheckboxComponent {
   // Signal für die FormGroup
   readonly buchForm = input.required<FormGroup>();
-  constructor() { }
+  constructor() {}
 
   /**
    * Lifecycle-Hook, der aufgerufen wird, wenn die Komponente initialisiert wurde.

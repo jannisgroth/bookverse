@@ -18,10 +18,10 @@ export class WriteService {
     private http: HttpClient,
     private auth: AuthService,
     private logger: LoggerService
-  ) { }
+  ) {}
 
   /**
-   * Legt ein neues Buch an. Wenn upload.mitFile true ist, 
+   * Legt ein neues Buch an. Wenn upload.mitFile true ist,
    * wird ein File mit hochgeladen und dem Buch zugeordnet.
    * @param buch Das Buch, das angelegt werden soll.
    * @param upload Ein Objekt mit den Eigenschaften "mitFile" (true, wenn eine Datei hochgeladen werden soll) und "file" (die Datei, die hochgeladen werden soll).
