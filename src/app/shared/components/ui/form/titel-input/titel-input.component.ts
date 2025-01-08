@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, input, Input, InputSignal, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -11,7 +11,6 @@ import {
   selector: 'app-titel-input',
   imports: [ReactiveFormsModule, NgClass],
   templateUrl: './titel-input.component.html',
-  styleUrl: './titel-input.component.css',
   providers: [],
 })
 export class TitelInputComponent implements OnInit {
@@ -20,13 +19,20 @@ export class TitelInputComponent implements OnInit {
 
   constructor() {}
 
+  /**
+   * Lifecycle-Hook, der beim Initialisieren der Komponente aufgerufen wird.
+   * Erstellt ein FormControl fuer den Titel mit einem Validator, der sicherstellt,
+   * dass die Titel vorhanden ist.
+   * Fuegt das FormControl der FormGroup hinzu.
+   */
   ngOnInit(): void {
-    //const form = this.buchForm().addControl('', [Validators.maxLength(3)]);
     const formControl = new FormControl(undefined, [Validators.required]);
-
     this.buchForm().addControl('titel', formControl);
   }
 
+  /**
+   * Gibt das FormControl für Titel zurück.
+   */
   get titel() {
     return this.buchForm().get('titel')!;
   }

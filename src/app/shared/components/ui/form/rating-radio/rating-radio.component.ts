@@ -5,7 +5,6 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   selector: 'app-rating',
   imports: [ReactiveFormsModule],
   templateUrl: './rating-radio.component.html',
-  styleUrl: './rating-radio.component.css',
 })
 export class RatingRadioComponent {
   // Signal für die FormGroup
@@ -13,6 +12,11 @@ export class RatingRadioComponent {
 
   constructor() {}
 
+  /**
+   * Lifecycle-Hook, der aufgerufen wird, wenn die Komponente initialisiert wurde.
+   * Erzeugt ein FormControl fuer die Bewertung und fuegt es der FormGroup hinzu.
+   * Der Standardwert fuer die Bewertung ist 5.
+   */
   ngOnInit(): void {
     const formControl = new FormControl(5);
 

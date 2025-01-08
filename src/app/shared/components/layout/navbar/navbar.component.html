@@ -20,7 +20,7 @@
       routerLinkActive="font-bold text-sky-500"
       >Bibliothek</a
     >
-    @if (userData.rolle === 'admin' || userData.rolle === 'user') {
+    @if (userData.rolle === 'admin') {
       <a
         class="btn btn-link text-sm sm:text-lg hover:text-sky-500 dark:hover:text-sky-400"
         routerLink="/buchAnlegen"

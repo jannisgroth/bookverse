@@ -11,7 +11,6 @@ import {
   selector: 'app-drop-down',
   imports: [ReactiveFormsModule, NgClass],
   templateUrl: './buchart-drop-down.component.html',
-  styleUrl: './buchart-drop-down.component.css',
 })
 export class BuchartDropDownComponent {
   // Signal für die FormGroup
@@ -19,6 +18,12 @@ export class BuchartDropDownComponent {
 
   constructor() {}
 
+  /**
+   * Lifecycle-Hook, der aufgerufen wird, wenn die Komponente initialisiert wurde.
+   * Erzeugt ein FormControl für die Buchart und fügt es der FormGroup hinzu.
+   * Das FormControl hat einen Validator, der sicherstellt, dass nur die Werte
+   * "wählen", "EPUB", "PAPERBACK" und "HARDCOVER" gültig sind.
+   */
   ngOnInit(): void {
     const formControl = new FormControl('wählen', [
       Validators.pattern(/^(wählen|EPUB|PAPERBACK|HARDCOVER)$/),
@@ -27,6 +32,9 @@ export class BuchartDropDownComponent {
     this.buchForm().addControl('buchart', formControl);
   }
 
+  /**
+   * Returns the FormControl for 'buchart'.
+   */
   get buchart() {
     return this.buchForm().get('buchart')!;
   }

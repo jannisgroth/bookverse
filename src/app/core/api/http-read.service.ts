@@ -32,7 +32,7 @@ export class ReadService {
   constructor(
     private readonly http: HttpClient,
     private readonly logger: LoggerService
-  ) { } // Dependency injection
+  ) {} // Dependency injection
 
   getBuecherMitBild(buecher: WritableSignal<Buch[]>) {
     //params enthält die Queryparameter aus den Signals

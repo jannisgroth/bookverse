@@ -7,7 +7,6 @@ import { ErrorAlertComponent } from '../../ui/alerts/error-alert/error-alert.com
   selector: 'app-footer',
   imports: [CommonModule, ErrorAlertComponent],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.css',
 })
 export class FooterComponent {
   showalert = signal<boolean>(false);

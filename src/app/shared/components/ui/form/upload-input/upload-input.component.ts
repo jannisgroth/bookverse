@@ -1,17 +1,15 @@
-import { Component, Injectable, input, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FormularComponent } from '../../formular/formular.component';
+import { Component, Injectable } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormularComponent } from '../formular/formular.component';
 
 @Component({
   selector: 'app-upload-input',
   imports: [ReactiveFormsModule],
   templateUrl: './upload-input.component.html',
-  styleUrl: './upload-input.component.css',
 })
 @Injectable({ providedIn: 'root' })
 export class UploadInputComponent {
-
-  constructor(private formular: FormularComponent) { }
+  constructor(private formular: FormularComponent) {}
 
   /**
    * @description Wird aufgerufen, wenn der Nutzer eine Datei auswählt.

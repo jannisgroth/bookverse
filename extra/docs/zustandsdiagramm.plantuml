@@ -1,0 +1,61 @@
+@startuml zustandsdiagramm
+
+state "index.html" as index_html {
+[*] --> Bibliothek : menuepunkt Bibliothek
+[*] --> Login : menuepunkt Login
+Login --> BuchAnlegen : nach Login ist das anlegen von Buechern moeglich
+
+    state Bibliothek {
+        [*] --> Suchformular : (Teil) Titel eingeben
+        Suchformular --> warten
+        
+        state entscheidungSuche <<choice>>
+        warten --> entscheidungSuche
+
+        state Suchergebnis {
+            state ErrorMsg
+            state gefundeneBuecher
+
+        }
+
+        entscheidungSuche --> ErrorMsg : keine Buecher gefunden
+        entscheidungSuche --> gefundeneBuecher : mindestens ein Buch gefunden
+        gefundeneBuecher --> showDetails : Button "show more" anklicken
+        showDetails --> [*]
+    }
+
+    state BuchAnlegen {
+        state CreateFormular
+        state wartenAnlegen
+        state ErrorMsgAnlegen
+        state erfolgreichAngelegt
+
+        [*] --> CreateFormular : Buchdaten eingeben
+        CreateFormular --> wartenAnlegen
+        state entscheidungAnlegen <<choice>>
+        wartenAnlegen --> entscheidungAnlegen
+        
+        entscheidungAnlegen --> ErrorMsgAnlegen : Daten waren fehlerhaft oder unvollständig
+        entscheidungAnlegen --> erfolgreichAngelegt : Daten waren korrekt und vollständig
+
+        erfolgreichAngelegt --> CreateFormular
+    }
+
+    state Login {
+        state eingelogt
+        state ausgelogt
+        state LoginFormular
+        state entscheidungLogin <<choice>>
+        state ErrorMsgLogin
+
+        [*] --> LoginFormular : Login Daten eingeben
+        LoginFormular --> entscheidungLogin
+        entscheidungLogin --> ErrorMsgLogin : Login Daten fehlerhaft
+        entscheidungLogin --> eingelogt : korrekte Login Daten eingegeben
+        eingelogt --> ausgelogt : Button "logout" geklickt
+        ausgelogt --> LoginFormular
+        ErrorMsgLogin --> LoginFormular
+        
+    }
+}
+@enduml

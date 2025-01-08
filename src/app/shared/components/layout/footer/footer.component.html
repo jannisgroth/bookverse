@@ -1,36 +1,38 @@
 <div class="mt-10">
-  <app-error-alert *ngIf="showalert()" message="Bitte geben Sie eine E-Mail-Adresse ein"></app-error-alert>
+  @if (showalert()) {
+  <app-error-alert message="Bitte geben Sie eine E-Mail-Adresse ein"></app-error-alert>
+  }
 
   <footer class="footer bg-neutral-50 text-base-content p-10">
     <nav>
-      <h6 class="footer-title">Services</h6>
-      <a class="link link-hover">Branding</a>
+      <h6 class="footer-title">Dienstleistungen</h6>
+      <a class="link link-hover">Markenbildung</a>
       <a class="link link-hover">Design</a>
       <a class="link link-hover">Marketing</a>
-      <a class="link link-hover">Advertisement</a>
+      <a class="link link-hover">Werbung</a>
     </nav>
     <nav>
-      <h6 class="footer-title">Company</h6>
-      <a class="link link-hover">About us</a>
-      <a class="link link-hover">Contact</a>
+      <h6 class="footer-title">Unternehmen</h6>
+      <a class="link link-hover">Über uns</a>
+      <a class="link link-hover">Kontakt</a>
       <a class="link link-hover">Jobs</a>
-      <a class="link link-hover">Press kit</a>
+      <a class="link link-hover">Pressekit</a>
     </nav>
     <nav>
-      <h6 class="footer-title">Legal</h6>
-      <a class="link link-hover">Terms of use</a>
-      <a class="link link-hover">Privacy policy</a>
-      <a class="link link-hover">Cookie policy</a>
+      <h6 class="footer-title">Rechtliches</h6>
+      <a class="link link-hover">Nutzungsbedingungen</a>
+      <a class="link link-hover">Datenschutzrichtlinie</a>
+      <a class="link link-hover">Cookie-Richtlinie</a>
     </nav>
     <div>
       <h6 class="footer-title">Newsletter</h6>
       <fieldset class="form-control w-80">
         <label class="label">
-          <span class="label-text">Enter your email address</span>
+          <span class="label-text">Geben Sie Ihre E-Mail-Adresse ein</span>
         </label>
         <div class="join">
-          <input type="text" placeholder="username@site.com" class="input input-bordered join-item" #email />
-          <button class="btn btn-primary join-item" (click)="subscribe(email.value)">Subscribe</button>
+          <input type="text" placeholder="benutzername@seite.de" class="input input-bordered join-item" #email />
+          <button class="btn btn-primary join-item" (click)="subscribe(email.value)">Abonnieren</button>
         </div>
       </fieldset>
     </div>

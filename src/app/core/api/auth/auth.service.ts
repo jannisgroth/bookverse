@@ -1,10 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
-import { Token } from '@angular/compiler';
 import { LoggerService } from '../../logging/logger.service';
 
-interface JwtPayloadWithRole extends JwtPayload {
+/**
+ * JwtPayload mit dem zusaetzlichen Attribut "Email" und "Rolle"
+ */
+interface JwtPayloadWithAttributes extends JwtPayload {
   email?: string;
   resource_access?: {
     [key: string]: {
@@ -17,15 +19,24 @@ interface JwtPayloadWithRole extends JwtPayload {
   providedIn: 'root',
 })
 export class AuthService {
-  zugriffAlert = signal<boolean | undefined>(undefined);
+  zugriffAlert = signal<{ show: boolean | undefined; message: string }>({
+    show: undefined,
+    message: '',
+  });
   token = signal<string | undefined>(undefined);
-  tokenEncoded = signal<JwtPayloadWithRole | undefined>(undefined);
+  tokenEncoded = signal<JwtPayloadWithAttributes | undefined>(undefined);
   userData = signal<{ email: string; rolle: string }>({ email: '', rolle: '' });
   loggedIn = signal<boolean>(false);
 
   private readonly authUrl = 'https://localhost:3000/auth';
 
-  constructor(private http: HttpClient, private logger: LoggerService) {
+  constructor(
+    private http: HttpClient,
+    private logger: LoggerService
+  ) {
+    // Lade den Refresh-Token aus der LocalStorage, falls vorhanden.
+    // Wenn der Refresh-Token vorhanden ist, wird der getRefreshToken()-Aufruf gestartet.
+    // Bei jedem refresh der Seite.
     if (localStorage.getItem('refresh_token')) {
       this.getRefreshToken();
     }
@@ -61,31 +72,47 @@ export class AuthService {
             localStorage.setItem('refresh_token', response.refresh_token);
             // https://www.npmjs.com/package/jwt-decode
             this.tokenEncoded.set(
-              jwtDecode<JwtPayloadWithRole>(response.access_token)
+              // https://www.npmjs.com/package/jwt-decode
+              jwtDecode<JwtPayloadWithAttributes>(response.access_token)
             );
 
             this.userData.set({
               email: this.tokenEncoded()!.email!,
               rolle:
-                this.tokenEncoded()!.resource_access?.['nest-client']!.roles[0]!,
+                this.tokenEncoded()!.resource_access?.['nest-client']!
+                  .roles[0]!,
             });
 
-            //console.log(this.tokenEncoded(), this.role(), this.email());
             this.loggedIn.set(true);
-            this.zugriffAlert.set(true);
+            this.zugriffAlert.set({
+              show: true,
+              message: 'Login erfolgreich!',
+            });
             setTimeout(() => {
-              this.zugriffAlert.set(undefined);
+              this.zugriffAlert.set({ show: undefined, message: '' });
             }, 4000);
             this.startTokenTimer();
+            this.logger.info('Login erfolgreich!');
             resolve();
           },
           error: error => {
             if (error instanceof HttpErrorResponse && error.status === 401) {
-              this.zugriffAlert.set(false);
+              this.zugriffAlert.set({
+                show: false,
+                message: 'Benutzername oder Passwort falsch',
+              });
               setTimeout(() => {
-                this.zugriffAlert.set(undefined);
+                this.zugriffAlert.set({ show: undefined, message: '' });
               }, 4000);
+              reject();
             }
+            this.zugriffAlert.set({
+              show: false,
+              message: 'Registrierung gerade nicht möglich!',
+            });
+            setTimeout(() => {
+              this.zugriffAlert.set({ show: undefined, message: '' });
+            }, 4000);
             reject();
           },
         });
@@ -103,36 +130,38 @@ export class AuthService {
       return;
     }
 
-    this.http.post<{
-      access_token: string;
-      refresh_token: string;
-    }>(`${this.authUrl}/refresh`, { refresh_token }).subscribe({
-      next: (response) => {
-        this.token.set(response.access_token);
-        localStorage.setItem('refresh_token', response.refresh_token);
-        this.tokenEncoded.set(
-          jwtDecode<JwtPayloadWithRole>(response.access_token)
-        );
+    this.http
+      .post<{
+        access_token: string;
+        refresh_token: string;
+      }>(`${this.authUrl}/refresh`, { refresh_token })
+      .subscribe({
+        next: response => {
+          this.token.set(response.access_token);
+          localStorage.setItem('refresh_token', response.refresh_token);
+          this.tokenEncoded.set(
+            jwtDecode<JwtPayloadWithAttributes>(response.access_token)
+          );
 
-        this.userData.set({
-          email: this.tokenEncoded()!.email!,
-          rolle:
-            this.tokenEncoded()!.resource_access?.['nest-client']!.roles[0]!,
-        });
-        this.loggedIn.set(true);
+          this.userData.set({
+            email: this.tokenEncoded()!.email!,
+            rolle:
+              this.tokenEncoded()!.resource_access?.['nest-client']!.roles[0]!,
+          });
+          this.loggedIn.set(true);
 
-        this.startTokenTimer();
-      },
-      error: () => {
-        this.logger.error('Fehler beim Refreshen des Token');
-        this.loggedIn.set(false);
-        this.token.set(undefined);
-        this.tokenEncoded.set(undefined);
-        this.userData.set({ email: '', rolle: '' });
-        localStorage.removeItem('refresh_token');
-        return;
-      }
-    });
+          this.startTokenTimer();
+        },
+        error: () => {
+          this.logger.error('Fehler beim Refreshen des Token');
+          this.loggedIn.set(false);
+          this.token.set(undefined);
+          this.tokenEncoded.set(undefined);
+          this.userData.set({ email: '', rolle: '' });
+          localStorage.removeItem('refresh_token');
+          return;
+        },
+      });
   }
 
   /**
@@ -143,12 +172,10 @@ export class AuthService {
     if (this.tokenEncoded() === undefined) {
       return;
     }
-    if (((this.tokenEncoded()!.exp! * 1000) - Date.now()) < 60000) {
-      this.logger.info('Zeit des Tokens bald rum', this.tokenEncoded()?.exp);
+    if (this.tokenEncoded()!.exp! * 1000 - Date.now() < 60000) {
+      this.logger.debug('Zeit des Tokens bald rum', this.tokenEncoded()?.exp);
       await this.getRefreshToken();
-      console.log('neuen token geholt');
-    } else {
-      console.log('noch kein token nötig', (this.tokenEncoded()!.exp! * 1000) - Date.now());
+      return;
     }
   }
 
@@ -158,12 +185,10 @@ export class AuthService {
    * getRefreshToken()-Aufruf gestartet.
    */
   private startTokenTimer() {
-    this.logger.info('Token Timer gestartet');
+    this.logger.debug('Token Timer gestartet');
     setInterval(() => {
-      this.logger.info('Token Timer ausgelöst');
+      this.logger.debug('Token Timer ausgelöst');
       this.checkToken();
     }, 60000);
   }
 }
-
-// TODO -> Bei den Postrequest genau schauen bezüglich asyncronität einfacher schreiben

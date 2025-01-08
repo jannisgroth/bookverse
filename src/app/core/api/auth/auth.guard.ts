@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { AuthService } from './auth.service'; // Import your authentication service
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,16 +10,19 @@ export class AuthGuard implements CanActivate {
     private authService: AuthService,
     private router: Router
   ) {}
+
+  /**
+   * Methode, die überprüft, ob der Benutzer Zugriff auf die Administration
+   * hat.
+   *
+   * @returns true, wenn der Benutzer Zugriff hat, false sonst.
+   */
   canActivate(): boolean {
-    if (
-      this.authService.userData().rolle === 'admin' ||
-      this.authService.userData().rolle === 'user'
-    ) {
-      return true; // Allow access to the route
+    if (this.authService.userData().rolle === 'admin') {
+      return true; // Zugriff erlaubt
     } else {
-      // Redirect to the login page
       this.router.navigate(['/registrierung']);
-      return false;
+      return false; // Zugriff verweigert
     }
   }
 }
