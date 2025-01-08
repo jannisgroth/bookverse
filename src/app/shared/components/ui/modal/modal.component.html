@@ -2,15 +2,22 @@
   <div class="modal-box flex custom-modal min-h-[35vh]">
     <figure class="flex-shrink-0 mt-4 mb-4">
       @if (buch()?.file) {
-      <img [src]="buch()?.file" alt="Book-File" class="w-64 h-auto rounded" />
+        <img [src]="buch()?.file" alt="Book-File" class="w-64 h-auto rounded" />
       } @else {
-      <div class="flex justify-center items-center h-full pl-12 pr-12">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="h-24 w-24 text-primary">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
-        </svg>
-      </div>
+        <div class="flex justify-center items-center h-full pl-12 pr-12">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-24 w-24 text-primary">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+          </svg>
+        </div>
       }
     </figure>
     <div class="ml-4">
@@ -18,21 +25,21 @@
       <div class="form-row">
         <div class="form-col">
           @if (buch()?.titel?.titel) {
-          <span class="text-5xl font-bold">{{ buch()?.titel?.titel }}</span>
+            <span class="text-5xl font-bold">{{ buch()?.titel?.titel }}</span>
           }
         </div>
         <div class="form-col">
-          <span class="berechneterPreis">{{ berechneterPreis }}€</span>
+          <span class="text-4xl font-semibold">{{ berechneterPreis }}€</span>
         </div>
         @if (berechneterRabatt != 0) {
-        <div class="form-col">
-          <span class="berechneterRabatt">-{{ berechneterRabatt }}% </span>
-        </div>
-        <div class="form-col">
-          @if (buch()?.preis) {
-          <span class="buch-preis">{{ buch()?.preis }}€</span>
-          }
-        </div>
+          <div class="form-col">
+            <span class="berechneterRabatt">-{{ berechneterRabatt }}% </span>
+          </div>
+          <div class="form-col">
+            @if (buch()?.preis) {
+              <span class="buch-preis">{{ buch()?.preis }}€</span>
+            }
+          </div>
         }
       </div>
 
@@ -40,7 +47,9 @@
       <div class="form-row">
         <div class="form-col">
           @if (buch()?.titel?.untertitel) {
-          <span class="buch-untertitel">{{ buch()?.titel?.untertitel }}</span>
+            <span class="text-gray-400t font-bold">{{
+              buch()?.titel?.untertitel
+            }}</span>
           }
         </div>
         <!-- Rating -->
@@ -49,7 +58,9 @@
 
           <ng-container>
             @for (star of generateStars(buch()?.rating ?? 0); track star) {
-            <span class="mask mask-star-2 w-8 h-8" [ngClass]="star ? 'ausgefüllt' : 'nicht-ausgefüllt'"></span>
+              <span
+                class="mask mask-star-2 w-8 h-8"
+                [ngClass]="star ? 'ausgefüllt' : 'nicht-ausgefüllt'"></span>
             }
           </ng-container>
         </div>
@@ -58,15 +69,15 @@
       <!-- 3. Reihe -->
       <div class="form-row">
         <div class="form-col">
-          <span class="buch-schlagwoerter">
+          <span class="buch-info">
             @if (buch()?.schlagwoerter && (buch()?.schlagwoerter)!.length > 0) {
-            {{ buch()?.schlagwoerter ? '-' + buch()?.schlagwoerter : '' }}
+              {{ buch()?.schlagwoerter ? '-' + buch()?.schlagwoerter : '' }}
             }
           </span>
         </div>
         <div class="form-col">
           @if (buch()?.datum) {
-          <span class="buch-datum">{{ formatDate(buch()?.datum) }}</span>
+            <span class="buch-datum">{{ formatDate(buch()?.datum) }}</span>
           }
         </div>
       </div>
@@ -75,8 +86,8 @@
       <div class="form-row">
         <div class="form-col">
           @if (buch()?.art) {
-          <span class="buch-art">{{
-            buch()?.art ? '-' + buch()?.art : ''
+            <span class="buch-info">{{
+              buch()?.art ? '-' + buch()?.art : ''
             }}</span>
           }
         </div>
@@ -86,7 +97,7 @@
       <div class="form-row">
         <div class="form-col">
           @if (buch()?.isbn) {
-          <span class="buch-isbn">-ISBN: {{ buch()?.isbn }}</span>
+            <span class="buch-info">-ISBN: {{ buch()?.isbn }}</span>
           }
         </div>
       </div>
@@ -94,24 +105,41 @@
       <!-- 6. Reihe -->
       <div class="form-row">
         <div class="form-col">
-          <span class="buch-lieferbar">-Lieferbar: </span>
+          <span class="buch-info">-Lieferbar: </span>
           @if (buch()?.lieferbar === true) {
-          <!-- Haken wenn Buch Lieferbar ist -->
-          <span class="lieferbar-true">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke="green" d="m4.5 12.75 6 6 9-13.5" />
-            </svg>
-          </span>
+            <!-- Haken wenn Buch Lieferbar ist -->
+            <span class="lieferbar-true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke="green"
+                  d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
+            </span>
           }
           @if (buch()?.lieferbar !== true) {
-          <!-- Kreuz wenn Buch nicht Lieferbar ist -->
-          <span class="lieferbar-false">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-          </span>
+            <!-- Kreuz wenn Buch nicht Lieferbar ist -->
+            <span class="lieferbar-false">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </span>
           }
         </div>
       </div>
@@ -120,10 +148,13 @@
       <div class="form-row">
         <div class="form-col">
           @if (buch()?.homepage) {
-          <a href="{{ buch()?.homepage }}" class="buch-homepage" target="_blank">
-            <!-- öffnet in anderem Tab -->
-            {{ buch()?.homepage }}
-          </a>
+            <a
+              href="{{ buch()?.homepage }}"
+              class="buch-homepage"
+              target="_blank">
+              <!-- öffnet in anderem Tab -->
+              {{ buch()?.homepage }}
+            </a>
           }
         </div>
       </div>
