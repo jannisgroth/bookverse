@@ -92,6 +92,7 @@ export class AuthService {
               this.zugriffAlert.set({ show: undefined, message: '' });
             }, 4000);
             this.startTokenTimer();
+            this.logger.info('Login erfolgreich!');
             resolve();
           },
           error: error => {
