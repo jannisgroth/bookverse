@@ -33,6 +33,9 @@ export class RabattInputComponent {
     this.buchForm().addControl('rabatt', formControl);
   }
 
+  /**
+   * Gibt das FormControl für den Rabatt zurück.
+   */
   get rabatt() {
     return this.buchForm().get('rabatt')!;
   }
