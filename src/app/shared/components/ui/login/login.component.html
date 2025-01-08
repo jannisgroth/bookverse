@@ -75,12 +75,12 @@
   </div>
 
 
-  @if (zugriffAlert === false) {
+  @if (zugriffAlert.show === false) {
   <div class="mt-5">
-    <app-error-alert message="Benutzername oder Passwort falsch"></app-error-alert>
+    <app-error-alert message=zugriffAlert.message></app-error-alert>
   </div>
   }
-  @if (zugriffAlert === true) {
+  @if (zugriffAlert.show === true) {
   <div class="mt-5">
     <app-success-alert message="Login als {{ userData.rolle }} erfolgreich!"></app-success-alert>
   </div>

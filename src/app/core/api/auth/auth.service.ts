@@ -20,7 +20,7 @@ interface JwtPayloadWithAttributes extends JwtPayload {
   providedIn: 'root',
 })
 export class AuthService {
-  zugriffAlert = signal<boolean | undefined>(undefined);
+  zugriffAlert = signal<{ show: boolean | undefined; message: string }>({ show: undefined, message: '' });
   token = signal<string | undefined>(undefined);
   tokenEncoded = signal<JwtPayloadWithAttributes | undefined>(undefined);
   userData = signal<{ email: string; rolle: string }>({ email: '', rolle: '' });
@@ -82,20 +82,25 @@ export class AuthService {
             });
 
             this.loggedIn.set(true);
-            this.zugriffAlert.set(true);
+            this.zugriffAlert.set({ show: true, message: 'Login erfolgreich!' });
             setTimeout(() => {
-              this.zugriffAlert.set(undefined);
+              this.zugriffAlert.set({ show: undefined, message: '' });
             }, 4000);
             this.startTokenTimer();
             resolve();
           },
           error: error => {
             if (error instanceof HttpErrorResponse && error.status === 401) {
-              this.zugriffAlert.set(false);
+              this.zugriffAlert.set({ show: false, message: 'Benutzername oder Passwort falsch' });
               setTimeout(() => {
-                this.zugriffAlert.set(undefined);
+                this.zugriffAlert.set({ show: undefined, message: '' });
               }, 4000);
+              reject();
             }
+            this.zugriffAlert.set({ show: false, message: 'Registrierung gerade nicht möglich!' });
+            setTimeout(() => {
+              this.zugriffAlert.set({ show: undefined, message: '' });
+            }, 4000);
             reject();
           },
         });

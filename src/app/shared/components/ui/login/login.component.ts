@@ -63,7 +63,7 @@ export class LoginComponent {
    */
   async onLogout() {
     this.auth.loggedIn.set(false);
-    this.auth.zugriffAlert.set(undefined);
+    this.auth.zugriffAlert.set({ show: undefined, message: '' });
     this.auth.userData.set({ email: '', rolle: '' });
     this.auth.token.set(undefined);
     localStorage.removeItem('refresh_token');
