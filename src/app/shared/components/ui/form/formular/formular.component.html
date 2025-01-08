@@ -5,7 +5,7 @@
   </span>
   }
   <!-- Error- und Success-Alerts -->
-  @if (!loading() && error().aktive) {
+  @if (!loading() && error().aktiv) {
   <app-error-alert message="{{ error().message }}"></app-error-alert>
   }
   @if (!loading() && success()) {
