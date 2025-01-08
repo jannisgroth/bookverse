@@ -1,4 +1,4 @@
-import { Injectable, resolveForwardRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Buch } from '../../shared/models/buch.model';
 import {
   HttpClient,
@@ -18,8 +18,16 @@ export class WriteService {
     private http: HttpClient,
     private auth: AuthService,
     private logger: LoggerService
-  ) {}
+  ) { }
 
+  /**
+   * Legt ein neues Buch an. Wenn upload.mitFile true ist, 
+   * wird ein File mit hochgeladen und dem Buch zugeordnet.
+   * @param buch Das Buch, das angelegt werden soll.
+   * @param upload Ein Objekt mit den Eigenschaften "mitFile" (true, wenn eine Datei hochgeladen werden soll) und "file" (die Datei, die hochgeladen werden soll).
+   * @returns Ein Promise, das gelöst wird, wenn das Buch erfolgreich angelegt wurde.
+   * @throws Wenn das Buch nicht angelegt werden konnte, wird ein Error geworfen.
+   */
   async createBuch(
     buch: Omit<Buch, '_links' | 'file'>,
     upload: { mitFile: boolean; file: File | undefined }
@@ -64,6 +72,13 @@ export class WriteService {
     });
   }
 
+  /**
+   * Lädt eine Datei auf den Server hoch und ordnet sie dem Buch mit der Id zu.
+   * @param file Die Datei, die hochgeladen werden soll.
+   * @param id Die Id des Buches, zu dem die Datei hochgeladen werden soll.
+   * @returns Ein Promise, das gelöst wird, wenn die Datei erfolgreich hochgeladen wurde.
+   * @throws Wenn die Datei nicht hochgeladen werden konnte, wird ein Error geworfen.
+   */
   async uploadFile(file: File, id: number) {
     return new Promise<void>((resolve, reject) => {
       if (!(file instanceof File)) {

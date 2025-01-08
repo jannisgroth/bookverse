@@ -19,11 +19,20 @@ export class TitelInputComponent implements OnInit {
 
   constructor() { }
 
+  /**
+   * Lifecycle-Hook, der beim Initialisieren der Komponente aufgerufen wird.
+   * Erstellt ein FormControl fuer den Titel mit einem Validator, der sicherstellt,
+   * dass die Titel vorhanden ist.
+   * Fuegt das FormControl der FormGroup hinzu.
+   */
   ngOnInit(): void {
     const formControl = new FormControl(undefined, [Validators.required]);
     this.buchForm().addControl('titel', formControl);
   }
 
+  /**
+   * Gibt das FormControl für Titel zurück.
+   */
   get titel() {
     return this.buchForm().get('titel')!;
   }

@@ -20,7 +20,7 @@ export class RabattInputComponent {
 
   /**
    * Lifecycle-Hook, der beim Initialisieren der Komponente aufgerufen wird.
-   * Erstellt ein FormControl f r den Rabatt mit einem Validator, der sicherstellt,
+   * Erstellt ein FormControl fuer den Rabatt mit einem Validator, der sicherstellt,
    * dass die Eingabe zwischen 0 und 100 liegt.
    * Fuegt das FormControl der FormGroup hinzu.
    */

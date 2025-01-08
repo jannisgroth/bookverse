@@ -4,7 +4,10 @@ import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { Token } from '@angular/compiler';
 import { LoggerService } from '../../logging/logger.service';
 
-interface JwtPayloadWithRole extends JwtPayload {
+/**
+ * JwtPayload mit dem zusaetzlichen Attribut "Email" und "Rolle"
+ */
+interface JwtPayloadWithAttributes extends JwtPayload {
   email?: string;
   resource_access?: {
     [key: string]: {
@@ -19,16 +22,20 @@ interface JwtPayloadWithRole extends JwtPayload {
 export class AuthService {
   zugriffAlert = signal<boolean | undefined>(undefined);
   token = signal<string | undefined>(undefined);
-  tokenEncoded = signal<JwtPayloadWithRole | undefined>(undefined);
+  tokenEncoded = signal<JwtPayloadWithAttributes | undefined>(undefined);
   userData = signal<{ email: string; rolle: string }>({ email: '', rolle: '' });
   loggedIn = signal<boolean>(false);
 
   private readonly authUrl = 'https://localhost:3000/auth';
 
+
   constructor(
     private http: HttpClient,
     private logger: LoggerService
   ) {
+    // Lade den Refresh-Token aus der LocalStorage, falls vorhanden.
+    // Wenn der Refresh-Token vorhanden ist, wird der getRefreshToken()-Aufruf gestartet.
+    // Bei jedem refresh der Seite.
     if (localStorage.getItem('refresh_token')) {
       this.getRefreshToken();
     }
@@ -64,7 +71,7 @@ export class AuthService {
             localStorage.setItem('refresh_token', response.refresh_token);
             // https://www.npmjs.com/package/jwt-decode
             this.tokenEncoded.set(
-              jwtDecode<JwtPayloadWithRole>(response.access_token)
+              jwtDecode<JwtPayloadWithAttributes>(response.access_token)
             );
 
             this.userData.set({
@@ -74,7 +81,6 @@ export class AuthService {
                   .roles[0]!,
             });
 
-            //console.log(this.tokenEncoded(), this.role(), this.email());
             this.loggedIn.set(true);
             this.zugriffAlert.set(true);
             setTimeout(() => {
@@ -117,7 +123,7 @@ export class AuthService {
           this.token.set(response.access_token);
           localStorage.setItem('refresh_token', response.refresh_token);
           this.tokenEncoded.set(
-            jwtDecode<JwtPayloadWithRole>(response.access_token)
+            jwtDecode<JwtPayloadWithAttributes>(response.access_token)
           );
 
           this.userData.set({
@@ -174,5 +180,3 @@ export class AuthService {
     }, 60000);
   }
 }
-
-// TODO -> Bei den Postrequest genau schauen bezüglich asyncronität einfacher schreiben

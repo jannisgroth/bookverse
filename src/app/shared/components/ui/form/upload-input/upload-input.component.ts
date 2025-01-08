@@ -6,7 +6,6 @@ import { FormularComponent } from '../formular/formular.component';
   selector: 'app-upload-input',
   imports: [ReactiveFormsModule],
   templateUrl: './upload-input.component.html',
-  styleUrl: './upload-input.component.css',
 })
 @Injectable({ providedIn: 'root' })
 export class UploadInputComponent {
