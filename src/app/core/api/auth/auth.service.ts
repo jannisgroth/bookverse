@@ -172,14 +172,9 @@ export class AuthService {
       return;
     }
     if (this.tokenEncoded()!.exp! * 1000 - Date.now() < 60000) {
-      this.logger.info('Zeit des Tokens bald rum', this.tokenEncoded()?.exp);
+      this.logger.debug('Zeit des Tokens bald rum', this.tokenEncoded()?.exp);
       await this.getRefreshToken();
-      console.log('neuen token geholt');
-    } else {
-      console.log(
-        'noch kein token nötig',
-        this.tokenEncoded()!.exp! * 1000 - Date.now()
-      );
+      return;
     }
   }
 
@@ -189,9 +184,9 @@ export class AuthService {
    * getRefreshToken()-Aufruf gestartet.
    */
   private startTokenTimer() {
-    this.logger.info('Token Timer gestartet');
+    this.logger.debug('Token Timer gestartet');
     setInterval(() => {
-      this.logger.info('Token Timer ausgelöst');
+      this.logger.debug('Token Timer ausgelöst');
       this.checkToken();
     }, 60000);
   }
