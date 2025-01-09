@@ -104,7 +104,8 @@ export class AuthService {
               setTimeout(() => {
                 this.zugriffAlert.set({ show: undefined, message: '' });
               }, 4000);
-              reject();
+              reject('Zugriff verweigert');
+              return;
             }
             this.zugriffAlert.set({
               show: false,
@@ -113,7 +114,7 @@ export class AuthService {
             setTimeout(() => {
               this.zugriffAlert.set({ show: undefined, message: '' });
             }, 4000);
-            reject();
+            reject('Fehler aufgetreten');
           },
         });
     });

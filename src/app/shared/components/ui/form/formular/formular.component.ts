@@ -70,7 +70,6 @@ export class FormularComponent {
     this.loading.set(true);
 
     const buchDTO = await this.inputToBuchDTO();
-    console.log(buchDTO);
 
     // Falls keine Datei ausgewählt wurde, rufe den WriteService ohne Datei auf
     const uploadParams =

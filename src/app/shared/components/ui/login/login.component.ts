@@ -31,7 +31,7 @@ export class LoginComponent {
   constructor(
     private auth: AuthService,
     private logger: LoggerService
-  ) {}
+  ) { }
 
   /**
    * Führt den Anmeldevorgang aus, sobald die Formularvalidierung erfolgreich ist.

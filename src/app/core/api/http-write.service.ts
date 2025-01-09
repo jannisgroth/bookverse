@@ -18,7 +18,7 @@ export class WriteService {
     private http: HttpClient,
     private auth: AuthService,
     private logger: LoggerService
-  ) {}
+  ) { }
 
   /**
    * Legt ein neues Buch an. Wenn upload.mitFile true ist,
@@ -52,6 +52,7 @@ export class WriteService {
                   'File-upload konnte nicht durchgeführt werden'
                 );
                 reject();
+                return;
               }
               const id = Number(location.split('/').pop()); // die Id aus dem Link ziehen
               await this.uploadFile(upload.file!, id);
@@ -64,6 +65,7 @@ export class WriteService {
             if (err.status === 422) {
               reject(err.error.message);
               this.logger.error('Invalide Daten, Buch nicht angelegt');
+              return;
             }
             this.logger.error('Fehler beim Anlegen des Buches', err);
             reject(`Fehler beim anlegen des Buches: ${err.error.message}`);
@@ -83,7 +85,8 @@ export class WriteService {
     return new Promise<void>((resolve, reject) => {
       if (!(file instanceof File)) {
         this.logger.error('File konnte nicht erkannt werden');
-        return reject();
+        reject();
+        return;
       }
 
       // Speichern des Files zur übergabe ans Backend.
