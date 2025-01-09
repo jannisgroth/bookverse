@@ -7,7 +7,6 @@ import { SortierenComponent } from '../sortieren.component';
   selector: 'app-sortier-dropdown',
   imports: [],
   templateUrl: './sortier-dropdown.component.html',
-  styleUrl: './sortier-dropdown.component.css',
 })
 export class SortierDropdownComponent {
   readonly sortierkriterium =

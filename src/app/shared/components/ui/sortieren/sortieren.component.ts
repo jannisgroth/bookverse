@@ -8,7 +8,6 @@ import { SortierToggleComponent } from './sortier-toggle/sortier-toggle.componen
   selector: 'app-sortieren',
   imports: [SortierDropdownComponent, SortierToggleComponent],
   templateUrl: './sortieren.component.html',
-  styleUrl: './sortieren.component.css',
 })
 export class SortierenComponent {
   readonly buecher = input.required<WritableSignal<Buch[]>>();

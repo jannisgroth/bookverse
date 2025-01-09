@@ -24,7 +24,6 @@ import { SuchleisteComponent } from '../../shared/components/ui/suchleiste/suchl
     SuchleisteComponent,
   ],
   templateUrl: './bibliothek.component.html',
-  styleUrl: './bibliothek.component.css',
   providers: [ReadService],
 })
 export class BibliothekComponent implements OnInit {

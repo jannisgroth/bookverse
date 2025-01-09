@@ -16,7 +16,6 @@ import { Buch } from '../../../models/buch.model';
   selector: 'app-suchleiste',
   imports: [FormsModule],
   templateUrl: './suchleiste.component.html',
-  styleUrl: './suchleiste.component.css',
 })
 export class SuchleisteComponent {
   @Input() buecher = signal<Buch[]>([]);

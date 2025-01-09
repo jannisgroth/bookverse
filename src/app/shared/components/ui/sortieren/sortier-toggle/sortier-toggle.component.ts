@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
   selector: 'app-sortier-toggle',
   imports: [CommonModule],
   templateUrl: './sortier-toggle.component.html',
-  styleUrl: './sortier-toggle.component.css',
 })
 export class SortierToggleComponent {
   readonly rangfolge =

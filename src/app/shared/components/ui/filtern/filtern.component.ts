@@ -26,7 +26,6 @@ import { ReadService } from '../../../../core/api/http-read.service';
     RabattFilterCollapseComponent,
   ],
   templateUrl: './filtern.component.html',
-  styleUrl: './filtern.component.css',
 })
 export class FilternComponent {
   readonly buecher = input(signal<Buch[]>([]));
