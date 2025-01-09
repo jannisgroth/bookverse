@@ -51,7 +51,7 @@ export class FormularComponent {
   constructor(
     private writeService: WriteService,
     private logger: LoggerService
-  ) { }
+  ) {}
 
   /**
    * Validiert das Formular und führt den Bucherstellungsprozess durch.
@@ -126,7 +126,8 @@ export class FormularComponent {
       lieferbar: this.buchForm.get('lieferbar')!.value ?? undefined,
       datum: this.buchForm.get('datum')!.value ?? undefined,
       homepage: this.buchForm.get('homepage')!.value ?? undefined,
-      schlagwoerter: gewählteSchlagwoerter === undefined ? undefined : gewählteSchlagwoerter,
+      schlagwoerter:
+        gewählteSchlagwoerter === undefined ? undefined : gewählteSchlagwoerter,
       titel: {
         titel: this.buchForm.get('titel')!.value!,
         untertitel: this.buchForm.get('untertitel')!.value ?? undefined,

@@ -18,7 +18,7 @@ export class WriteService {
     private http: HttpClient,
     private auth: AuthService,
     private logger: LoggerService
-  ) { }
+  ) {}
 
   /**
    * Legt ein neues Buch an. Wenn upload.mitFile true ist,
