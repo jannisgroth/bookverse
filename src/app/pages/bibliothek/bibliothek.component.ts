@@ -6,7 +6,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { ModalComponent } from '../../shared/components/ui/modal/modal.component';
 import { ErrorAlertComponent } from '../../shared/components/ui/alerts/error-alert/error-alert.component';
 import { LoggerService } from '../../core/logging/logger.service';
-import { SortierServiceComponent } from '../../shared/components/ui/sortier-service/sortier-service.component';
+import { SortierenComponent } from '../../shared/components/ui/sortieren/sortieren.component';
 import { FilternComponent } from '../../shared/components/ui/filtern/filtern.component';
 import { SuchleisteComponent } from '../../shared/components/ui/suchleiste/suchleiste.component';
 
@@ -19,7 +19,7 @@ import { SuchleisteComponent } from '../../shared/components/ui/suchleiste/suchl
     NgIf,
     ModalComponent,
     ErrorAlertComponent,
-    SortierServiceComponent,
+    SortierenComponent,
     FilternComponent,
     SuchleisteComponent,
   ],

@@ -1,7 +1,7 @@
 import { Component, signal, WritableSignal, input } from '@angular/core';
 import { LoggerService } from '../../../../../core/logging/logger.service';
 import { Buch } from '../../../../models/buch.model';
-import { SortierServiceComponent } from '../../sortier-service/sortier-service.component';
+import { SortierenComponent } from '../sortieren.component';
 
 @Component({
   selector: 'app-sortier-dropdown',
@@ -31,7 +31,7 @@ export class SortierDropdownComponent {
 
   constructor(
     private logger: LoggerService,
-    private sortierservice: SortierServiceComponent
+    private sortierservice: SortierenComponent
   ) {}
 
   /**

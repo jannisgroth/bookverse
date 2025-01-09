@@ -5,12 +5,12 @@ import { SortierDropdownComponent } from './sortier-dropdown/sortier-dropdown.co
 import { SortierToggleComponent } from './sortier-toggle/sortier-toggle.component';
 
 @Component({
-  selector: 'app-sortier-service',
+  selector: 'app-sortieren',
   imports: [SortierDropdownComponent, SortierToggleComponent],
-  templateUrl: './sortier-service.component.html',
-  styleUrl: './sortier-service.component.css',
+  templateUrl: './sortieren.component.html',
+  styleUrl: './sortieren.component.css',
 })
-export class SortierServiceComponent {
+export class SortierenComponent {
   readonly buecher = input.required<WritableSignal<Buch[]>>();
 
   /**
