@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SortierServiceComponent } from './sortier-service.component';
+import { SortierenComponent } from './sortieren.component';
 
-describe('SortierServiceComponent', () => {
-  let component: SortierServiceComponent;
-  let fixture: ComponentFixture<SortierServiceComponent>;
+describe('SortierenComponent', () => {
+  let component: SortierenComponent;
+  let fixture: ComponentFixture<SortierenComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SortierServiceComponent],
+      imports: [SortierenComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SortierServiceComponent);
+    fixture = TestBed.createComponent(SortierenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

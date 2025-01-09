@@ -1,11 +1,10 @@
 import { Component, WritableSignal, input } from '@angular/core';
-import { SortierServiceComponent } from '../../sortier-service/sortier-service.component';
+import { SortierenComponent } from '../sortieren.component';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-sortier-toggle',
   imports: [CommonModule],
   templateUrl: './sortier-toggle.component.html',
-  styleUrl: './sortier-toggle.component.css',
 })
 export class SortierToggleComponent {
   readonly rangfolge =
@@ -14,7 +13,7 @@ export class SortierToggleComponent {
   /**
    * Erzeugt eine neue SortierToggleComponent
    */
-  constructor(private sortierservice: SortierServiceComponent) {}
+  constructor(private sortierservice: SortierenComponent) {}
 
   /**
    * Wechselt die Reihenfolge der (sortierten) Bücherliste zu auf/absteigend

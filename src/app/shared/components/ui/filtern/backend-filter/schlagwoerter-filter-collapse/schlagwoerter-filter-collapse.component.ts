@@ -15,7 +15,6 @@ import { FilternComponent } from '../../filtern.component';
   selector: 'app-schlagwoerter-filter-collapse',
   imports: [CommonModule],
   templateUrl: './schlagwoerter-filter-collapse.component.html',
-  styleUrl: './schlagwoerter-filter-collapse.component.css',
 })
 export class SchlagwoerterFilterCollapseComponent {
   readonly schlagwoerterFilter = input(signal<string[]>([]));

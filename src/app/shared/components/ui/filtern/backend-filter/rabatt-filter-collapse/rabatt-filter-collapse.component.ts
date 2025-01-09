@@ -6,7 +6,6 @@ import { FilternComponent } from '../../filtern.component';
   selector: 'app-rabatt-filter-collapse',
   imports: [NgClass],
   templateUrl: './rabatt-filter-collapse.component.html',
-  styleUrl: './rabatt-filter-collapse.component.css',
 })
 export class RabattFilterCollapseComponent {
   readonly rabattFilter = input.required<WritableSignal<string | undefined>>();

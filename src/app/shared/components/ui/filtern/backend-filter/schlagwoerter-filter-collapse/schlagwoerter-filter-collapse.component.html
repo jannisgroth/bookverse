@@ -8,19 +8,19 @@
     <div class="container">
       <label class="label cursor-pointer">
         <div class="join join-vertical w-full">
-          <div *ngFor="let option of options">
+          @for (option of options; track option.label) {
             <div class="form-control">
               <label class="label cursor-pointer">
                 <span class="label-text">{{ option.label }}</span>
                 <input
                   type="checkbox"
                   name="schlagwoertercheckbox"
-                  class="checkbox checkbox-primary"
+                  class="checkbox checkbox-primary ml-[60px]"
                   value="{{ option.value }}"
                   (change)="schlagwoerterFilterSetter($event.target!)" />
               </label>
             </div>
-          </div>
+          }
         </div>
       </label>
     </div>

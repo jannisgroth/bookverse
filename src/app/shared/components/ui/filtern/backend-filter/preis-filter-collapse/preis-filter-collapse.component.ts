@@ -14,7 +14,6 @@ import { FilternComponent } from '../../filtern.component';
   selector: 'app-preis-filter-collapse',
   imports: [NgClass],
   templateUrl: './preis-filter-collapse.component.html',
-  styleUrl: './preis-filter-collapse.component.css',
 })
 export class PreisFilterCollapseComponent {
   readonly preisFilter = input.required<WritableSignal<string | undefined>>();

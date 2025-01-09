@@ -13,7 +13,6 @@ import { FilternComponent } from '../../filtern.component';
   selector: 'app-art-filter-collapse',
   imports: [CommonModule],
   templateUrl: './art-filter-collapse.component.html',
-  styleUrl: './art-filter-collapse.component.css',
 })
 export class ArtFilterCollapseComponent {
   readonly artFilter = input(signal<BuchArt | undefined>(undefined));

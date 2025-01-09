@@ -5,7 +5,6 @@ import { FilternComponent } from '../../filtern.component';
   selector: 'app-rating-filter-collapse',
   imports: [],
   templateUrl: './rating-filter-collapse.component.html',
-  styleUrl: './rating-filter-collapse.component.css',
 })
 export class RatingFilterCollapseComponent {
   readonly ratingFilter = input.required<WritableSignal<number | undefined>>();

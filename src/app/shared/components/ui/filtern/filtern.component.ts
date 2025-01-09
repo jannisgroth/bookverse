@@ -26,7 +26,6 @@ import { ReadService } from '../../../../core/api/http-read.service';
     RabattFilterCollapseComponent,
   ],
   templateUrl: './filtern.component.html',
-  styleUrl: './filtern.component.css',
 })
 export class FilternComponent {
   readonly buecher = input(signal<Buch[]>([]));
@@ -50,8 +49,7 @@ export class FilternComponent {
   }
 
   /**
-   * Filtert eine Buchliste anhand der Kriterien, die sich nicht über eine
-   * GET Request filtern lassen.
+   * Ruft den ReadService auf.
    */
   filter() {
     this.readService.getBuecherMitBild(this.buecher());

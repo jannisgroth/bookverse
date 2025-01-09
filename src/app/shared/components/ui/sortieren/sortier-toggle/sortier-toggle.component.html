@@ -1,0 +1,39 @@
+<!-- Sortierreihenfolge -->
+<button
+  id="sortierToggleButton"
+  class="btn no-animation rounded-l-none w-32"
+  (click)="buecherRangfolge()">
+  <div class="flex items-center">
+    @switch (rangfolge()()) {
+      @case ('Aufsteigend') {
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="swap-off h-5 w-5">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+        </svg>
+      }
+      @case ('Absteigend') {
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="swap-on h-5 w-5">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+        </svg>
+      }
+    }
+    <label id="rangfolgeLabel">{{ rangfolge()() }} </label>
+  </div>
+</button>

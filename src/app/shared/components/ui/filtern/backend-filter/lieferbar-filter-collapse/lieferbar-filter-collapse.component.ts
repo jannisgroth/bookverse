@@ -13,7 +13,6 @@ import { FilternComponent } from '../../filtern.component';
   selector: 'app-lieferbar-filter-collapse',
   imports: [],
   templateUrl: './lieferbar-filter-collapse.component.html',
-  styleUrl: './lieferbar-filter-collapse.component.css',
 })
 export class LieferbarFilterCollapseComponent {
   readonly lieferbarFilter = input(signal<boolean | undefined>(undefined));
