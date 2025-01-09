@@ -11,7 +11,6 @@ import {
   selector: 'app-preis-input',
   imports: [ReactiveFormsModule, NgClass],
   templateUrl: './preis-input.component.html',
-  styleUrl: './preis-input.component.css',
 })
 export class PreisInputComponent {
   // Signal für die FormGroup

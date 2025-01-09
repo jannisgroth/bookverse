@@ -17,9 +17,6 @@ export class CardComponent {
   constructor(private location: Location) {}
 
   showDetails() {
-    if (this.buch?.titel?.titel) {
-      this.location.go(`/buch/${this.buch.titel.titel}`);
-    }
     this.openModal.emit(this.buch);
   }
 }

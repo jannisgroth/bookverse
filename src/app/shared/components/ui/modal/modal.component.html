@@ -1,37 +1,70 @@
-<dialog #modal id="modal" class="modal min-h-96">
-  <div class="modal-box flex custom-modal">
-    <figure class="flex-shrink-0 mt-4 mb-4">
-      <img [src]="buch?.file" alt="Book-File" class="w-64 h-auto rounded" />
+<dialog #modal id="modal" class="modal">
+  <div class="modal-box flex custom-modal overflow-hidden">
+    <figure class="flex-shrink-0 m-4">
+      @if (buch()?.file) {
+        <img
+          [src]="buch()?.file"
+          alt="Book-File"
+          class="w-full h-full max-w-full max-h-full object-contain rounded" />
+      } @else {
+        <div class="flex justify-center items-center h-full pl-12 pr-12">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-24 w-24 text-primary">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+          </svg>
+        </div>
+      }
     </figure>
     <div class="ml-4">
       <!-- 1. Reihe -->
       <div class="form-row">
         <div class="form-col">
-          <span class="buch-titel">{{ buch?.titel?.titel }}</span>
+          @if (buch()?.titel?.titel) {
+            <span class="text-5xl font-bold">{{ buch()?.titel?.titel }}</span>
+          }
         </div>
         <div class="form-col">
-          <span class="berechneterPreis">{{ berechneterPreis }}€</span>
+          <span class="text-4xl font-semibold">{{ berechneterPreis }}€</span>
         </div>
-        <div class="form-col">
-          <span class="berechneterRabatt">-{{ berechneterRabatt }}% </span>
-        </div>
-        <div class="form-col">
-          <span class="buch-preis">{{ buch?.preis }}€</span>
-        </div>
+        @if (berechneterRabatt != 0) {
+          <div class="form-col">
+            <span class="berechneterRabatt">-{{ berechneterRabatt }}% </span>
+          </div>
+          <div class="form-col">
+            @if (buch()?.preis) {
+              <span class="buch-preis">{{ buch()?.preis }}€</span>
+            }
+          </div>
+        }
       </div>
 
       <!-- 2. Reihe -->
       <div class="form-row">
         <div class="form-col">
-          <span class="buch-untertitel">{{ buch?.titel?.untertitel }}</span>
+          @if (buch()?.titel?.untertitel) {
+            <span class="text-gray-400t font-bold">{{
+              buch()?.titel?.untertitel
+            }}</span>
+          }
         </div>
         <!-- Rating -->
         <div class="form-col">
           <!-- Iteriere über das Array von Sternen -->
-          <ng-container *ngFor="let star of generateStars(buch?.rating ?? 0)">
-            <span
-              class="mask mask-star-2 w-8 h-8"
-              [ngClass]="star ? 'ausgefüllt' : 'nicht-ausgefüllt'"></span>
+
+          <ng-container>
+            @for (star of generateStars(buch()?.rating ?? 0); track star) {
+              <span
+                class="mask mask-star-2 w-8 h-8"
+                [ngClass]="star ? 'ausgefüllt' : 'nicht-ausgefüllt'"></span>
+            }
           </ng-container>
         </div>
       </div>
@@ -39,74 +72,98 @@
       <!-- 3. Reihe -->
       <div class="form-row">
         <div class="form-col">
-          <span class="buch-schlagwoerter">
-            {{ buch?.schlagwoerter ? '-' + buch?.schlagwoerter : '' }}
+          <span class="buch-info">
+            @if (buch()?.schlagwoerter && (buch()?.schlagwoerter)!.length > 0) {
+              {{ buch()?.schlagwoerter ? '-' + buch()?.schlagwoerter : '' }}
+            }
           </span>
         </div>
         <div class="form-col">
-          <span class="buch-datum">{{ formatDate(buch?.datum) }}</span>
+          @if (buch()?.datum) {
+            <span class="buch-datum">{{ formatDate(buch()?.datum) }}</span>
+          }
         </div>
       </div>
 
       <!-- 4. Reihe -->
       <div class="form-row">
         <div class="form-col">
-          <span class="buch-art">{{ buch?.art ? '-' + buch?.art : '' }}</span>
+          @if (buch()?.art) {
+            <span class="buch-info">{{
+              buch()?.art ? '-' + buch()?.art : ''
+            }}</span>
+          }
         </div>
       </div>
 
       <!-- 5. Reihe -->
       <div class="form-row">
         <div class="form-col">
-          <span class="buch-isbn">-ISBN: {{ buch?.isbn }}</span>
+          @if (buch()?.isbn) {
+            <span class="buch-info">-ISBN: {{ buch()?.isbn }}</span>
+          }
         </div>
       </div>
 
       <!-- 6. Reihe -->
       <div class="form-row">
         <div class="form-col">
-          <span class="buch-lieferbar">-Lieferbar: </span>
-          <span *ngIf="buch?.lieferbar === true">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m4.5 12.75 6 6 9-13.5" />
-            </svg>
-          </span>
-          <span *ngIf="buch?.lieferbar !== true">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18 18 6M6 6l12 12" />
-            </svg>
-          </span>
+          <span class="buch-info">-Lieferbar: </span>
+          @if (buch()?.lieferbar === true) {
+            <!-- Haken wenn Buch Lieferbar ist -->
+            <span class="lieferbar-true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke="green"
+                  d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
+            </span>
+          }
+          @if (buch()?.lieferbar !== true) {
+            <!-- Kreuz wenn Buch nicht Lieferbar ist -->
+            <span class="lieferbar-false">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </span>
+          }
         </div>
       </div>
 
       <!-- 7. Reihe -->
       <div class="form-row">
         <div class="form-col">
-          <span class="buch-homepage"> {{ buch?.homepage }}</span>
+          @if (buch()?.homepage) {
+            <a
+              href="{{ buch()?.homepage }}"
+              class="buch-homepage"
+              target="_blank">
+              <!-- öffnet in anderem Tab -->
+              {{ buch()?.homepage }}
+            </a>
+          }
         </div>
       </div>
 
       <!-- Close -->
       <div class="modal-action absolute bottom-0 right-0 p-4">
-        <button class="btn ml-2">Warenkorb</button>
         <form method="dialog">
           <button class="btn btn-close" (click)="closeModal(modal)">
             Close

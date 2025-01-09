@@ -61,7 +61,7 @@ export class FormularComponent {
   async onSubmit() {
     // Zuerst prüfen, ob das Formular gültig ist
     if (!this.buchForm.valid) {
-      this.logger.debug('Formular ist nicht valid');
+      this.logger.error('Formular ist nicht valid');
       //this.loading.set(false); // Ladezustand auf false setzen, falls Formular ungültig ist
       return; // Beende die Methode frühzeitig
     }
@@ -97,6 +97,7 @@ export class FormularComponent {
       .finally(() => {
         this.buchForm.reset({
           buchart: 'wählen',
+          rating: 5,
         });
         this.ausgewähltesFile.set(undefined);
         this.loading.set(false);
@@ -125,7 +126,8 @@ export class FormularComponent {
       lieferbar: this.buchForm.get('lieferbar')!.value ?? undefined,
       datum: this.buchForm.get('datum')!.value ?? undefined,
       homepage: this.buchForm.get('homepage')!.value ?? undefined,
-      schlagwoerter: gewählteSchlagwoerter,
+      schlagwoerter:
+        gewählteSchlagwoerter === undefined ? undefined : gewählteSchlagwoerter,
       titel: {
         titel: this.buchForm.get('titel')!.value!,
         untertitel: this.buchForm.get('untertitel')!.value ?? undefined,
