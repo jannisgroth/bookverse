@@ -1,4 +1,4 @@
-import { Injectable, signal, effect, WritableSignal } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Buch, BuchArt } from '../../shared/models/buch.model';
 import { LoggerService } from '../logging/logger.service';
@@ -32,7 +32,7 @@ export class ReadService {
   constructor(
     private readonly http: HttpClient,
     private readonly logger: LoggerService
-  ) {} // Dependency injection
+  ) { } // Dependency injection
 
   getBuecherMitBild(buecher: WritableSignal<Buch[]>) {
     //params enthält die Queryparameter aus den Signals
