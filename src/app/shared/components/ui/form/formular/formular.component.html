@@ -16,7 +16,7 @@
   @if (!loading()) {
   <form class="flex flex-col gap-8" [formGroup]="buchForm" (ngSubmit)="onSubmit()">
     <!-- Row 1 -->
-    <div class="form-row grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="form-row">
       <div class="form-col">
         <app-titel-input [buchForm]="buchForm"></app-titel-input>
       </div>
@@ -26,7 +26,7 @@
     </div>
 
     <!-- Row 2 -->
-    <div class="form-row grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="form-row">
       <div class="form-col">
         <app-isbn-input [buchForm]="buchForm"></app-isbn-input>
       </div>
@@ -36,7 +36,7 @@
     </div>
 
     <!-- Row 3 -->
-    <div class="form-row grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="form-row">
       <div class="form-col">
         <app-datum-input [buchForm]="buchForm"></app-datum-input>
       </div>
@@ -46,7 +46,7 @@
     </div>
 
     <!-- Row 4 -->
-    <div class="form-row grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="form-row">
       <div class="form-col">
         <app-preis-input [buchForm]="buchForm"></app-preis-input>
       </div>
