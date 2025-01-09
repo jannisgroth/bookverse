@@ -49,8 +49,7 @@ export class FilternComponent {
   }
 
   /**
-   * Filtert eine Buchliste anhand der Kriterien, die sich nicht über eine
-   * GET Request filtern lassen.
+   * Ruft den ReadService auf.
    */
   filter() {
     this.readService.getBuecherMitBild(this.buecher());
